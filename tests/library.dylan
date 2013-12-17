@@ -1,17 +1,17 @@
 Module:    dylan-user
-Synopsis:  Test library for packetizer
+Synopsis:  Test library for binary-data
 author: Andreas Bogk and Hannes Mehnert
 copyright: 2005-2011 Andreas Bogk and Hannes Mehnert. All rights reserved.
 license: see LICENSE.txt in this distribution
 
-define library packetizer-test
+define library binary-data-test
   use common-dylan;
   use testworks;
-  use packetizer;
-end library packetizer-test;
+  use binary-data;
+end library binary-data-test;
 
-define module packetizer-test
+define module binary-data-test
   use common-dylan;
-  use packetizer, exclude: { type-code, data };
+  use binary-data, exclude: { type-code, data };
   use testworks;
-end module packetizer-test;
+end module binary-data-test;

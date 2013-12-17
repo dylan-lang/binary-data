@@ -3,17 +3,17 @@ author: Andreas Bogk and Hannes Mehnert
 copyright: 2005-2011 Andreas Bogk and Hannes Mehnert. All rights reserved.
 license: see LICENSE.txt in this distribution
 
-define library packetizer
+define library binary-data
   use common-dylan;
   use dylan;
   use io;
   use collections;
   use system;
 
-  export packetizer;
-end library packetizer;
+  export binary-data;
+end library binary-data;
 
-define module packetizer
+define module binary-data
   use common-dylan, exclude: { format-to-string };
   use dylan-extensions, import: { \copy-down-method-definer };
   use format;
@@ -159,4 +159,4 @@ define module packetizer
     unparsed-frame-field-generator;
 
   export protocol-module-definer;
-end module packetizer;
+end module binary-data;

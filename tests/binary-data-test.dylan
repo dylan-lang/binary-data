@@ -1,4 +1,4 @@
-module: packetizer-test
+module: binary-data-test
 author: Andreas Bogk and Hannes Mehnert
 copyright: 2005-2011 Andreas Bogk and Hannes Mehnert. All rights reserved.
 license: see LICENSE.txt in this distribution
@@ -32,7 +32,7 @@ define protocol test-protocol (container-frame)
   field bar :: <unsigned-byte>;
 end;
 
-define test packetizer-parser ()
+define test binary-data-parser ()
   let frame = parse-frame(<test-protocol>, #(#x23, #x42));
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
@@ -41,12 +41,12 @@ define test packetizer-parser ()
   frame-field-checker(1, frame, 8, 8, 16);
 end;
 
-define test packetizer-assemble ()
+define test binary-data-assemble ()
   let frame = make(<test-protocol>, foo: #x23, bar: #x42);
   let byte-vector = assemble-frame(frame);
   check-equal("Assembled frame is correct", as(<byte-vector>, #(#x23, #x42)), byte-vector.packet);
 end;
-define test packetizer-modify ()
+define test binary-data-modify ()
   let frame = parse-frame(<test-protocol>, #(#x23, #x42));
   frame.bar := #x69;
   let byte-vector = assemble-frame(frame);
@@ -59,7 +59,7 @@ define protocol dynamic-test (header-frame)
     start: frame.foobar * 8;
 end;
 
-define test packetizer-dynamic-parser ()
+define test binary-data-dynamic-parser ()
   let frame = parse-frame(<dynamic-test>, #(#x2, #x0, #x0, #x3, #x4, #x5));
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
@@ -68,7 +68,7 @@ define test packetizer-dynamic-parser ()
   frame-field-checker(1, frame, 16, 32, 48);
 end;
 
-define test packetizer-dynamic-assemble ()
+define test binary-data-dynamic-assemble ()
   let frame = make(<dynamic-test>,
                    foobar: #x3,
                    payload: parse-frame(<raw-frame>, as(<byte-vector>, #(#x23, #x42, #x23, #x42))));
@@ -631,9 +631,9 @@ define test abstract-user-assemble-test ()
   check-equal("byte10 of abstract-user is correct", 23, as.packet[9]);
 end;
 
-define suite packetizer-suite ()
-  test packetizer-parser;
-  test packetizer-dynamic-parser;
+define suite binary-data-suite ()
+  test binary-data-parser;
+  test binary-data-dynamic-parser;
   test static-start-test;
   test repeated-test;
   test repeated-and-dynamic-test;
@@ -654,10 +654,10 @@ define suite packetizer-suite ()
   test abstract-user-parse-test;
 end;
 
-define suite packetizer-assemble-suite ()
-  test packetizer-assemble;
-  test packetizer-modify;
-  test packetizer-dynamic-assemble;
+define suite binary-data-assemble-suite ()
+  test binary-data-assemble;
+  test binary-data-modify;
+  test binary-data-dynamic-assemble;
   test static-start-assemble;
   test repeated-assemble;
   test repeated-and-dynamic-assemble;
@@ -680,7 +680,7 @@ define suite packetizer-assemble-suite ()
 end;
 
 begin
-  run-test-application(packetizer-suite); //, arguments: #("-debug"));
-  run-test-application(packetizer-assemble-suite); //, arguments: #("-debug"));
+  run-test-application(binary-data-suite); //, arguments: #("-debug"));
+  run-test-application(binary-data-assemble-suite); //, arguments: #("-debug"));
 end;
 

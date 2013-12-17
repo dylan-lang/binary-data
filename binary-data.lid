@@ -1,7 +1,7 @@
-library: packetizer
+library: binary-data
 files: library
   stretchy-byte-vector
-  packetizer
+  binary-data
   leaf-frames
   fields
   util
