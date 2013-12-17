@@ -226,7 +226,7 @@ define method parse-frame (frame-type :: subclass(<fixed-size-byte-vector-frame>
   => (frame :: <fixed-size-byte-vector-frame>, next-unparsed :: <integer>)
   let end-of-frame = field-size(frame-type);
   if (packet.size < byte-offset(end-of-frame))
-    signal(make(<malformed-packet-error>))
+    signal(make(<malformed-data-error>))
   else
     values(make(frame-type,
                 data: packet),
@@ -326,7 +326,7 @@ define method parse-frame (frame-type :: subclass(<big-endian-unsigned-integer-b
  => (value :: <integer>, next-unparsed :: <integer>)
  let result-size = byte-offset(frame-size(frame-type));
  if (packet.size < result-size)
-   signal(make(<malformed-packet-error>))
+   signal(make(<malformed-data-error>))
  else
    let result = 0;
    for (i from 0 below result-size)
@@ -384,7 +384,7 @@ define method parse-frame (frame-type :: subclass(<little-endian-unsigned-intege
  => (value :: <integer>, next-unparsed :: <integer>)
  let result-size = byte-offset(frame-size(frame-type));
  if (packet.size < result-size)
-   signal(make(<malformed-packet-error>))
+   signal(make(<malformed-data-error>))
  else
    let result = 0;
    for (i from result-size - 1 to 0 by -1)
