@@ -5,24 +5,17 @@ license: see LICENSE.txt in this distribution
 
 define library binary-data
   use common-dylan;
-  use dylan;
   use io;
-  use collections;
-  use system;
 
   export binary-data;
 end library binary-data;
 
 define module binary-data
   use common-dylan, exclude: { format-to-string };
-  use dylan-extensions, import: { \copy-down-method-definer };
-  use format;
-  use format-out;
-  use standard-io;
-  use streams;
-  use print, import: { print-object };
-  use date;
   use byte-vector;
+  use format;
+  use print, import: { print-object };
+  use streams;
 
   export <stretchy-vector-subsequence>,
     <stretchy-byte-vector-subsequence>,
