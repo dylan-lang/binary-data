@@ -245,7 +245,7 @@ define method assemble-frame-into (frame :: <fixed-size-byte-vector-frame>,
 end;
 
 define method as (class == <string>, frame :: <fixed-size-byte-vector-frame>) => (res :: <string>)
-  let out-stream = make(<string-stream>, direction: #"output");
+  let out-stream = make(<string-stream>, direction: #"output", stream-lock: #f);
   block ()
     hexdump(out-stream, frame.data);
     out-stream.stream-contents;
@@ -490,7 +490,7 @@ define constant $empty-raw-frame
   = make(<raw-frame>, data: make(<byte-sequence>, capacity: 0));
 
 define method as (class == <string>, frame :: <raw-frame>) => (res :: <string>)
-  let out-stream = make(<string-stream>, direction: #"output");
+  let out-stream = make(<string-stream>, direction: #"output", stream-lock: #f);
   block ()
     hexdump(out-stream, frame.data);
     out-stream.stream-contents;
