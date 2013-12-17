@@ -27,7 +27,7 @@ define function frame-field-checker (field-index :: <integer>,
   check-equal("Frame-field has end", my-end, frame-field.end-offset);
 end;
 
-define protocol test-protocol (container-frame)
+define binary-data test-protocol (container-frame)
   field foo :: <unsigned-byte>;
   field bar :: <unsigned-byte>;
 end;
@@ -53,7 +53,7 @@ define test binary-data-modify ()
   check-equal("Modified frame is correct", as(<byte-vector>, #(#x23, #x69)), byte-vector.packet);
 end;
 
-define protocol dynamic-test (header-frame)
+define binary-data dynamic-test (header-frame)
   field foobar :: <unsigned-byte>;
   field payload :: <raw-frame>,
     start: frame.foobar * 8;
@@ -77,7 +77,7 @@ define test binary-data-dynamic-assemble ()
               as(<stretchy-byte-vector-subsequence>, #(#x3, #x0, #x0, #x23, #x42, #x23, #x42)),
               byte-vector.packet);
 end;
-define protocol static-start-frame (container-frame)
+define binary-data static-start-frame (container-frame)
   field a :: <unsigned-byte>;
   field b :: <raw-frame>, static-start: 24;
 end;
@@ -98,7 +98,7 @@ define test static-start-assemble ()
               as(<byte-vector>, #(#x23, #x0, #x0, #x2, #x3, #x4, #x5)),
               byte-vector.packet);
 end;
-define protocol repeated-test-frame (container-frame)
+define binary-data repeated-test-frame (container-frame)
   field foo :: <unsigned-byte>;
   repeated field bar :: <unsigned-byte>,
     reached-end?: frame = 0;
@@ -127,7 +127,7 @@ define test repeated-assemble ()
               byte-vector.packet);
 end;
 
-define protocol repeated-and-dynamic-test-frame (header-frame)
+define binary-data repeated-and-dynamic-test-frame (header-frame)
   field header-length :: <unsigned-byte>,
 // FIXME:    fixup: byte-offset(frame-size(frame.header-length) + frame-size(frame.type-code) + frame-size(frame.options));
     fixup: frame.options.size + 2;
@@ -172,7 +172,7 @@ define test repeated-and-dynamic-assemble ()
               byte-vector.packet);
 end;
 
-define protocol count-repeated-test-frame (container-frame)
+define binary-data count-repeated-test-frame (container-frame)
   field foo :: <unsigned-byte>,
     fixup: frame.fragments.size;
   repeated field fragments :: <unsigned-byte>,
@@ -202,14 +202,14 @@ define test count-repeated-assemble ()
               byte-vector.packet);
 end;
 
-define protocol frag (container-frame)
+define binary-data frag (container-frame)
   field type-code :: <unsigned-byte> = #x23;
   field data-length :: <unsigned-byte>,
     fixup: byte-offset(frame-size(frame.data));
   field data :: <raw-frame>,
     length: frame.data-length * 8;
 end;
-define protocol labe (container-frame)
+define binary-data labe (container-frame)
   field a :: <unsigned-byte>;
   repeated field b :: <frag>,
     reached-end?: frame.data-length = 0;
@@ -314,11 +314,11 @@ define test label-assign3 ()
               bv.packet);
 end;
 
-define protocol a-super (container-frame)
+define binary-data a-super (container-frame)
   field type-code :: <unsigned-byte>;
 end;
 
-define protocol a-sub (a-super)
+define binary-data a-sub (a-super)
   field a :: <unsigned-byte>
 end;
 
@@ -339,7 +339,7 @@ define test inheritance-assemble ()
   check-equal("inheritance assemble", as(<byte-vector>, #(#x42, #x23)), byte-vector.packet);
 end;
 
-define protocol b-sub (a-super)
+define binary-data b-sub (a-super)
   field payload-length :: <unsigned-byte>,
     fixup: byte-offset(frame-size(frame.data));
   field data :: <raw-frame>,
@@ -359,7 +359,7 @@ define test inheritance-dynamic-length()
   frame-field-checker(2, aframe, 16, 24, 40);
 end;
 
-define protocol b-sub-sub (container-frame)
+define binary-data b-sub-sub (container-frame)
   field a :: <unsigned-byte>;
   field a* :: <raw-frame>,
     length: frame.a * 8;
@@ -376,7 +376,7 @@ define test dyn-length ()
   frame-field-checker(1, aframe, 8, 24, 32);
   frame-field-checker(2, aframe, 32, 8, 40);
 end;
-define protocol b-subb (container-frame)
+define binary-data b-subb (container-frame)
   //variably-typed-field data,
   //  type-function: <b-sub-sub>;
   field data :: <b-sub-sub>;
@@ -397,7 +397,7 @@ define test inheritance-dynamic-length-assemble ()
               byte-vector.packet);
 end;
 
-define protocol half-byte-protocol (container-frame)
+define binary-data half-byte-protocol (container-frame)
   field first-element :: <4bit-unsigned-integer> = #xf;
   field second-element :: <7bit-unsigned-integer> = #x7f;
 end;
@@ -429,7 +429,7 @@ define test half-byte-modify ()
   check-equal("first byte is #xf3", #xf3, ff.packet[0]);
   check-equal("second byte is #x40", #x40, ff.packet[1]);
 end;
-define protocol half-bytes (container-frame)
+define binary-data half-bytes (container-frame)
   field a :: <4bit-unsigned-integer> = #xf;
   field b :: <4bit-unsigned-integer> = #x0;
   field c :: <4bit-unsigned-integer> = #x5;
@@ -448,7 +448,7 @@ define test half-bytes-assembling ()
   check-equal("assembling is correct", #(#xe0, #x5a), as.packet);
 end;
 
-define protocol bits (container-frame)
+define binary-data bits (container-frame)
   field a :: <1bit-unsigned-integer> = 0;
   field b :: <1bit-unsigned-integer> = 1;
   field c :: <1bit-unsigned-integer> = 0;
@@ -463,7 +463,7 @@ define test bits-assemble ()
   check-equal("assembling is correct", 84, as.packet[0]);
 end;
 
-define protocol dns-foo (container-frame)
+define binary-data dns-foo (container-frame)
   field typed :: <2bit-unsigned-integer> = 3;
   field pointer :: <14bit-unsigned-integer> = 42;
 end;
@@ -481,7 +481,7 @@ define test dns-foo-assemble ()
   check-equal("assembling of dns-foo[1] is correct", 42, as.packet[1]);
 end;
 
-define protocol dyn-length-in-container (container-frame)
+define binary-data dyn-length-in-container (container-frame)
   length frame.mylength * 8;
   field foo :: <unsigned-byte> = 0;
   field mylength :: <unsigned-byte>,
@@ -516,7 +516,7 @@ define test dynlength-assemble ()
   check-equal("assembly of dynlength[1] works correct", 3, as.packet[1]);
 end;
 
-define protocol dyn-length-as-client-field (container-frame)
+define binary-data dyn-length-as-client-field (container-frame)
   field first-foo :: <dyn-length-in-container>;
   field second-foo :: <dyn-length-in-container>;
 end;
@@ -538,7 +538,7 @@ define test dyn-length-client2 ()
   frame-field-checker(1, f, 24, 32, 56);
 end;
 
-define protocol enum-field-test (container-frame)
+define binary-data enum-field-test (container-frame)
   enum field foobar :: <unsigned-byte>,
     mappings: { 1 <=> #"hello",
                 2 <=> #"foobar" };
@@ -566,16 +566,16 @@ define test enum-parse-test ()
   check-equal("enum field parses correct to changed symbol", #"foobar", g.foobar);
 end;
 
-define abstract protocol abstract-test (variably-typed-container-frame)
+define abstract binary-data abstract-test (variably-typed-container-frame)
   layering field foo :: <unsigned-byte>;
 end;
 
-define protocol abstract-sub42 (abstract-test)
+define binary-data abstract-sub42 (abstract-test)
   over <abstract-test> 42;
   field bar :: <unsigned-byte> = 42;
 end;
 
-define protocol abstract-sub23 (abstract-test)
+define binary-data abstract-sub23 (abstract-test)
   over <abstract-test> 23;
   field foobar :: <unsigned-byte> = 23;
 end;
@@ -595,7 +595,7 @@ define test abstract-assemble-test ()
   check-equal("assembling of abstract is ok", 42, as.packet[0]);
 end;
 
-define protocol abstract-user (container-frame)
+define binary-data abstract-user (container-frame)
   repeated field abstracts :: <abstract-test>,
     reached-end?: instance?(frame, <abstract-sub23>);
 end;

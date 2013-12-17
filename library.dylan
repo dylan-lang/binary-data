@@ -144,7 +144,7 @@ define module binary-data
     compute-length,
     find-frame-at-offset;
 
-  export protocol-definer;
+  export binary-data-definer;
   //XXX: we shouldn't need to export those
   export real-class-definer, decoded-class-definer, gen-classes,
     frame-field-generator, summary-generator, enum-frame-field-generator,
