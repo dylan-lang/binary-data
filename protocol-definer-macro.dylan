@@ -7,7 +7,7 @@ define macro unsupplied-or
   { unsupplied-or(?:expression) }
  =>
   { type-union(singleton($unsupplied), ?expression) }
-end; 
+end;
 
 define inline function filter-enums
     (key/value-pairs :: <collection>, fields :: <collection>)
@@ -16,7 +16,7 @@ define inline function filter-enums
   for (ele in fields)
     if (instance?(ele, <enum-field>))
       let pos
-        = block(ret)
+        = block (ret)
             for (i :: <integer> from 0 below key/value-pairs.size by 2)
               if (key/value-pairs[i] == ele.field-name)
                 ret(i + 1);
@@ -191,7 +191,7 @@ define macro decoded-class-definer
     fields:
     { } => { }
     { ?field:*; ... } => { ?field ; ... }
-    
+
     field:
     { variably-typed-field ?:name, ?rest:* }
     => { slot ?name :: unsupplied-or(<frame>) = $unsupplied,
@@ -256,7 +256,7 @@ end;
 
 define inline function enum-field-symbol-to-int
     (field :: <enum-field>, key :: <symbol>) => (res :: <integer>)
-  block(ret)
+  block (ret)
     for (i from 1 below field.mappings.size by 2)
       if (field.mappings[i] == key)
         ret(field.mappings[i - 1])
@@ -273,7 +273,7 @@ define macro enum-frame-field-generator
  => { define inline method ?name (mframe :: "<decoded-" ## ?frame-type) => (res)
         let field = fields(mframe)[?field-index];
         let val = "%" ## ?name (mframe);
-        block(ret)
+        block (ret)
           for (i from 0 below field.mappings.size by 2)
             if (field.mappings[i] == val)
               ret(field.mappings[i + 1])
@@ -551,17 +551,17 @@ define macro protocol-definer
         over ?super:name ?magic:expression;
         ?fields:*
       end } =>
-      { 
+      {
         define ?attrs protocol ?name (?superprotocol) ?fields end;
         define method lookup-layer (frame :: subclass(?super), value == ?magic) => (class :: <class>) "<" ## ?name ## ">" end;
         define method reverse-lookup-layer (frame :: subclass(?super), payload :: "<" ## ?name ## ">") => (value :: <integer>) ?magic end;
       }
- 
+
     { define ?attrs:* protocol ?:name (?superprotocol:name)
         length ?container-frame-length:expression;
         ?fields:*
       end } =>
-      { 
+      {
         define ?attrs protocol ?name (?superprotocol) ?fields end;
         define inline method container-frame-size (?=frame :: "<" ## ?name ## ">") => (res :: <integer>)
           ?container-frame-length

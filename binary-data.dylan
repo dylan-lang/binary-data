@@ -61,13 +61,13 @@ define function find-protocol (name :: <string>)
  => (res :: <class>, frame-name :: <string>)
   let protocol-name = name;
   let res = find-protocol-aux(protocol-name);
-  unless(res)
+  unless (res)
     protocol-name := concatenate("<", name, ">");
     res := find-protocol-aux(protocol-name);
-    unless(res)
+    unless (res)
       protocol-name := concatenate("<", name, "-frame>");
       res := find-protocol-aux(protocol-name);
-      unless(res)
+      unless (res)
         error("Protocol not found %s\n", name);
       end;
     end;
@@ -281,6 +281,7 @@ define method initialize (class :: <unparsed-container-frame>,
   next-method();
   parent-setter(parent, class.cache);
 end;
+
 define inline method concrete-frame-fields (frame :: <unparsed-container-frame>) => (res :: <vector>)
   frame.cache.concrete-frame-fields;
 end;
@@ -355,8 +356,9 @@ end;
 
 define open generic payload-setter (value /* :: false-or(<frame>) */, object :: <header-frame>)
  => (res /* :: false-or(<frame>) */);
+
 define method frame-size (frame :: <container-frame>) => (res :: <integer>)
-  block()
+  block ()
     container-frame-size(frame);
   exception (e :: <error>)
     reduce1(\+, map(curry(get-field-size-aux, frame), frame.fields));
@@ -371,6 +373,7 @@ end;
 define method assemble-frame! (frame :: <unparsed-container-frame>) => (res :: <unparsed-container-frame>)
   frame;
 end;
+
 define method assemble-frame! (frame :: <decoded-container-frame>) => (packet :: <unparsed-container-frame>)
   let result = make(<stretchy-byte-vector-subsequence>, data: make(<stretchy-byte-vector>, capacity: 1548));
   assemble-frame-into(frame, result);
@@ -379,12 +382,12 @@ define method assemble-frame! (frame :: <decoded-container-frame>) => (packet ::
   uf;
 end;
 
-define method as(type == <string>, frame :: <container-frame>) => (string :: <string>);
+define method as (type == <string>, frame :: <container-frame>) => (string :: <string>);
   apply(concatenate,
         format-to-string("%=\n", frame.object-class),
         map(method(field :: <field>)
               let field-value = field.getter(frame);
-              let field-as-string 
+              let field-as-string
                 = if (instance?(field-value, <collection>))
                     reduce(method(x, y) concatenate(x, " ", as(<string>, y)) end,
                            "", field-value)
@@ -507,9 +510,9 @@ define method assemble-frame-into (frame :: <unparsed-container-frame>,
   (len - start) * 8;
 end;
 
-define method assemble-field-into(field :: <enum-field>,
-                                  frame :: <container-frame>,
-                                  packet :: <stretchy-vector-subsequence>)
+define method assemble-field-into (field :: <enum-field>,
+                                   frame :: <container-frame>,
+                                   packet :: <stretchy-vector-subsequence>)
   let value = field.getter(frame);
   if (instance?(value, <symbol>))
     value := enum-field-symbol-to-int(field, value)
@@ -517,21 +520,21 @@ define method assemble-field-into(field :: <enum-field>,
   assemble-aux(field.type, value, packet);
 end;
 
-define method assemble-field-into(field :: <single-field>,
-                                  frame :: <container-frame>,
-                                  packet :: <stretchy-vector-subsequence>)
+define method assemble-field-into (field :: <single-field>,
+                                   frame :: <container-frame>,
+                                   packet :: <stretchy-vector-subsequence>)
   assemble-aux(field.type, field.getter(frame), packet);
 end;
 
-define method assemble-field-into(field :: <variably-typed-field>,
-                                  frame :: <container-frame>,
-                                  packet :: <stretchy-vector-subsequence>)
+define method assemble-field-into (field :: <variably-typed-field>,
+                                   frame :: <container-frame>,
+                                   packet :: <stretchy-vector-subsequence>)
   assemble-frame-into(field.getter(frame), packet);
 end;
 
-define method assemble-field-into(field :: <repeated-field>,
-                                  frame :: <container-frame>,
-                                  packet :: <stretchy-vector-subsequence>)
+define method assemble-field-into (field :: <repeated-field>,
+                                   frame :: <container-frame>,
+                                   packet :: <stretchy-vector-subsequence>)
   let offset :: <integer> = 0;
   let repeated-ff = frame.concrete-frame-fields[field.index];
   for (ele in field.getter(frame))

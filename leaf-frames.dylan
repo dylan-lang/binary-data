@@ -35,23 +35,23 @@ define method read-frame (frame-type :: subclass(<leaf-frame>), string :: <strin
 end;
 
 define class <boolean-bit> (<fixed-size-translated-leaf-frame>) end;
- 
+
 define method parse-frame (frame-type == <boolean-bit>,
                            packet :: <byte-sequence>,
                            #key)
  => (value :: <boolean>, next-unparsed :: <integer>)
   values(logand(packet[0], #x80) == #x80, 1)
 end;
-    
+
 define method assemble-frame-into-as
     (frame-type == <boolean-bit>,
      data :: <boolean>,
      packet :: <byte-sequence>) => (end-offset :: <integer>)
   let subseq = subsequence(packet, length: 1);
   if (data)
-    encode-integer(1, subseq, 1); 
+    encode-integer(1, subseq, 1);
   else
-    encode-integer(0, subseq, 1); 
+    encode-integer(0, subseq, 1);
   end;
   1;
 end;
@@ -103,6 +103,7 @@ define method read-frame (type == <unsigned-byte>,
   end;
   res;
 end;
+
 define inline method high-level-type (low-level-type == <unsigned-byte>)
  => (res == <byte>)
   <byte>;
@@ -118,7 +119,7 @@ define macro n-bit-unsigned-integer-definer
             slot data :: limited(<integer>, min: 0, max: 2 ^ ?n - 1),
               required-init-keyword: data:;
           end;
-          
+
           define inline method high-level-type (low-level-type == ?name)
             => (res :: <type>)
             limited(<integer>, min: 0, max: 2 ^ ?n - 1);
@@ -210,7 +211,7 @@ define macro n-byte-vector-definer
 
           define inline method field-size (type == "<" ## ?name ## ">") => (length :: <integer>)
             ?n * 8;
-          end; 
+          end;
 
           define leaf-frame-constructor(?name) end;
 }
@@ -245,7 +246,7 @@ end;
 
 define method as (class == <string>, frame :: <fixed-size-byte-vector-frame>) => (res :: <string>)
   let out-stream = make(<string-stream>, direction: #"output");
-  block()
+  block ()
     hexdump(out-stream, frame.data);
     out-stream.stream-contents;
   cleanup
@@ -282,7 +283,7 @@ define macro n-byte-unsigned-integer-definer
             slot data :: limited(<integer>, min: 0, max: 2 ^ (8 * ?n) - 1),
               required-init-keyword: data:;
           end;
-          
+
           define inline method high-level-type
               (low-level-type == ?name ## "-big-endian-unsigned-integer>")
             => (res :: <type>)
@@ -294,13 +295,12 @@ define macro n-byte-unsigned-integer-definer
            ?n * 8
           end;
 
-
           define class ?name ## "-little-endian-unsigned-integer>"
                  (<little-endian-unsigned-integer-byte-frame>)
             slot data :: limited(<integer>, min: 0, max: 2 ^ (8 * ?n) - 1),
               required-init-keyword: data:;
           end;
-          
+
           define inline method high-level-type
               (low-level-type == ?name ## "-little-endian-unsigned-integer>")
             => (res :: <type>)
@@ -491,7 +491,7 @@ define constant $empty-raw-frame
 
 define method as (class == <string>, frame :: <raw-frame>) => (res :: <string>)
   let out-stream = make(<string-stream>, direction: #"output");
-  block()
+  block ()
     hexdump(out-stream, frame.data);
     out-stream.stream-contents;
   cleanup
@@ -522,7 +522,7 @@ define macro leaf-frame-constructor-definer
   { define leaf-frame-constructor(?:name) end }
  =>
   {
-    define method ?name (data :: <byte-vector>) 
+    define method ?name (data :: <byte-vector>)
      => (res :: "<" ## ?name ## ">");
       parse-frame("<" ## ?name ## ">", data)
     end;

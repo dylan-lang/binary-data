@@ -5,7 +5,7 @@ license: see LICENSE.txt in this distribution
 
 define function find-frame-field (frame :: <container-frame>, search :: type-union(<container-frame>, <raw-frame>))
  => (res :: false-or(type-union(<frame-field>, <rep-frame-field>)))
-  block(ret)
+  block (ret)
     for (ff in frame.concrete-frame-fields)
       if (ff.value = search)
         ret(ff)
@@ -35,6 +35,7 @@ define method compute-absolute-offset (ff :: <rep-frame-field>, relative-to)
  => (res :: <integer>)
   start-offset(ff) + compute-absolute-offset(ff.parent-frame-field, relative-to);
 end;
+
 define method compute-absolute-offset (frame-field :: <frame-field>, relative-to)
  => (res :: <integer>)
   start-offset(frame-field) + compute-absolute-offset(frame-field.frame, relative-to)
@@ -62,7 +63,7 @@ end;
 
 define method find-frame-at-offset (frame :: <container-frame>, offset :: <integer>)
  => (result-frame)
-  block(ret)
+  block (ret)
     for (ff in sorted-frame-fields(frame))
       if ((start-offset(ff) <= offset) & (end-offset(ff) >= offset))
         //format-out("looking in %s, offset %d\n", ff.field.field-name, offset - start-offset(ff));
@@ -74,7 +75,7 @@ end;
 
 define method find-frame-at-offset (frame :: <collection>, offset :: <integer>)
   let start = 0;
-  block(ret)
+  block (ret)
     for (ele in frame, i from 0)
       if ((start <= offset) & (frame-size(ele) >= offset))
         //format-out("looking in %d, offset %d\n", i, offset - start);

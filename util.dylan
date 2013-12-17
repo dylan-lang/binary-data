@@ -9,19 +9,19 @@ define function hex(integer :: <integer>, #key size = 0)
 end function hex;
 
 define method hexdump (stream :: <stream>, sequence :: <sequence>) => ()
-  if(sequence.size > 16)
+  if (sequence.size > 16)
     format(stream, "\n");
   end;
   for (byte in sequence,
        index from 0)
-    if(sequence.size > 16 & modulo(index, 16) == 0)
+    if (sequence.size > 16 & modulo(index, 16) == 0)
       format(stream, "%s  ", hex(index, size: 4))
     end;
     format(stream, "%s", hex(byte, size: 2));
-    if(modulo(index, 16) == 15 
+    if (modulo(index, 16) == 15
          | (index == sequence.size - 1 & sequence.size > 16))
       format(stream, "\n")
-    elseif(modulo(index, 16) == 7)
+    elseif (modulo(index, 16) == 7)
       format(stream, "  ");
     else
       format(stream, " ");
@@ -126,5 +126,3 @@ define method bit-vector-to-byte-vector-msb-first (bits :: <bit-vector>)
  end;
  result;
 end;
-
-

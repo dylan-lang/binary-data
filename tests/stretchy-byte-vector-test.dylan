@@ -48,7 +48,7 @@ define test byte-vector-subsequence-iteration-modify ()
   check-equal("Map(-as) works", #(#x00, #x01, #x04, #x06), map-as(<list>, method(x) x end, sbv));
   replace-elements!(sbv, method(x) #t end, curry(\*, 2));
   check-equal("Map(-as) works", #(#x08, #x0c), map-as(<list>, method(x) x end, sbv-sub));
-  check-equal("Map(-as) works", #(#x00, #x02, #x08, #x0c), map-as(<list>, method(x) x end, sbv));  
+  check-equal("Map(-as) works", #(#x00, #x02, #x08, #x0c), map-as(<list>, method(x) x end, sbv));
 end;
 
 define test byte-vector-subsequence-error-test ()

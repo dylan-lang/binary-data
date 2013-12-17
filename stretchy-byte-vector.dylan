@@ -45,6 +45,7 @@ define method make (class :: subclass(<stretchy-vector-subsequence>),
   end;
   apply(next-method, class, args)
 end;
+
 define inline function check-values (start :: <integer>, length :: false-or(<integer>), last :: false-or(<integer>))
  => (start :: <integer>, last :: false-or(<integer>))
   if (last & length)
@@ -59,6 +60,7 @@ define inline function check-values (start :: <integer>, length :: false-or(<int
   end;
   values(start, end-offset);
 end;
+
 define method subsequence (seq :: <stretchy-byte-vector-subsequence>,
                            #key start :: <integer> = 0,
                                 length :: false-or(<integer>),
@@ -87,18 +89,18 @@ define method subsequence (seq :: <stretchy-byte-vector-subsequence>,
        bit-end: if (last-bit) last-bit end);
 end;
 
-define inline function vs-fip-next-element 
+define inline function vs-fip-next-element
     (c :: <stretchy-vector-subsequence>, s :: <integer>) => (result :: <integer>);
   s + 1;
 end function;
 
-define inline function vs-fip-done? 
+define inline function vs-fip-done?
     (c :: <stretchy-vector-subsequence>, s :: <integer>, l :: <integer>)
  => (done :: <boolean>);
   s >= l;
 end function;
 
-define inline function vs-fip-current-key 
+define inline function vs-fip-current-key
     (c :: <stretchy-vector-subsequence>, s :: <integer>) => (result :: <integer>);
   s;
 end function;
@@ -164,6 +166,7 @@ define inline function check-sbv-range
     signal(make(<out-of-bound-error>))
   end;
 end;
+
 define inline method element (seq :: <stretchy-byte-vector-subsequence>,
                               key :: <integer>, #key default) => (res :: <byte>)
   check-sbv-range(seq, key);
@@ -245,6 +248,7 @@ define inline function replace-arg (list :: <vector>, key :: <symbol>, value :: 
     end;
   end;
 end;
+
 define inline method subsequence (seq :: <stretchy-byte-vector-subsequence-with-offset>,
                                   #key start :: <integer> = 0,
                                        length :: false-or(<integer>),
@@ -269,7 +273,7 @@ define inline method subsequence (seq :: <stretchy-byte-vector-subsequence-with-
     signal(make(<out-of-bound-error>))
   end;
   let (last-byte :: false-or(<integer>), last-bit :: false-or(<integer>))
-    = if (new-end) truncate/(new-end, 8) else values(#f, #f) end; 
+    = if (new-end) truncate/(new-end, 8) else values(#f, #f) end;
   make(<stretchy-vector-subsequence>,
        data: seq.real-data,
        start: start-byte,
@@ -399,7 +403,7 @@ end;
 
 define inline method decode-integer (seq :: <stretchy-byte-vector-subsequence-with-offset>, count :: <integer>)
  => (res :: <integer>)
-  if (seq.end-index & (((seq.end-index - seq.start-index) * 8 - seq.bit-start-index + seq.bit-end-index) < count))  
+  if (seq.end-index & (((seq.end-index - seq.start-index) * 8 - seq.bit-start-index + seq.bit-end-index) < count))
     signal(make(<out-of-bound-error>));
   end;
   let (fullbytes, bits) = truncate/(count - 8 + seq.bit-start-index, 8);

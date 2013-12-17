@@ -11,7 +11,7 @@ end;
 
 define method find-field (name :: <symbol>, list :: <simple-vector>)
  => (res :: false-or(<field>))
-  block(ret)
+  block (ret)
     for (field in list)
       if (field.field-name = name)
         ret(field)
@@ -21,7 +21,7 @@ define method find-field (name :: <symbol>, list :: <simple-vector>)
   end;
 end;
 
-define function compute-static-offset(list :: <simple-vector>)
+define function compute-static-offset (list :: <simple-vector>)
   //input is a list of <field>
   //sets static-start, static-end, static-length for all fields
   let start = 0;
@@ -133,21 +133,21 @@ define class <count-repeated-field> (<repeated-field>)
   slot count, required-init-keyword: count:;
 end;
 
-/* one day I want to have this... 
+/* one day I want to have this...
 define class <externally-delimited-repeated-field> (<self-delimited-repeated-field>)
   keyword reached-end?:, init-value: always(#f);
 end;
 */
 
-define method make(class == <repeated-field>,
-                   #rest rest, 
-                   #key count, reached-end?,
-                   #all-keys)
+define method make (class == <repeated-field>,
+                    #rest rest,
+                    #key count, reached-end?,
+                    #all-keys)
  => (instance :: <repeated-field>);
   apply(make,
-        if(count)
+        if (count)
           <count-repeated-field>
-        elseif(reached-end?)
+        elseif (reached-end?)
           <self-delimited-repeated-field>
         else
           error("unknown repeated field type encountered");

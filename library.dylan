@@ -47,7 +47,7 @@ define module binary-data
 
   export <variable-size-byte-vector>, <externally-delimited-string>,
     <raw-frame>;
-  
+
   export $empty-externally-delimited-string, $empty-raw-frame;
 
   //XXX: evil hacks
@@ -55,7 +55,6 @@ define module binary-data
     float-to-byte-vector-be, byte-vector-to-float-be,
     <big-endian-unsigned-integer-4byte>, big-endian-unsigned-integer-4byte,
     <little-endian-unsigned-integer-4byte>, little-endian-unsigned-integer-4byte,;
-
 
   export <fixed-size-translated-leaf-frame>, <byte-sequence>,
     <fixed-size-byte-vector-frame>;

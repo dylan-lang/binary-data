@@ -89,7 +89,7 @@ define test static-start-test ()
   static-checker(field-list[1], 24, $unknown-at-compile-time, $unknown-at-compile-time);
   frame-field-checker(0, frame, 0, 8, 8);
   frame-field-checker(1, frame, 24, 8, 32);
-end;  
+end;
 
 define test static-start-assemble ()
   let frame = make(<static-start-frame>, a: #x23, b: parse-frame(<raw-frame>, as(<byte-vector>, #(#x2, #x3, #x4, #x5))));
@@ -594,7 +594,7 @@ define test abstract-assemble-test ()
   check-equal("assembling of abstract is ok", 42, as.packet[0]);
   check-equal("assembling of abstract is ok", 42, as.packet[0]);
 end;
-  
+
 define protocol abstract-user (container-frame)
   repeated field abstracts :: <abstract-test>,
     reached-end?: instance?(frame, <abstract-sub23>);
