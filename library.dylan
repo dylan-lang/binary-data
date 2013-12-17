@@ -150,6 +150,4 @@ define module binary-data
   export real-class-definer, decoded-class-definer, gen-classes,
     frame-field-generator, summary-generator, enum-frame-field-generator,
     unparsed-frame-field-generator;
-
-  export protocol-module-definer;
 end module binary-data;

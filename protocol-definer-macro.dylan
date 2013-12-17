@@ -9,36 +9,6 @@ define macro unsupplied-or
   { type-union(singleton($unsupplied), ?expression) }
 end; 
 
-define macro protocol-module-definer
-  { protocol-module-definer (?:name; ?super:name; ?fields:*) }
- => { define module ?name
-        use dylan;
-        use binary-data;
-        //?super;
-        create "<" ## ?name ## ">";
-        ?fields
-      end; }
-
-  fields:
-    { } => { }
-    { field ?filter:name ?rest:* ; ... } => { ?filter ... }
-    { repeated field ?filter:name ?rest:* ; ... } => { ?filter ... }
-    { variably-typed-field ?filter:name ?rest:* ; ... } => { ?filter ... }
-
-
-  super:
-    { container-frame } => { }
-    { header-frame } => { }
-    { ?:name } => { use ?name; }
-
-  filter:
-    { source-address } => { }
-    { destination-address } => { }
-    { payload } => { }
-    { ?:name } => { create ?name, ?name ## "-setter"; }
-
-end;
-
 define inline function filter-enums
     (key/value-pairs :: <collection>, fields :: <collection>)
  => (args :: <collection>)
@@ -570,7 +540,7 @@ define macro protocol-definer
 
 
     { define ?attrs:* protocol ?:name (container-frame) end } =>
-      { //protocol-module-definer(?name; container-frame; );
+      {
         define abstract class "<" ## ?name ## ">" (<container-frame>) end;
         define abstract class "<decoded-" ## ?name ## ">"
          ("<" ## ?name ## ">", <decoded-container-frame>)
@@ -602,7 +572,7 @@ define macro protocol-definer
     { define ?attrs:* protocol ?:name (?superprotocol:name)
         ?fields:*
       end } =>
-      { //protocol-module-definer(?name; ?superprotocol; ?fields);
+      {
         real-class-definer(?attrs; "<" ## ?name ## ">"; "<" ## ?superprotocol ## ">"; ?fields);
         decoded-class-definer("<decoded-" ## ?name ## ">";
                               "<" ## ?name ## ">", "<decoded-" ## ?superprotocol ## ">";
