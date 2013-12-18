@@ -4,7 +4,7 @@ copyright: 2005-2011 Andreas Bogk and Hannes Mehnert. All rights reserved.
 license: see LICENSE.txt in this distribution
 
 
-define class <malformed-packet-error> (<error>)
+define class <malformed-data-error> (<error>)
 end;
 
 define class <alignment-error> (<error>)

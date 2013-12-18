@@ -530,16 +530,16 @@ define macro container-frame-constructor
   }
 end;
 
-define macro protocol-definer
-    { define ?attrs:* protocol ?:name (?superprotocol:name)
+define macro binary-data-definer
+    { define ?attrs:* binary-data ?:name (?superprotocol:name)
         summary ?summary:* ;
         ?fields:*
       end } =>
       { summary-generator("<" ## ?name ## ">"; ?summary);
-        define ?attrs protocol ?name (?superprotocol) ?fields end; }
+        define ?attrs binary-data ?name (?superprotocol) ?fields end; }
 
 
-    { define ?attrs:* protocol ?:name (container-frame) end } =>
+    { define ?attrs:* binary-data ?:name (container-frame) end } =>
       {
         define abstract class "<" ## ?name ## ">" (<container-frame>) end;
         define abstract class "<decoded-" ## ?name ## ">"
@@ -547,29 +547,29 @@ define macro protocol-definer
         end;
         gen-classes(?name; container-frame); }
 
-    { define ?attrs:* protocol ?:name (?superprotocol:name)
+    { define ?attrs:* binary-data ?:name (?superprotocol:name)
         over ?super:name ?magic:expression;
         ?fields:*
       end } =>
       {
-        define ?attrs protocol ?name (?superprotocol) ?fields end;
+        define ?attrs binary-data ?name (?superprotocol) ?fields end;
         define method lookup-layer (frame :: subclass(?super), value == ?magic) => (class :: <class>) "<" ## ?name ## ">" end;
         define method reverse-lookup-layer (frame :: subclass(?super), payload :: "<" ## ?name ## ">") => (value :: <integer>) ?magic end;
       }
 
-    { define ?attrs:* protocol ?:name (?superprotocol:name)
+    { define ?attrs:* binary-data ?:name (?superprotocol:name)
         length ?container-frame-length:expression;
         ?fields:*
       end } =>
       {
-        define ?attrs protocol ?name (?superprotocol) ?fields end;
+        define ?attrs binary-data ?name (?superprotocol) ?fields end;
         define inline method container-frame-size (?=frame :: "<" ## ?name ## ">") => (res :: <integer>)
           ?container-frame-length
         end;
       }
 
 
-    { define ?attrs:* protocol ?:name (?superprotocol:name)
+    { define ?attrs:* binary-data ?:name (?superprotocol:name)
         ?fields:*
       end } =>
       {

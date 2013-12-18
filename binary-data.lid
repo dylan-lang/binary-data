@@ -5,7 +5,7 @@ files: library
   leaf-frames
   fields
   util
-  protocol-definer-macro
+  binary-data-definer-macro
   frame-utils
 target-type: dll
 compilation-mode: loose

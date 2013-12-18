@@ -27,7 +27,7 @@ define module binary-data
 
   export data,
     concrete-frame-fields,
-    <repeated-field>, <malformed-packet-error>;
+    <repeated-field>;
 
   export byte-aligned, high-level-type;
 
@@ -61,7 +61,7 @@ define module binary-data
 
   export <integer-or-unknown>, $unknown-at-compile-time;
 
-  export <malformed-packet-error>, <parse-error>;
+  export <malformed-data-error>, <parse-error>;
 
   export <frame-field>,
     <repeated-frame-field>,
@@ -144,7 +144,7 @@ define module binary-data
     compute-length,
     find-frame-at-offset;
 
-  export protocol-definer;
+  export binary-data-definer;
   //XXX: we shouldn't need to export those
   export real-class-definer, decoded-class-definer, gen-classes,
     frame-field-generator, summary-generator, enum-frame-field-generator,
