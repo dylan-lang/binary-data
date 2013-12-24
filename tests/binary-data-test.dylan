@@ -46,6 +46,7 @@ define test binary-data-assemble ()
   let byte-vector = assemble-frame(frame);
   check-equal("Assembled frame is correct", as(<byte-vector>, #(#x23, #x42)), byte-vector.packet);
 end;
+
 define test binary-data-modify ()
   let frame = parse-frame(<test-protocol>, #(#x23, #x42));
   frame.bar := #x69;
@@ -77,6 +78,7 @@ define test binary-data-dynamic-assemble ()
               as(<stretchy-byte-vector-subsequence>, #(#x3, #x0, #x0, #x23, #x42, #x23, #x42)),
               byte-vector.packet);
 end;
+
 define binary-data static-start-frame (container-frame)
   field a :: <unsigned-byte>;
   field b :: <raw-frame>, static-start: 24;
@@ -98,6 +100,7 @@ define test static-start-assemble ()
               as(<byte-vector>, #(#x23, #x0, #x0, #x2, #x3, #x4, #x5)),
               byte-vector.packet);
 end;
+
 define binary-data repeated-test-frame (container-frame)
   field foo :: <unsigned-byte>;
   repeated field bar :: <unsigned-byte>,
@@ -209,6 +212,7 @@ define binary-data frag (container-frame)
   field data :: <raw-frame>,
     length: frame.data-length * 8;
 end;
+
 define binary-data labe (container-frame)
   field a :: <unsigned-byte>;
   repeated field b :: <frag>,
@@ -226,6 +230,7 @@ define test label-test ()
   frame-field-checker(1, frame, 8, 80, 88);
   frame-field-checker(2, frame, 88, 8, 96);
 end;
+
 define test label-assemble ()
   let frames = as(<stretchy-vector>,
                   list(make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x1, #x2, #x3)))),
@@ -376,6 +381,7 @@ define test dyn-length ()
   frame-field-checker(1, aframe, 8, 24, 32);
   frame-field-checker(2, aframe, 32, 8, 40);
 end;
+
 define binary-data b-subb (container-frame)
   //variably-typed-field data,
   //  type-function: <b-sub-sub>;
@@ -429,6 +435,7 @@ define test half-byte-modify ()
   check-equal("first byte is #xf3", #xf3, ff.packet[0]);
   check-equal("second byte is #x40", #x40, ff.packet[1]);
 end;
+
 define binary-data half-bytes (container-frame)
   field a :: <4bit-unsigned-integer> = #xf;
   field b :: <4bit-unsigned-integer> = #x0;

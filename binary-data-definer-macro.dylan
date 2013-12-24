@@ -366,6 +366,7 @@ define method parse-frame-field-aux
   packet :: <byte-sequence>)
  parse-frame(field.type, packet, parent: frame);
 end;
+
 define method parse-frame-field-aux
   (field :: <variably-typed-field>,
    frame :: <unparsed-container-frame>,
@@ -421,6 +422,7 @@ define method parse-frame-field-aux
   end;
   values(frames, start);
 end;
+
 define method parse-frame-field-aux
   (field :: <count-repeated-field>,
    frame :: <unparsed-container-frame>,
