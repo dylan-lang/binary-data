@@ -256,6 +256,7 @@ define test decode-and-encode-test ()
     end;
   end;
 end;
+
 define suite stretchy-byte-vector-suite ()
   test byte-vector-subsequence-read;
   test byte-vector-subsequence-modify;
