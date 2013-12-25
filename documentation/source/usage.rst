@@ -79,12 +79,55 @@ Variably Typed Container Frame
 Field Types
 ===========
 
+Normal Fields
+-------------
+
+...
+
+Enumerated Fields
+-----------------
+
+...
+
 Layering Fields
 ---------------
 
 A layering field provides the information that the value of this field
 controls the type of the payload, and introduces a registry for field
 values and matching payload types.
+
+Repeated Fields
+---------------
+
+Repeated fields have a list of values of the field type, instead of just
+a single one. We support multiple typed of repeated fields, which differ
+by the way the compute the number of elements in a repeated field. Choices
+are: self-delimited (some magic end of list value present) or count (some
+other field specifies a count of elements in the repeated field).
+
+A self-delimited field definition uses an expression to evaluate whether
+or not the end has been reached, usually by checking for a magic value.
+This expression should return ``#t`` when the field is fully parsed:
+
+.. code-block:: dylan
+
+    repeated field options :: <ip-option-frame>,
+      reached-end?:
+        instance?(frame, <end-of-option-ip-option>);
+
+Counted field definitions use another field in the frame to determine
+how many elements are in the field:
+
+.. code-block:: dylan
+
+    field number-methods :: <unsigned-byte>,
+      fixup: frame.methods.size;
+    repeated field methods :: <unsigned-byte>,
+      count: frame.number-methods;
+
+Note the use of the ``fixup`` keyword on the ``number-methods`` field to
+calculate a value for use by :gf:`assemble-frame` if the value is not
+otherwise specified.
 
 Variably Typed Fields
 ---------------------
@@ -93,8 +136,3 @@ Most fields have the same type in all frame instances, these are statically
 typed. Some fields depend on the value of another field of the same protocol,
 these are variably typed. To figure out the type, a type function has to be
 provided for the variably typed field using the ``type-function:``.
-
-Repeated Fields
----------------
-
-...
