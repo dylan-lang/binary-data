@@ -87,7 +87,18 @@ Normal Fields
 Enumerated Fields
 -----------------
 
-...
+An enumerated field provides a set of mappings from the binary value
+to a high level Dylan value.
+
+In this example, accessing the value of the field would return one
+of the symbols rather than the value of the :class:`<unsigned-byte>`:
+
+.. code-block:: dylan
+
+    enum field command :: <unsigned-byte> = 0,
+        mappings: { 1 <=> #"connect",
+                    2 <=> #"bind",
+                    3 <=> #"udp associate" };
 
 Layering Fields
 ---------------
