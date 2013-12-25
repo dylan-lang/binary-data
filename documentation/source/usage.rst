@@ -4,6 +4,9 @@ Usage
 .. current-library:: binary-data
 .. current-module:: binary-data
 
+.. contents::
+   :local:
+
 Terminology
 ===========
 

@@ -8,7 +8,7 @@ implemented as an extension of the Dylan language, making use of Dylan's macro
 facility.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    usage
    reference
