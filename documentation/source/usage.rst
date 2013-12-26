@@ -77,7 +77,28 @@ Header Frame
 Variably Typed Container Frame
 ------------------------------
 
-...
+The :class:`<variably-typed-container-frame>` class is used in container
+frames which have the type information encoded in the frame. Parsing of
+the layering field of these container frames is needed to find out the
+actual type.
+
+For example:
+
+.. code-block:: dylan
+
+    define abstract binary-data ip-option-frame (variably-typed-container-frame)
+      field copy-flag :: <1bit-unsigned-integer>;
+      layering field option-type :: <7bit-unsigned-integer>;
+    end;
+
+    define binary-data end-of-option-ip-option (ip-option-frame)
+      over <ip-option-frame> 0;
+    end;
+
+This defines the ``<end-of-option-ip-option>`` which has the ``option-type``
+field in the ip-option frame set to ``0``. An ``<end-of-option-ip-option>``
+does not contain any further fields, thus only has the two fields inherited from
+the ``<ip-option-frame>``.
 
 Field Types
 ===========
@@ -109,6 +130,9 @@ Layering Fields
 A layering field provides the information that the value of this field
 controls the type of the payload, and introduces a registry for field
 values and matching payload types.
+
+See `Variably Typed Container Frame`_ for an example of how this is
+used.
 
 Repeated Fields
 ---------------
