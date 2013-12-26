@@ -106,7 +106,30 @@ Field Types
 Normal Fields
 -------------
 
-...
+Fields can have the following parameters specified:
+
+``start:``
+   ...
+
+``length:``
+   ...
+
+``end:``
+   ...
+
+``fixup:``
+   When assembling a frame into a binary byte sequence, if the value
+   of a field has not been specified, the fixup expression will be
+   executed and the return value used to fill in that field.
+
+``static-start:``
+   ...
+
+``static-length:``
+   ...
+
+``static-end:``
+   ...
 
 Enumerated Fields
 -----------------
