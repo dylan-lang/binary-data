@@ -4,6 +4,9 @@ Usage
 .. current-library:: binary-data
 .. current-module:: binary-data
 
+.. contents::
+   :local:
+
 Terminology
 ===========
 
@@ -74,10 +77,75 @@ Header Frame
 Variably Typed Container Frame
 ------------------------------
 
-...
+The :class:`<variably-typed-container-frame>` class is used in container
+frames which have the type information encoded in the frame. Parsing of
+the layering field of these container frames is needed to find out the
+actual type.
+
+For example:
+
+.. code-block:: dylan
+
+    define abstract binary-data ip-option-frame (variably-typed-container-frame)
+      field copy-flag :: <1bit-unsigned-integer>;
+      layering field option-type :: <7bit-unsigned-integer>;
+    end;
+
+    define binary-data end-of-option-ip-option (ip-option-frame)
+      over <ip-option-frame> 0;
+    end;
+
+This defines the ``<end-of-option-ip-option>`` which has the ``option-type``
+field in the ip-option frame set to ``0``. An ``<end-of-option-ip-option>``
+does not contain any further fields, thus only has the two fields inherited from
+the ``<ip-option-frame>``.
 
 Field Types
 ===========
+
+Normal Fields
+-------------
+
+Fields can have the following parameters specified:
+
+``start:``
+   ...
+
+``length:``
+   ...
+
+``end:``
+   ...
+
+``fixup:``
+   When assembling a frame into a binary byte sequence, if the value
+   of a field has not been specified, the fixup expression will be
+   executed and the return value used to fill in that field.
+
+``static-start:``
+   ...
+
+``static-length:``
+   ...
+
+``static-end:``
+   ...
+
+Enumerated Fields
+-----------------
+
+An enumerated field provides a set of mappings from the binary value
+to a high level Dylan value.
+
+In this example, accessing the value of the field would return one
+of the symbols rather than the value of the :class:`<unsigned-byte>`:
+
+.. code-block:: dylan
+
+    enum field command :: <unsigned-byte> = 0,
+        mappings: { 1 <=> #"connect",
+                    2 <=> #"bind",
+                    3 <=> #"udp associate" };
 
 Layering Fields
 ---------------
@@ -86,6 +154,42 @@ A layering field provides the information that the value of this field
 controls the type of the payload, and introduces a registry for field
 values and matching payload types.
 
+See `Variably Typed Container Frame`_ for an example of how this is
+used.
+
+Repeated Fields
+---------------
+
+Repeated fields have a list of values of the field type, instead of just
+a single one. We support multiple typed of repeated fields, which differ
+by the way the compute the number of elements in a repeated field. Choices
+are: self-delimited (some magic end of list value present) or count (some
+other field specifies a count of elements in the repeated field).
+
+A self-delimited field definition uses an expression to evaluate whether
+or not the end has been reached, usually by checking for a magic value.
+This expression should return ``#t`` when the field is fully parsed:
+
+.. code-block:: dylan
+
+    repeated field options :: <ip-option-frame>,
+      reached-end?:
+        instance?(frame, <end-of-option-ip-option>);
+
+Counted field definitions use another field in the frame to determine
+how many elements are in the field:
+
+.. code-block:: dylan
+
+    field number-methods :: <unsigned-byte>,
+      fixup: frame.methods.size;
+    repeated field methods :: <unsigned-byte>,
+      count: frame.number-methods;
+
+Note the use of the ``fixup`` keyword on the ``number-methods`` field to
+calculate a value for use by :gf:`assemble-frame` if the value is not
+otherwise specified.
+
 Variably Typed Fields
 ---------------------
 
@@ -93,8 +197,3 @@ Most fields have the same type in all frame instances, these are statically
 typed. Some fields depend on the value of another field of the same protocol,
 these are variably typed. To figure out the type, a type function has to be
 provided for the variably typed field using the ``type-function:``.
-
-Repeated Fields
----------------
-
-...
