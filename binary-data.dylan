@@ -328,18 +328,6 @@ define open abstract class <unparsed-header-frame>
   (<header-frame>, <unparsed-container-frame>)
 end;
 
-define open generic source-address
-    (frame :: type-union(<raw-frame>, <container-frame>)) => (res);
-
-define open generic source-address-setter
-    (value, frame :: type-union(<raw-frame>, <container-frame>)) => (res);
-
-define open generic destination-address
-    (frame :: type-union(<raw-frame>, <container-frame>)) => (res);
-
-define open generic destination-address-setter
-    (value, frame :: type-union(<raw-frame>, <container-frame>)) => (res);
-
 //can't specify type because unparsed-getter can't return false-or(<frame>)!
 define open generic payload (frame :: <header-frame>) => (payload);
 
