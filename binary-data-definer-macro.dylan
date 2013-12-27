@@ -104,13 +104,13 @@ define macro real-class-definer
 
   fields-aux:
    { } => { }
-   { variably-typed-field ?:name, ?args:*; ... }
+   { variably-typed field ?:name, ?args:*; ... }
      => { make(<variably-typed-field>,
                name: ?#"name",
                getter: ?name,
                setter: ?name ## "-setter",
                ?args), ... }
-   { variably-typed-field ?:name = ?init:expression , ?args:*; ... }
+   { variably-typed field ?:name = ?init:expression , ?args:*; ... }
      => { make(<variably-typed-field>,
                name: ?#"name",
                init-value: ?init,
@@ -193,7 +193,7 @@ define macro decoded-class-definer
     { ?field:*; ... } => { ?field ; ... }
 
     field:
-    { variably-typed-field ?:name, ?rest:* }
+    { variably-typed field ?:name, ?rest:* }
     => { slot ?name :: unsupplied-or(<frame>) = $unsupplied,
       init-keyword: ?#"name" }
     { repeated field ?:name ?rest:* }
@@ -507,7 +507,7 @@ define macro frame-field-generator
     { frame-field-generator(?type:name; ?count:expression; field ?field-name:name ?foo:*  ; ?rest:*) }
     => { unparsed-frame-field-generator(?field-name, ?type, ?count);
          frame-field-generator(?type; ?count + 1; ?rest) }
-    { frame-field-generator(?type:name; ?count:expression; variably-typed-field ?field-name:name ?foo:* ; ?rest:*) }
+    { frame-field-generator(?type:name; ?count:expression; variably-typed field ?field-name:name ?foo:* ; ?rest:*) }
     => { unparsed-frame-field-generator(?field-name, ?type, ?count);
          frame-field-generator(?type; ?count + 1; ?rest) }
     { frame-field-generator(?:name; ?count:expression) }
