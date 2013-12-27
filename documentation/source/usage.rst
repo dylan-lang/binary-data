@@ -100,6 +100,23 @@ field in the ip-option frame set to ``0``. An ``<end-of-option-ip-option>``
 does not contain any further fields, thus only has the two fields inherited from
 the ``<ip-option-frame>``.
 
+Frame Options
+=============
+
+.. note:: These frame options do not compose. The presence of one prohibits
+   the presence of the others.
+
+``length``:
+   ...
+
+``over``:
+   See `Variably Typed Container Frame`_ for an example of how this is
+   used.
+
+
+``summary``:
+   ...
+
 Field Types
 ===========
 
