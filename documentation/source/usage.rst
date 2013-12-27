@@ -196,4 +196,18 @@ Variably Typed Fields
 Most fields have the same type in all frame instances, these are statically
 typed. Some fields depend on the value of another field of the same protocol,
 these are variably typed. To figure out the type, a type function has to be
-provided for the variably typed field using the ``type-function:``.
+provided for the variably typed field using the ``type-function:``:
+
+.. code-block:: dylan
+
+    field length-type :: <2bit-unsigned-integer>;
+    variably-typed-field body-length,
+      type-function: select (frame.length-type)
+                       0 => <unsigned-byte>;
+                       1 => <2byte-big-endian-unsigned-integer>;
+                       2 => <4byte-big-endian-unsigned-integer>;
+                       3 => <null-frame>;
+                     end;
+
+.. warning:: Note that the field type is named ``variably-typed-field``
+   rather than ``variably-typed field``.
