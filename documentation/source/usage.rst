@@ -211,3 +211,11 @@ provided for the variably typed field using the ``type-function:``:
 
 .. warning:: Note that the field type is named ``variably-typed-field``
    rather than ``variably-typed field``.
+
+Extending binary-data
+=====================
+
+Adding a New Leaf Frame Type
+----------------------------
+
+...
