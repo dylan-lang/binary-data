@@ -11,7 +11,10 @@ easy to understand manner.
 This project used ideas from the defstorage system available as part of
 the `Genera Common Lisp operating system`_.
 
-There are two documents about this project:
+The documentation for this project is viewable online at
+http://opendylan.org/documentation/binary-data/.
+
+There are two papers about this project:
 
 * `Secure networking`_ [2006]
 * `A domain-specific language for manipulation of binary data in Dylan`_ [2007]
