@@ -383,9 +383,8 @@ define test dyn-length ()
 end;
 
 define binary-data b-subb (container-frame)
-  //variably-typed-field data,
-  //  type-function: <b-sub-sub>;
-  field data :: <b-sub-sub>;
+  variably-typed field data,
+    type-function: <b-sub-sub>;
 end;
 
 define test dynamic-length ()
