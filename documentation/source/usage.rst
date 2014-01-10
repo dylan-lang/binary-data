@@ -152,7 +152,8 @@ Enumerated Fields
 -----------------
 
 An enumerated field provides a set of mappings from the binary value
-to a high level Dylan value.
+to a Dylan symbol. Note that the binary value must be a numerical
+type so that the mapping is from an integer to a symbol.
 
 In this example, accessing the value of the field would return one
 of the symbols rather than the value of the :class:`<unsigned-byte>`:
