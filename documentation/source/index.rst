@@ -29,5 +29,6 @@ about a TCP/IP stack written entirely in Dylan:
    :maxdepth: 3
 
    usage
+   efficiency
    reference
    internals

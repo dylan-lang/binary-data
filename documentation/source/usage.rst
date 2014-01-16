@@ -256,14 +256,15 @@ details).
 Default values for fields can be provided, similar to Dylan class
 definitions, after the equal sign (``=``) after the field type.
 
+Inheritance: Variably Typed Container Frames
+--------------------------------------------
 
-Variably Typed Container Frame
-------------------------------
-
-The :class:`<variably-typed-container-frame>` class is used in container
-frames which have the type information encoded in the frame. Parsing of
-the layering field of these container frames is needed to find out the
-actual type.
+A vontainer frame can inherit from another container frame which
+already has some field structure. The
+:class:`<variably-typed-container-frame>` class is used in container
+frames which have the type information encoded in the frame. Parsing
+of the layering field of these container frames is needed to find out
+the actual type.
 
 For example:
 
@@ -278,10 +279,19 @@ For example:
       over <ip-option-frame> 0;
     end;
 
+    define binary-data router-alert-ip-option (ip-option-frame)
+      over <ip-option-frame> 20;
+      field router-alert-length :: <unsigned-byte> = 4;
+      field router-alert-value :: <2byte-big-endian-unsigned-integer>;
+    end;
+
 This defines the ``<end-of-option-ip-option>`` which has the ``option-type``
 field in the ip-option frame set to ``0``. An ``<end-of-option-ip-option>``
 does not contain any further fields, thus only has the two fields inherited from
 the ``<ip-option-frame>``.
+
+The ``<router-alert-ip-option>`` specifies two more fields, which are
+appended to the inherited fields.
 
 Container Frame Options
 =======================
