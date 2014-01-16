@@ -144,7 +144,7 @@ end;
 
 define open generic container-frame-size (frame :: <container-frame>) => (length :: false-or(<integer>));
 
-define open generic frame-size (frame :: type-union(<frame>, subclass(<fixed-size-frame>)))
+define open generic frame-size (frame :: <frame>)
  => (length :: <integer>);
 
 define open generic summary (frame :: <frame>) => (summary :: <string>);
@@ -154,11 +154,6 @@ define method summary (frame :: <frame>) => (summary :: <string>)
 end;
 
 define abstract class <fixed-size-frame> (<frame>)
-end;
-
-define inline method frame-size (frame :: subclass(<fixed-size-frame>))
- => (length :: <integer>)
-  field-size(frame);
 end;
 
 define inline method frame-size (frame :: <fixed-size-frame>)
@@ -702,7 +697,7 @@ define method get-field-size-aux-aux (frame :: <frame>,
                                       field :: <single-field>,
                                       frame-type :: subclass(<fixed-size-frame>))
  => (res :: <integer>)
-  frame-size(frame-type);
+  field-size(frame-type);
 end;
 
 define method get-field-size-aux-aux (frame :: <frame>,
