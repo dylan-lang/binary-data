@@ -294,7 +294,7 @@ The ``<router-alert-ip-option>`` specifies two more fields, which are
 appended to the inherited fields.
 
 Container Frame Options
-=======================
+-----------------------
 
 ``length`` *expression*:
    A Dylan expression which emits the length of the frame. A binding
