@@ -11,7 +11,8 @@ The design goals are manifold: concise expressive syntax, efficient
 conversion between byte vectors and high level objects (in both
 directions, by using zerocopy and lazy parsing
 technology). Inspiration for this library is taken among others from
-the defstorage macro and the tool scapy.
+the defstorage macro (from Genera, the LISP machine) and the tool
+`scapy <http://bb.secdev.org/scapy/wiki/Home>`__.
 
 A large body of implemented binary data formats using this library can
 be found at `GitHub

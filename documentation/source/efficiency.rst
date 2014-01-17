@@ -15,19 +15,19 @@ time and space overhead are minimal (the compiler should remove all
 the indirections!).
 
 This library is carefully designed to achieve this goal, while not
-limiting the expressiveness, sacrificing the safety, or burden the
+limiting the expressiveness, sacrificing the safety, or burdening the
 developer with inconvenient syntactic noise. A story about binary data
 is that there are often big chunks of data, and deeply nested pieces
 of data. The good news is that most applications do not need all
 binary data.
 
-The binary data was designed with lazy parsing in mind: if a byte
-vector is received, the high-level object does not parse the byte
+The binary data library was designed with lazy parsing in mind: if a
+byte vector is received, the high-level object does not parse the byte
 vector completely, but only the requested fields. To achieve this, we
 gather information about each field, specifically its start and end
 offset, and also its length, already at compile time, using a number
 system consisting of the type union between :drm:`<integer>` and
-:const:`$unknown-at-compile-time`, for which basic arithmetics are
+:const:`$unknown-at-compile-time`, for which basic arithmetics is
 defined.
 
 For fixed sized fields, meaning single fields with a static and fixed
@@ -37,7 +37,7 @@ known at compile time. Accessing the ``payload`` is an subsequence
 operation (performing zerocopy) starting at bit 112 (or byte 15) of
 the binary vector.
 
-While at the user level arithmetics are on the bit level, accesses at
+While at the user level arithmetics is on the bit level, accesses at
 byte boundaries are done directly into the byte vector. This is
 encapsulated in the class :class:`<stretchy-byte-vector-subsequence>`
 

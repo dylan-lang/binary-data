@@ -61,9 +61,9 @@ The class :class:`<frame>` defines several generic functions:
 Some properties are mixed in into our class hierarchy by introducing
 the direct subclasses of :class:`<frame>`:
 
-For efficiency reason, a distinction between frames that have a static
-(compile-time) size (:class:`<fixed-size-frame>`) and frames of
-dynamic size (:class:`<variable-size-frame>`) is done.
+For efficiency reasons, there is a distinction between frames that
+have a static (compile-time) size (:class:`<fixed-size-frame>`) and
+frames of dynamic size (:class:`<variable-size-frame>`).
 
 Another property is translation of the value into a Dylan object of
 the standard library. An example of such a :class:`<translated-frame>`
@@ -94,11 +94,11 @@ untranslated. Examples are:
    * :class:`<2byte-big-endian-unsigned-integer>` has a fixed size of 16 bits, and its translation is a Dylan :drm:`<integer>`.
 
 FIXME: :class:`<externally-delimited-string>` is variable size and
-untranslated, though :drm:`as` in both directions with <string> is
-provided (should inherit from translated frame)
+untranslated, though :drm:`as` in both directions with :drm:`<string>`
+is provided (should inherit from translated frame)
 
-The generic function :gf:`read-frame` is used to convert a <string>
-into an instance of a `<leaf-frame>`.
+The generic function :gf:`read-frame` is used to convert a
+:drm:`<string>` into an instance of a `<leaf-frame>`.
 
 FIXME: why is read-frame not defined on container-frame?
 
@@ -259,7 +259,7 @@ definitions, after the equal sign (``=``) after the field type.
 Inheritance: Variably Typed Container Frames
 --------------------------------------------
 
-A vontainer frame can inherit from another container frame which
+A container frame can inherit from another container frame which
 already has some field structure. The
 :class:`<variably-typed-container-frame>` class is used in container
 frames which have the type information encoded in the frame. Parsing
