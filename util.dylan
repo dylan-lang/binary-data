@@ -3,7 +3,7 @@ author: Andreas Bogk and Hannes Mehnert
 copyright: 2005-2011 Andreas Bogk and Hannes Mehnert. All rights reserved.
 license: see LICENSE.txt in this distribution
 
-define function hex(integer :: <integer>, #key size = 0)
+define function hex (integer :: <integer>, #key size = 0)
  => (string :: <string>)
   integer-to-string(integer, base: 16, size: size)
 end function hex;
