@@ -109,7 +109,7 @@ end;
 
 define inline method high-level-type (low-level-type == <unsigned-byte>)
  => (res == <byte>)
-  <byte>;
+  <byte>
 end;
 
 

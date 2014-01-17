@@ -117,12 +117,14 @@ define macro real-class-definer
 
   fields-aux:
    { } => { }
+
    { variably-typed field ?:name, ?args:*; ... }
      => { make(<variably-typed-field>,
                name: ?#"name",
                getter: ?name,
                setter: ?name ## "-setter",
                ?args), ... }
+
    { variably-typed field ?:name = ?init:expression , ?args:*; ... }
      => { make(<variably-typed-field>,
                name: ?#"name",
@@ -130,12 +132,14 @@ define macro real-class-definer
                getter: ?name,
                setter: ?name ## "-setter",
                ?args), ... }
+
    { ?attributes:* field ?:name \:: ?field-type:name; ... }
      => { make(?attributes,
                name: ?#"name",
                type: ?field-type,
                getter: ?name,
                setter: ?name ## "-setter"), ... }
+
    { ?attributes:* field ?:name \:: ?field-type:name, ?args:*; ... }
      => { make(?attributes,
                name: ?#"name",
@@ -143,6 +147,7 @@ define macro real-class-definer
                getter: ?name,
                setter: ?name ## "-setter",
                ?args), ... }
+
    { ?attributes:* field ?:name \:: ?field-type:name = ?init:expression ; ... }
      => { make(?attributes,
                name: ?#"name",
@@ -150,6 +155,7 @@ define macro real-class-definer
                type: ?field-type,
                getter: ?name,
                setter: ?name ## "-setter"), ... }
+
    { ?attributes:* field ?:name \:: ?field-type:name = ?init:expression , ?args:*; ... }
      => { make(?attributes,
                name: ?#"name",
