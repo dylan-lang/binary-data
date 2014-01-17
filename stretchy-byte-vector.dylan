@@ -16,8 +16,8 @@ define abstract class <stretchy-vector-subsequence> (<vector>)
 end;
 
 define method make
-  (class == <stretchy-vector-subsequence>, #next next-method,
-   #rest rest, #key start, end: last, bit-start, bit-end, #all-keys)
+    (class == <stretchy-vector-subsequence>, #next next-method,
+     #rest rest, #key start, end: last, bit-start, bit-end, #all-keys)
  => (res :: <stretchy-vector-subsequence>)
   if (bit-start & bit-start ~= 0)
     apply(make, <stretchy-byte-vector-subsequence-with-offset>, rest)
@@ -31,8 +31,8 @@ define method make
 end;
 
 define method make
- (class :: subclass(<stretchy-vector-subsequence>),
-  #next next-method, #rest rest, #key data, #all-keys)
+    (class :: subclass(<stretchy-vector-subsequence>),
+     #next next-method, #rest rest, #key data, #all-keys)
  => (res :: <stretchy-vector-subsequence>)
   let args = rest;
   unless (data)
@@ -44,7 +44,9 @@ define method make
 end;
 
 define inline function check-values
-  (start :: <integer>, length :: false-or(<integer>), last :: false-or(<integer>))
+    (start :: <integer>,
+     length :: false-or(<integer>),
+     last :: false-or(<integer>))
  => (start :: <integer>, last :: false-or(<integer>))
   if (last & length)
     error("only last or length can be provided!");
@@ -88,25 +90,25 @@ define method subsequence (seq :: <stretchy-byte-vector-subsequence>,
 end;
 
 define inline function vs-fip-next-element
-  (c :: <stretchy-vector-subsequence>, s :: <integer>)
+    (c :: <stretchy-vector-subsequence>, s :: <integer>)
  => (result :: <integer>);
   s + 1
 end function;
 
 define inline function vs-fip-done?
-  (c :: <stretchy-vector-subsequence>, s :: <integer>, l :: <integer>)
+    (c :: <stretchy-vector-subsequence>, s :: <integer>, l :: <integer>)
  => (done :: <boolean>);
   s >= l
 end function;
 
 define inline function vs-fip-current-key
-  (c :: <stretchy-vector-subsequence>, s :: <integer>)
+    (c :: <stretchy-vector-subsequence>, s :: <integer>)
  => (result :: <integer>)
   s
 end function;
 
 define inline function vs-fip-copy-state
-  (c :: <stretchy-vector-subsequence>, s :: <integer>)
+    (c :: <stretchy-vector-subsequence>, s :: <integer>)
  => (result :: <integer>);
   s
 end function;
@@ -116,19 +118,19 @@ define sealed class <stretchy-byte-vector-subsequence> (<stretchy-vector-subsequ
 end;
 
 define inline function real-sbv-element
-  (c :: <stretchy-byte-vector-subsequence>, key :: <integer>)
+    (c :: <stretchy-byte-vector-subsequence>, key :: <integer>)
  => (result :: <byte>)
   c.real-data[key]
 end;
 
 define inline function real-sbv-element-setter
-  (value :: <byte>, c :: <stretchy-byte-vector-subsequence>, key :: <integer>)
+    (value :: <byte>, c :: <stretchy-byte-vector-subsequence>, key :: <integer>)
  => (result :: <byte>)
   c.real-data[key] := value
 end;
 
 define inline method forward-iteration-protocol
-  (seq :: <stretchy-byte-vector-subsequence>)
+    (seq :: <stretchy-byte-vector-subsequence>)
  => (initial-state :: <object>, limit :: <object>, next-state :: <function>,
      finished-state? :: <function>, current-key :: <function>,
      current-element :: <function>, current-element-setter :: <function>,
@@ -139,13 +141,13 @@ define inline method forward-iteration-protocol
 end;
 
 define inline method as
-  (class == <stretchy-byte-vector-subsequence>, data :: <byte-vector>)
+    (class == <stretchy-byte-vector-subsequence>, data :: <byte-vector>)
  => (res :: <stretchy-byte-vector-subsequence>)
   make(<stretchy-byte-vector-subsequence>, data: as(<stretchy-byte-vector>, data))
 end;
 
 define inline method as
-  (class == <stretchy-byte-vector-subsequence>, data :: <collection>)
+    (class == <stretchy-byte-vector-subsequence>, data :: <collection>)
  => (res :: <stretchy-byte-vector-subsequence>)
   as(<stretchy-byte-vector-subsequence>, as(<byte-vector>, data))
 end;
@@ -165,7 +167,7 @@ define inline method size (c :: <stretchy-byte-vector-subsequence>)
 end method size;
 
 define inline function check-sbv-range
- (seq :: <stretchy-byte-vector-subsequence>, key :: <integer>) => ()
+    (seq :: <stretchy-byte-vector-subsequence>, key :: <integer>) => ()
   if (key < 0)
     signal(make(<out-of-bound-error>));
   end;
@@ -175,16 +177,16 @@ define inline function check-sbv-range
 end;
 
 define inline method element
-  (seq :: <stretchy-byte-vector-subsequence>, key :: <integer>, #key default)
+    (seq :: <stretchy-byte-vector-subsequence>, key :: <integer>, #key default)
  => (res :: <byte>)
   check-sbv-range(seq, key);
   seq.real-data[key + seq.start-index]
 end;
 
 define inline method element-setter
-  (value :: <byte>,
-   seq :: <stretchy-byte-vector-subsequence>,
-   key :: <integer>)
+    (value :: <byte>,
+     seq :: <stretchy-byte-vector-subsequence>,
+     key :: <integer>)
  => (res :: <byte>)
   check-sbv-range(seq, key);
   seq.real-data[key + seq.start-index] := value
@@ -210,7 +212,7 @@ define inline method size(c :: <stretchy-bit-vector-subsequence>)
 end method size;
 
 define inline method element
-  (seq :: <stretchy-bit-vector-subsequence>, key :: <integer>, #key default)
+    (seq :: <stretchy-bit-vector-subsequence>, key :: <integer>, #key default)
  => (res :: <bit>)
   if ((key > seq.start-index) & (seq.end-index & (key < seq.end-index)))
     let (byte-offset, bit-offset) = truncate/(seq.start-index + key, 8);
@@ -221,9 +223,9 @@ define inline method element
 end;
 
 define inline method element-setter
-  (value :: <bit>,
-   seq :: <stretchy-bit-vector-subsequence>,
-   key :: <integer>)
+    (value :: <bit>,
+     seq :: <stretchy-bit-vector-subsequence>,
+     key :: <integer>)
  => (res :: <bit>)
   if ((key > seq.start-index) & (seq.end-index & (key < seq.end-index)))
     let (byte-offset, bit-offset) = truncate/(seq.start-index + key, 8);
@@ -242,8 +244,8 @@ define class <stretchy-byte-vector-subsequence-with-offset> (<stretchy-vector-su
 end;
 
 define method make
- (class == <stretchy-byte-vector-subsequence-with-offset>,
-  #next next-method, #rest rest, #key bit-end, end: last, #all-keys)
+    (class == <stretchy-byte-vector-subsequence-with-offset>,
+     #next next-method, #rest rest, #key bit-end, end: last, #all-keys)
  => (res :: <stretchy-byte-vector-subsequence-with-offset>)
   unless (bit-end)
     replace-arg(rest, #"bit-end", 8);
@@ -256,7 +258,7 @@ define method make
 end;
 
 define inline function replace-arg
-  (list :: <vector>, key :: <symbol>, value :: <object>)
+    (list :: <vector>, key :: <symbol>, value :: <object>)
  => ()
   for (i from 0 below list.size by 2)
     if (list[i] = key)
@@ -266,10 +268,10 @@ define inline function replace-arg
 end;
 
 define inline method subsequence
-  (seq :: <stretchy-byte-vector-subsequence-with-offset>,
-   #key start :: <integer> = 0,
-        length :: false-or(<integer>),
-        end: last :: false-or(<integer>))
+    (seq :: <stretchy-byte-vector-subsequence-with-offset>,
+     #key start :: <integer> = 0,
+          length :: false-or(<integer>),
+          end: last :: false-or(<integer>))
  => (seq :: <stretchy-vector-subsequence>)
   let (start, end-offset) = check-values(start, length, last);
   let old-start = seq.start-index * 8 + seq.bit-start-index;
@@ -300,7 +302,7 @@ define inline method subsequence
 end;
 
 define inline method size
-  (c :: <stretchy-byte-vector-subsequence-with-offset>)
+    (c :: <stretchy-byte-vector-subsequence-with-offset>)
  => (result :: <integer>);
   let fudge-factor = if (c.bit-start-index >= c.bit-end-index) 0 else 1 end;
   let res = c.real-data.size - c.start-index + fudge-factor;
@@ -316,7 +318,7 @@ define inline method size
 end method size;
 
 define inline function check-sbvwo-range
- (seq :: <stretchy-byte-vector-subsequence-with-offset>, key :: <integer>)
+    (seq :: <stretchy-byte-vector-subsequence-with-offset>, key :: <integer>)
   if (key < 0)
     signal(make(<out-of-bound-error>));
   end;
@@ -326,21 +328,21 @@ define inline function check-sbvwo-range
 end;
 
 define inline function real-sbvwo-element
-  (c :: <stretchy-byte-vector-subsequence-with-offset>, key :: <integer>)
+    (c :: <stretchy-byte-vector-subsequence-with-offset>, key :: <integer>)
  => (result :: <byte>)
   element(c, key - c.start-index)
 end;
 
 define inline function real-sbvwo-element-setter
-  (value :: <byte>,
-   c :: <stretchy-byte-vector-subsequence-with-offset>,
-   key :: <integer>)
+    (value :: <byte>,
+     c :: <stretchy-byte-vector-subsequence-with-offset>,
+     key :: <integer>)
  => (result :: <byte>)
   element-setter(value, c, key - c.start-index)
 end;
 
 define inline method forward-iteration-protocol
-  (seq :: <stretchy-byte-vector-subsequence-with-offset>)
+    (seq :: <stretchy-byte-vector-subsequence-with-offset>)
  => (initial-state :: <object>, limit :: <object>, next-state :: <function>,
      finished-state? :: <function>, current-key :: <function>,
      current-element :: <function>, current-element-setter :: <function>,
@@ -351,9 +353,9 @@ define inline method forward-iteration-protocol
 end;
 
 define inline method element
-  (seq :: <stretchy-byte-vector-subsequence-with-offset>,
-   key :: <integer>,
-   #key default)
+    (seq :: <stretchy-byte-vector-subsequence-with-offset>,
+     key :: <integer>,
+     #key default)
  => (res :: <byte>)
   check-sbvwo-range(seq, key);
   if (key = seq.size - 1)
@@ -378,9 +380,9 @@ define inline method element
 end;
 
 define inline method element-setter
-  (value :: <byte>,
-   seq :: <stretchy-byte-vector-subsequence-with-offset>,
-   key :: <integer>)
+    (value :: <byte>,
+     seq :: <stretchy-byte-vector-subsequence-with-offset>,
+     key :: <integer>)
  => (res :: <byte>)
   check-sbvwo-range(seq, key);
   let first-byte = key + seq.start-index;
@@ -414,7 +416,7 @@ define inline method element-setter
 end;
 
 define inline method decode-integer
-  (seq :: <stretchy-byte-vector-subsequence>, count :: <integer>)
+    (seq :: <stretchy-byte-vector-subsequence>, count :: <integer>)
  => (res :: <integer>)
   //assumption: count is always dividable by 8!
   let res = 0;
@@ -425,9 +427,9 @@ define inline method decode-integer
 end;
 
 define inline method encode-integer
-  (value :: <integer>,
-   seq :: <stretchy-byte-vector-subsequence>,
-   count :: <integer>)
+    (value :: <integer>,
+     seq :: <stretchy-byte-vector-subsequence>,
+     count :: <integer>)
   //assumption: count is always dividable by 8!
   let bytes = truncate/(count, 8);
   for (i from 0 below bytes)
@@ -436,7 +438,7 @@ define inline method encode-integer
 end;
 
 define inline method decode-integer
-  (seq :: <stretchy-byte-vector-subsequence-with-offset>, count :: <integer>)
+    (seq :: <stretchy-byte-vector-subsequence-with-offset>, count :: <integer>)
  => (res :: <integer>)
   if (seq.end-index & (((seq.end-index - seq.start-index) * 8 - seq.bit-start-index + seq.bit-end-index) < count))
     signal(make(<out-of-bound-error>));
@@ -464,9 +466,9 @@ define inline method decode-integer
 end;
 
 define inline method encode-integer
-  (value :: <integer>,
-   seq :: <stretchy-byte-vector-subsequence-with-offset>,
-   count :: <integer>)
+    (value :: <integer>,
+     seq :: <stretchy-byte-vector-subsequence-with-offset>,
+     count :: <integer>)
   if (value > 2 ^ count - 1)
     error("value to big for n bits");
   end;

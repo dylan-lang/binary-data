@@ -9,7 +9,7 @@ define macro unsupplied-or
 end;
 
 define inline function filter-enums
-  (key/value-pairs :: <collection>, fields :: <collection>)
+    (key/value-pairs :: <collection>, fields :: <collection>)
  => (args :: <collection>)
   let args = copy-sequence(key/value-pairs);
   for (ele in fields)
@@ -56,7 +56,7 @@ define macro real-class-definer
       end;
 
       define method fields-initializer
-        (frame :: subclass(?name), #next next-method)
+          (frame :: subclass(?name), #next next-method)
        => (frame-fields :: <simple-vector>)
         let res = concatenate(next-method(), vector(?fields-aux));
         for (ele in res, i from 0)
@@ -101,8 +101,9 @@ define macro real-class-definer
         end;
       end;
 
-      define method make (class == ?name,
-                          #rest rest, #key, #all-keys) => (res :: ?name)
+      define method make
+          (class == ?name, #rest rest, #key, #all-keys)
+       => (res :: ?name)
         let args = filter-enums(rest, "$" ## ?name ## "-fields");
         let frame = apply(make, decoded-class(?name), args);
         for (field in fields(frame))
@@ -222,12 +223,14 @@ end;
 define macro gen-classes
   { gen-classes(?:name; ?superframe:name) }
  => { define inline method unparsed-class
-       (type :: subclass("<" ## ?name ## ">")) => (class == "<unparsed-" ## ?name ## ">");
+          (type :: subclass("<" ## ?name ## ">"))
+       => (class == "<unparsed-" ## ?name ## ">")
         "<unparsed-" ## ?name ## ">"
       end;
 
       define inline method decoded-class
-       (type :: subclass("<" ## ?name ## ">")) => (class == "<decoded-" ## ?name ## ">");
+          (type :: subclass("<" ## ?name ## ">"))
+       => (class == "<decoded-" ## ?name ## ">")
         "<decoded-" ## ?name ## ">"
       end;
 
@@ -257,7 +260,8 @@ define macro unparsed-frame-field-generator
         end;
       end;
 
-      define inline method ?name ## "-setter" (value, mframe :: ?frame-type) => (res)
+      define inline method ?name ## "-setter"
+          (value, mframe :: ?frame-type) => (res)
         mframe.cache.?name := value;
         let frame-field = get-frame-field(?field-index, mframe);
         // blatantly ignores changed length, FIXME!
@@ -268,7 +272,7 @@ define macro unparsed-frame-field-generator
 end;
 
 define inline function enum-field-symbol-to-int
-  (field :: <enum-field>, key :: <symbol>) => (res :: <integer>)
+    (field :: <enum-field>, key :: <symbol>) => (res :: <integer>)
   block (ret)
     for (i from 1 below field.mappings.size by 2)
       if (field.mappings[i] == key)
@@ -283,7 +287,8 @@ define macro enum-frame-field-generator
   { enum-frame-field-generator(?:name,
                                "<unparsed-" ## ?frame-type:name,
                                ?field-index:expression) }
- => { define inline method ?name (mframe :: "<decoded-" ## ?frame-type) => (res)
+ => { define inline method ?name
+          (mframe :: "<decoded-" ## ?frame-type) => (res)
         let field = fields(mframe)[?field-index];
         let val = "%" ## ?name (mframe);
         block (ret)
@@ -297,16 +302,16 @@ define macro enum-frame-field-generator
       end;
 
       define inline method ?name ## "-setter"
-        (value :: <symbol>, mframe :: "<decoded-" ## ?frame-type) => (res)
+          (value :: <symbol>, mframe :: "<decoded-" ## ?frame-type) => (res)
         let field = fields(mframe)[?field-index];
         let val :: <integer> = enum-field-symbol-to-int(field, value);
         "%" ## ?name ## "-setter"(val , mframe);
       end;
 
       define inline method ?name ## "-setter"
-        (value :: false-or(<integer>),
-           mframe :: "<decoded-" ## ?frame-type) => (res)
-        "%" ## ?name ## "-setter"(value, mframe);
+          (value :: false-or(<integer>), mframe :: "<decoded-" ## ?frame-type)
+       => (res)
+        "%" ## ?name ## "-setter"(value, mframe)
       end;
 
       define inline method ?name ## "-setter"
@@ -319,7 +324,7 @@ define macro enum-frame-field-generator
 end;
 
 define method parse-frame-field
-  (frame-field :: <frame-field>)
+    (frame-field :: <frame-field>)
  => (res, length);
   let full-frame-size = frame-field.frame.packet.size * 8;
   let start = frame-field.start-offset;
@@ -376,25 +381,25 @@ define method parse-frame-field
 end;
 
 define method parse-frame-field-aux
-  (field :: <single-field>,
-   frame :: <unparsed-container-frame>,
-   packet :: <byte-sequence>)
-  parse-frame(field.type, packet, parent: frame);
+    (field :: <single-field>,
+     frame :: <unparsed-container-frame>,
+     packet :: <byte-sequence>)
+  parse-frame(field.type, packet, parent: frame)
 end;
 
 define method parse-frame-field-aux
-  (field :: <variably-typed-field>,
-   frame :: <unparsed-container-frame>,
-   packet :: <byte-sequence>)
+    (field :: <variably-typed-field>,
+     frame :: <unparsed-container-frame>,
+     packet :: <byte-sequence>)
   let type = field.type-function(frame);
-  parse-frame(type, packet, parent: frame);
+  parse-frame(type, packet, parent: frame)
 end;
 
 //XXX: refactor here. parse more lazy; use <frame-field> infrastructure
 define method parse-frame-field-aux
-  (field :: <self-delimited-repeated-field>,
-   frame :: <unparsed-container-frame>,
-   packet :: <byte-sequence>)
+    (field :: <self-delimited-repeated-field>,
+     frame :: <unparsed-container-frame>,
+     packet :: <byte-sequence>)
   let frames = make(<stretchy-vector>);
   let ff = get-frame-field(field.index, frame);
   let frame-fields = ff.frame-field-list;
@@ -439,9 +444,9 @@ define method parse-frame-field-aux
 end;
 
 define method parse-frame-field-aux
-  (field :: <count-repeated-field>,
-   frame :: <unparsed-container-frame>,
-   packet :: <byte-sequence>)
+    (field :: <count-repeated-field>,
+     frame :: <unparsed-container-frame>,
+     packet :: <byte-sequence>)
   let frames = make(<stretchy-vector>);
   let ff = get-frame-field(field.index, frame);
   let frame-fields = ff.frame-field-list;
@@ -469,10 +474,11 @@ define method parse-frame-field-aux
   values(frames, start)
 end;
 
-define method parse-frame (frame-type :: subclass(<variably-typed-container-frame>),
-                           packet :: <byte-sequence>,
-                           #key parent :: false-or(<container-frame>),
-                           default)
+define method parse-frame
+    (frame-type :: subclass(<variably-typed-container-frame>),
+     packet :: <byte-sequence>,
+     #key parent :: false-or(<container-frame>),
+          default)
  => (value :: <variably-typed-container-frame>, next-unparsed :: <integer>)
   let (superprotocol-frame, next) = next-method();
   let real-type = lookup-layer(frame-type, layer-magic(superprotocol-frame));
@@ -487,9 +493,10 @@ define method parse-frame (frame-type :: subclass(<variably-typed-container-fram
   end;
 end;
 
-define method parse-frame (frame-type :: subclass(<container-frame>),
-                           byte-packet :: <byte-sequence>,
-                           #key parent :: false-or(<container-frame>))
+define method parse-frame
+    (frame-type :: subclass(<container-frame>),
+     byte-packet :: <byte-sequence>,
+     #key parent :: false-or(<container-frame>))
  => (value :: <container-frame>, next-unparsed :: <integer>)
   let frame = make(unparsed-class(frame-type),
                    packet: byte-packet,
@@ -543,10 +550,10 @@ end;
 
 define macro summary-generator
   { summary-generator(?type:name; ?summary-string:expression, ?summary-getters:*) }
- => { define method summary (frame :: ?type) => (result :: <string>);
+ => { define method summary (frame :: ?type) => (result :: <string>)
         apply(format-to-string,
               ?summary-string,
-              map(rcurry(apply, list(frame)), list(?summary-getters)));
+              map(rcurry(apply, list(frame)), list(?summary-getters)))
       end; }
 end;
 
@@ -581,12 +588,13 @@ define macro binary-data-definer
  => { define ?attrs binary-data ?name (?superprotocol) ?fields end;
 
       define method lookup-layer
-        (frame :: subclass(?super), value == ?magic) => (class :: <class>)
+          (frame :: subclass(?super), value == ?magic)
+       => (class :: <class>)
         "<" ## ?name ## ">"
       end;
 
       define method reverse-lookup-layer
-        (frame :: subclass(?super), payload :: "<" ## ?name ## ">")
+          (frame :: subclass(?super), payload :: "<" ## ?name ## ">")
        => (value :: <integer>)
         ?magic
       end; }
@@ -598,7 +606,7 @@ define macro binary-data-definer
  => { define ?attrs binary-data ?name (?superprotocol) ?fields end;
 
       define inline method container-frame-size
-        (?=frame :: "<" ## ?name ## ">") => (res :: <integer>)
+          (?=frame :: "<" ## ?name ## ">") => (res :: <integer>)
         ?container-frame-length
       end; }
 

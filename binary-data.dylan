@@ -48,7 +48,8 @@ define function find-protocol (name :: <string>)
   values(res, protocol-name)
 end;
 
-define function find-protocol-field (protocol :: <class>, field-name :: <string>)
+define function find-protocol-field
+    (protocol :: <class>, field-name :: <string>)
  => (res :: <field>)
   let field = find-field(field-name, fields(protocol));
   unless (field)
@@ -62,16 +63,16 @@ define abstract class <frame> (<object>)
 end;
 
 define open generic parse-frame
-  (frame-type :: subclass(<frame>),
-   packet :: <sequence>,
-   #rest rest, #key, #all-keys)
-  => (value :: <object>, next-unparsed :: <integer>);
+    (frame-type :: subclass(<frame>),
+     packet :: <sequence>,
+     #rest rest, #key, #all-keys)
+ => (value :: <object>, next-unparsed :: <integer>);
 
 define method parse-frame
-  (frame-type :: subclass(<frame>),
-   packet :: <sequence>,
-   #rest rest,
-   #key, #all-keys)
+    (frame-type :: subclass(<frame>),
+     packet :: <sequence>,
+     #rest rest,
+     #key, #all-keys)
  => (value :: <object>, next-unparsed :: <integer>);
  let packet-subseq = as(<stretchy-byte-vector-subsequence>, packet);
  apply(parse-frame, frame-type, packet-subseq, rest)
@@ -82,19 +83,21 @@ define open generic assemble-frame-into
     (frame :: <frame>, packet :: <stretchy-vector-subsequence>)
  => (length :: <integer>);
 
-define generic assemble-frame
-  (frame :: <frame>) => (packet /* :: <vector> */);
+define generic assemble-frame (frame :: <frame>) => (packet /* :: <vector> */);
 
 define method assemble-frame
-  (frame :: <unparsed-container-frame>) => (packet :: <unparsed-container-frame>)
+    (frame :: <unparsed-container-frame>)
+ => (packet :: <unparsed-container-frame>)
   frame
 end;
 
 define generic assemble-frame-as
-    (frame-type :: subclass(<frame>), data :: <object>) => (packet /* :: <vector> */);
+    (frame-type :: subclass(<frame>), data :: <object>)
+ => (packet /* :: <vector> */);
 
 define method assemble-frame-as
-    (frame-type :: subclass(<frame>), data :: <object>) => (packet /* :: <byte-vector> */)
+    (frame-type :: subclass(<frame>), data :: <object>)
+ => (packet /* :: <byte-vector> */)
   if (instance?(data, frame-type))
     assemble-frame(data)
   else
@@ -112,10 +115,10 @@ end;
 
 define open generic fixup! (frame :: type-union(<container-frame>, <raw-frame>));
 
-define method fixup!(frame :: type-union(<container-frame>, <raw-frame>))
+define method fixup! (frame :: type-union(<container-frame>, <raw-frame>))
 end;
 
-define method fixup!(frame :: <header-frame>)
+define method fixup! (frame :: <header-frame>)
   fixup!(frame.payload);
 end;
 
@@ -161,14 +164,14 @@ define open abstract class <container-frame> (<variable-size-untranslated-frame>
 end;
 
 define open generic frame-name
-  (frame :: type-union(subclass(<container-frame>), <container-frame>))
-  => (res :: <string>);
+    (frame :: type-union(subclass(<container-frame>), <container-frame>))
+ => (res :: <string>);
 
 define inline method frame-name (frame :: <container-frame>) => (res :: <string>)
   frame-name(frame.object-class);
 end;
 
-define method frame-name(frame :: subclass(<container-frame>))
+define method frame-name (frame :: subclass(<container-frame>))
   => (res :: <string>)
   "anonymous"
 end;
@@ -187,7 +190,7 @@ define inline method field-count (frame :: subclass(<unparsed-container-frame>))
 end;
 
 define open generic fields
-  (frame :: type-union(<container-frame>, subclass(<container-frame>)))
+    (frame :: type-union(<container-frame>, subclass(<container-frame>)))
  => (res :: <simple-vector>);
 
 define open generic fields-initializer (frame :: subclass(<container-frame>))
@@ -195,7 +198,7 @@ define open generic fields-initializer (frame :: subclass(<container-frame>))
 
 define inline method fields-initializer (frame :: subclass(<container-frame>))
  => (fields :: <simple-vector>)
-  as(<simple-object-vector>, #[]);
+  as(<simple-object-vector>, #[])
 end;
 
 define open generic unparsed-class (type :: subclass(<container-frame>))
@@ -221,25 +224,25 @@ define function payload-type (frame :: <container-frame>) => (res :: <type>)
 end;
 
 define open generic lookup-layer
-  (frame :: subclass(<frame>), value :: <integer>)
-  => (class :: false-or(<class>));
+    (frame :: subclass(<frame>), value :: <integer>)
+ => (class :: false-or(<class>));
 
 define method lookup-layer (frame :: subclass(<frame>), value :: <integer>)
-  => (false == #f)
+ => (false == #f)
   #f
 end;
 
 define open generic reverse-lookup-layer
-  (frame :: subclass(<frame>), payload :: <frame>)
-  => (value :: <integer>);
+    (frame :: subclass(<frame>), payload :: <frame>)
+ => (value :: <integer>);
 
 define inline method fixup-protocol-magic
-  (frame :: <header-frame>) => (magic :: <integer>)
+    (frame :: <header-frame>) => (magic :: <integer>)
   reverse-lookup-layer(frame.object-class, frame.payload)
 end;
 
 define inline method fixup-protocol-magic
-  (frame :: <container-frame>) => (magic :: <integer>)
+    (frame :: <container-frame>) => (magic :: <integer>)
   reverse-lookup-layer(frame.object-class, frame)
 end;
 
@@ -249,12 +252,12 @@ end;
 define class <missing-inline-layering-error> (<error>)
 end;
 
-define method initialize (frame :: <decoded-container-frame>,
-                          #rest rest, #key ff, #all-keys)
+define method initialize
+    (frame :: <decoded-container-frame>, #rest rest, #key ff, #all-keys)
   next-method();
   unless (ff)
-    frame.concrete-frame-fields
-      := make(<vector>, size: field-count(frame.object-class), fill: #f);
+    frame.concrete-frame-fields :=
+      make(<vector>, size: field-count(frame.object-class), fill: #f);
   end
 end;
 
@@ -263,8 +266,8 @@ define open abstract class <unparsed-container-frame> (<container-frame>)
   constant slot cache :: <container-frame>, init-keyword: cache:;
 end;
 
-define method initialize (class :: <unparsed-container-frame>,
-                          #rest rest, #key parent, #all-keys)
+define method initialize
+    (class :: <unparsed-container-frame>, #rest rest, #key parent, #all-keys)
   next-method();
   parent-setter(parent, class.cache);
 end;
@@ -280,13 +283,13 @@ define inline method parent (frame :: <unparsed-container-frame>)
 end;
 
 define inline method parent-setter
-  (value :: false-or(<container-frame>), frame :: <unparsed-container-frame>)
+    (value :: false-or(<container-frame>), frame :: <unparsed-container-frame>)
  => (res :: false-or(<container-frame>))
   frame.cache.parent := value
 end;
 
 define method get-frame-field
-  (field-index :: <integer>, frame :: <container-frame>)
+    (field-index :: <integer>, frame :: <container-frame>)
  => (res :: <frame-field>)
   let res = frame.concrete-frame-fields[field-index];
   if (res)
@@ -334,16 +337,16 @@ define open abstract class <unparsed-header-frame>
 end;
 
 define open generic source-address
-  (frame :: type-union(<raw-frame>, <container-frame>)) => (res);
+    (frame :: type-union(<raw-frame>, <container-frame>)) => (res);
 
 define open generic source-address-setter
-  (value, frame :: type-union(<raw-frame>, <container-frame>)) => (res);
+    (value, frame :: type-union(<raw-frame>, <container-frame>)) => (res);
 
 define open generic destination-address
-  (frame :: type-union(<raw-frame>, <container-frame>)) => (res);
+    (frame :: type-union(<raw-frame>, <container-frame>)) => (res);
 
 define open generic destination-address-setter
-  (value, frame :: type-union(<raw-frame>, <container-frame>)) => (res);
+    (value, frame :: type-union(<raw-frame>, <container-frame>)) => (res);
 
 //can't specify type because unparsed-getter can't return false-or(<frame>)!
 define open generic payload (frame :: <header-frame>) => (payload);
@@ -353,7 +356,7 @@ define method payload (frame :: <header-frame>) => (payload)
 end;
 
 define open generic payload-setter
-  (value /* :: false-or(<frame>) */, object :: <header-frame>)
+    (value /* :: false-or(<frame>) */, object :: <header-frame>)
  => (res /* :: false-or(<frame>) */);
 
 define method frame-size (frame :: <container-frame>) => (res :: <integer>)
@@ -439,7 +442,7 @@ define method copy-frame (frame, #key par) => (res)
 end;
 
 define method assemble-frame-into
-  (frame :: <container-frame>, packet :: <stretchy-vector-subsequence>)
+    (frame :: <container-frame>, packet :: <stretchy-vector-subsequence>)
  => (res :: <integer>)
   let offset :: <integer> = 0;
   for (field in fields(frame))
@@ -505,7 +508,8 @@ define method assemble-frame-into
 end;
 
 define method assemble-frame-into
-  (frame :: <unparsed-container-frame>, to-packet :: <stretchy-vector-subsequence>)
+    (frame :: <unparsed-container-frame>,
+     to-packet :: <stretchy-vector-subsequence>)
  => (res :: <integer>)
   let ff = frame.concrete-frame-fields;
   let start = if (ff.size > 0 & ff[0] & ff[0].start-offset)
@@ -523,9 +527,9 @@ define method assemble-frame-into
 end;
 
 define method assemble-field-into
-  (field :: <enum-field>,
-   frame :: <container-frame>,
-   packet :: <stretchy-vector-subsequence>)
+    (field :: <enum-field>,
+     frame :: <container-frame>,
+     packet :: <stretchy-vector-subsequence>)
   let value = field.getter(frame);
   if (instance?(value, <symbol>))
     value := enum-field-symbol-to-int(field, value)
@@ -534,23 +538,23 @@ define method assemble-field-into
 end;
 
 define method assemble-field-into
-  (field :: <single-field>,
-   frame :: <container-frame>,
-   packet :: <stretchy-vector-subsequence>)
+    (field :: <single-field>,
+     frame :: <container-frame>,
+     packet :: <stretchy-vector-subsequence>)
   assemble-aux(field.type, field.getter(frame), packet)
 end;
 
 define method assemble-field-into
-  (field :: <variably-typed-field>,
-   frame :: <container-frame>,
-   packet :: <stretchy-vector-subsequence>)
+    (field :: <variably-typed-field>,
+     frame :: <container-frame>,
+     packet :: <stretchy-vector-subsequence>)
   assemble-frame-into(field.getter(frame), packet)
 end;
 
 define method assemble-field-into
-  (field :: <repeated-field>,
-   frame :: <container-frame>,
-   packet :: <stretchy-vector-subsequence>)
+    (field :: <repeated-field>,
+     frame :: <container-frame>,
+     packet :: <stretchy-vector-subsequence>)
   let offset :: <integer> = 0;
   let repeated-ff = frame.concrete-frame-fields[field.index];
   for (ele in field.getter(frame))
@@ -565,17 +569,17 @@ define method assemble-field-into
 end;
 
 define method assemble-aux
-  (frame-type :: subclass(<untranslated-frame>),
-   frame :: <frame>,
-   packet :: <stretchy-vector-subsequence>)
+    (frame-type :: subclass(<untranslated-frame>),
+     frame :: <frame>,
+     packet :: <stretchy-vector-subsequence>)
  => (res :: <integer>)
   assemble-frame-into(frame, packet)
 end;
 
 define method assemble-aux
-  (frame-type :: subclass(<translated-frame>),
-   frame :: <object>,
-   packet :: <stretchy-vector-subsequence>)
+    (frame-type :: subclass(<translated-frame>),
+     frame :: <object>,
+     packet :: <stretchy-vector-subsequence>)
  => (res :: <integer>)
   assemble-frame-into-as(frame-type, frame, packet)
 end;
@@ -702,24 +706,24 @@ define inline method end-offset (frame-field :: <frame-field>)
 end;
 
 define sideways method print-object
-  (frame-field :: <frame-field>, stream :: <stream>) => ();
+    (frame-field :: <frame-field>, stream :: <stream>) => ();
   format(stream, "%s: %=", frame-field.field.field-name, frame-field.frame);
 end;
 
 define method get-field-size-aux
-  (frame :: <container-frame>, field :: <statically-typed-field>)
+    (frame :: <container-frame>, field :: <statically-typed-field>)
  => (size :: <integer>)
   get-field-size-aux-aux(frame, field, field.type)
 end;
 
 define method get-field-size-aux
-  (frame :: <container-frame>, field :: <variably-typed-field>)
+    (frame :: <container-frame>, field :: <variably-typed-field>)
  => (size :: <integer>)
   frame-size(field.getter(frame))
 end;
 
 define method get-field-size-aux
-  (frame :: <container-frame>, field :: <repeated-field>)
+    (frame :: <container-frame>, field :: <repeated-field>)
  => (size :: <integer>)
   //XXX: refactor this whole crap
   let fs = field-size(field.type);
@@ -731,17 +735,17 @@ define method get-field-size-aux
 end;
 
 define method get-field-size-aux-aux
-  (frame :: <frame>,
-   field :: <single-field>,
-   frame-type :: subclass(<fixed-size-frame>))
+    (frame :: <frame>,
+     field :: <single-field>,
+     frame-type :: subclass(<fixed-size-frame>))
  => (res :: <integer>)
   field-size(frame-type)
 end;
 
 define method get-field-size-aux-aux
-  (frame :: <frame>,
-   field :: <single-field>,
-   frame-type :: subclass(<variable-size-untranslated-frame>))
+    (frame :: <frame>,
+     field :: <single-field>,
+     frame-type :: subclass(<variable-size-untranslated-frame>))
  => (res :: <integer>)
   if (field.static-length ~= $unknown-at-compile-time)
     field.static-length
@@ -751,9 +755,9 @@ define method get-field-size-aux-aux
 end;
 
 define method get-field-size-aux-aux
-  (frame :: <frame>,
-   field :: <single-field>,
-   frame-type :: subclass(<variable-size-translated-leaf-frame>))
+    (frame :: <frame>,
+     field :: <single-field>,
+     frame-type :: subclass(<variable-size-translated-leaf-frame>))
  => (res :: <integer>)
   //need to look for user-defined static size method
   //or assemble frame, cache it and get its size

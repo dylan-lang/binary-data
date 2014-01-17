@@ -4,8 +4,8 @@ copyright: 2005-2011 Andreas Bogk and Hannes Mehnert. All rights reserved.
 license: see LICENSE.txt in this distribution
 
 define function find-frame-field
-  (frame :: <container-frame>,
-   search :: type-union(<container-frame>, <raw-frame>))
+    (frame :: <container-frame>,
+     search :: type-union(<container-frame>, <raw-frame>))
  => (res :: false-or(type-union(<frame-field>, <rep-frame-field>)))
   block (ret)
     for (ff in frame.concrete-frame-fields)
@@ -24,11 +24,11 @@ define function find-frame-field
 end;
 
 define open generic compute-absolute-offset
-  (a :: <object>, b :: <object>) => (res :: <integer>);
+    (a :: <object>, b :: <object>) => (res :: <integer>);
 
 define method compute-absolute-offset
-  (frame :: type-union(<container-frame>, <raw-frame>), relative-to)
-  => (res :: <integer>)
+    (frame :: type-union(<container-frame>, <raw-frame>), relative-to)
+ => (res :: <integer>)
   if (frame.parent & frame ~= relative-to)
     let ff = find-frame-field(frame.parent, frame);
     compute-absolute-offset(ff, relative-to)
@@ -38,39 +38,43 @@ define method compute-absolute-offset
 end;
 
 define method compute-absolute-offset
-  (ff :: <rep-frame-field>, relative-to)
+    (ff :: <rep-frame-field>, relative-to)
  => (res :: <integer>)
   start-offset(ff) + compute-absolute-offset(ff.parent-frame-field, relative-to)
 end;
 
 define method compute-absolute-offset
- (frame-field :: <frame-field>, relative-to)
+    (frame-field :: <frame-field>, relative-to)
  => (res :: <integer>)
   start-offset(frame-field) + compute-absolute-offset(frame-field.frame, relative-to)
 end;
 
-define method compute-length (frame :: <header-frame>) => (res :: <integer>)
+define method compute-length (frame :: <header-frame>)
+ => (res :: <integer>)
   start-offset(sorted-frame-fields(frame).last)
 end;
 
-define method compute-length (frame :: <frame>) => (res :: <integer>)
+define method compute-length (frame :: <frame>)
+ => (res :: <integer>)
   frame-size(frame)
 end;
 
-define method compute-length (frame-field :: <position-mixin>) => (res :: <integer>)
+define method compute-length (frame-field :: <position-mixin>)
+ => (res :: <integer>)
   frame-field.length
 end;
 
-define method compute-length (frame-field :: <frame-field>) => (res :: <integer>)
+define method compute-length (frame-field :: <frame-field>)
+ => (res :: <integer>)
   if (frame-field.field.field-name = #"payload")
     compute-length(frame-field.value)
   else
-    frame-field.length;
+    frame-field.length
   end
 end;
 
 define method find-frame-at-offset
-  (frame :: <container-frame>, offset :: <integer>)
+    (frame :: <container-frame>, offset :: <integer>)
  => (result-frame)
   block (ret)
     for (ff in sorted-frame-fields(frame))
@@ -82,7 +86,8 @@ define method find-frame-at-offset
   end;
 end;
 
-define method find-frame-at-offset (frame :: <collection>, offset :: <integer>)
+define method find-frame-at-offset
+    (frame :: <collection>, offset :: <integer>)
   let start = 0;
   block (ret)
     for (ele in frame, i from 0)
@@ -95,7 +100,8 @@ define method find-frame-at-offset (frame :: <collection>, offset :: <integer>)
   end;
 end;
 
-define method find-frame-at-offset (frame :: <leaf-frame>, offset :: <integer>)
+define method find-frame-at-offset
+    (frame :: <leaf-frame>, offset :: <integer>)
   frame
 end;
 

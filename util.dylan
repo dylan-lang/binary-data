@@ -79,9 +79,9 @@ define inline function byte-aligned (offset :: <integer>)
 end;
 
 define inline function alignment-assert (func)
- unless (func)
-   signal(make(<alignment-error>))
- end;
+  unless (func)
+    signal(make(<alignment-error>))
+  end;
 end;
 
 define method byte-vector-to-bit-vector-lsb-first (bytes :: <byte-vector>)

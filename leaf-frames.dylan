@@ -27,18 +27,18 @@ define abstract class <variable-size-translated-leaf-frame>
 end;
 
 define open generic read-frame
-  (frame-type :: subclass(<leaf-frame>), string :: <string>) => (frame);
+    (frame-type :: subclass(<leaf-frame>), string :: <string>) => (frame);
 
-define method read-frame (frame-type :: subclass(<leaf-frame>), string :: <string>)
+define method read-frame
+    (frame-type :: subclass(<leaf-frame>), string :: <string>)
  => (frame)
   error("read-frame not supported for frame-type %=", frame-type);
 end;
 
 define class <boolean-bit> (<fixed-size-translated-leaf-frame>) end;
 
-define method parse-frame (frame-type == <boolean-bit>,
-                           packet :: <byte-sequence>,
-                           #key)
+define method parse-frame
+    (frame-type == <boolean-bit>, packet :: <byte-sequence>, #key)
  => (value :: <boolean>, next-unparsed :: <integer>)
   values(logand(packet[0], #x80) == #x80, 1)
 end;
@@ -46,7 +46,8 @@ end;
 define method assemble-frame-into-as
     (frame-type == <boolean-bit>,
      data :: <boolean>,
-     packet :: <byte-sequence>) => (end-offset :: <integer>)
+     packet :: <byte-sequence>)
+ => (end-offset :: <integer>)
   let subseq = subsequence(packet, length: 1);
   if (data)
     encode-integer(1, subseq, 1);
@@ -57,12 +58,12 @@ define method assemble-frame-into-as
 end;
 
 define inline method field-size (type == <boolean-bit>)
-  => (length :: <integer>)
+ => (length :: <integer>)
   1
 end;
 
-define method read-frame (type == <boolean-bit>,
-                          string :: <string>)
+define method read-frame
+    (type == <boolean-bit>, string :: <string>)
  => (res)
   string = "#t" | string = "true"
 end;
@@ -72,11 +73,13 @@ define inline method high-level-type (low-level-type == <boolean-bit>)
   <boolean>;
 end;
 
-define class <unsigned-byte> (<fixed-size-translated-leaf-frame>) end;
+define class <unsigned-byte> (<fixed-size-translated-leaf-frame>)
+end;
 
-define method parse-frame (frame-type == <unsigned-byte>,
-                           packet :: <byte-sequence>,
-                           #key)
+define method parse-frame
+    (frame-type == <unsigned-byte>,
+     packet :: <byte-sequence>,
+     #key)
  => (value :: <byte>, next-unparsed :: <integer>)
   values(packet[0], 8)
 end;
@@ -84,24 +87,24 @@ end;
 define method assemble-frame-into-as
     (frame-type == <unsigned-byte>,
      data :: <byte>,
-     packet :: <stretchy-byte-vector-subsequence>) => (end-offset :: <integer>)
+     packet :: <stretchy-byte-vector-subsequence>)
+ => (end-offset :: <integer>)
   packet[0] := data;
-  8;
-end;
-
-define inline method field-size (type == <unsigned-byte>)
-  => (length :: <integer>)
   8
 end;
 
-define method read-frame (type == <unsigned-byte>,
-                          string :: <string>)
+define inline method field-size (type == <unsigned-byte>)
+ => (length :: <integer>)
+  8
+end;
+
+define method read-frame (type == <unsigned-byte>, string :: <string>)
  => (res)
   let res = string-to-integer(string);
   if (res < 0 | res > (2 ^ field-size(type) - 1))
     signal(make(<out-of-range-error>))
   end;
-  res;
+  res
 end;
 
 define inline method high-level-type (low-level-type == <unsigned-byte>)
@@ -121,13 +124,13 @@ define macro n-bit-unsigned-integer-definer
           end;
 
           define inline method high-level-type (low-level-type == ?name)
-            => (res :: <type>)
-            limited(<integer>, min: 0, max: 2 ^ ?n - 1);
+           => (res :: <type>)
+            limited(<integer>, min: 0, max: 2 ^ ?n - 1)
           end;
 
           define inline method field-size (type == ?name)
            => (length :: <integer>)
-           ?n
+            ?n
           end; }
 end;
 
@@ -149,8 +152,8 @@ define n-bit-unsigned-integer(<15bit-unsigned-integer>; 15) end;
 define n-bit-unsigned-integer(<20bit-unsigned-integer>; 20) end;
 
 define method parse-frame
-  (frame-type :: subclass(<unsigned-integer-bit-frame>),
-   packet :: <byte-sequence>, #key)
+    (frame-type :: subclass(<unsigned-integer-bit-frame>),
+     packet :: <byte-sequence>, #key)
  => (value :: <integer>, next-unparsed :: <integer>)
   let result-size = field-size(frame-type);
   let subseq = subsequence(packet, length: result-size);
@@ -164,8 +167,8 @@ define method assemble-frame (frame :: <unsigned-integer-bit-frame>)
 end;
 
 define method assemble-frame-as
-  (frame-type :: subclass(<unsigned-integer-bit-frame>),
-   data :: <integer>)
+    (frame-type :: subclass(<unsigned-integer-bit-frame>),
+     data :: <integer>)
  => (packet :: <byte-sequence>)
   let result-size = field-size(frame-type);
   let result = make(<byte-sequence>, end: byte-offset(result-size + 7));
@@ -174,9 +177,9 @@ define method assemble-frame-as
 end;
 
 define method assemble-frame-into-as
-  (frame-type :: subclass(<unsigned-integer-bit-frame>),
-   data :: <integer>,
-   packet :: <stretchy-vector-subsequence>)
+    (frame-type :: subclass(<unsigned-integer-bit-frame>),
+     data :: <integer>,
+     packet :: <stretchy-vector-subsequence>)
  => (res :: <integer>)
   let result-size = field-size(frame-type);
   let subseq = subsequence(packet, length: result-size);
@@ -185,11 +188,11 @@ define method assemble-frame-into-as
 end;
 
 define method as (class == <string>, frame :: <unsigned-integer-bit-frame>)
-  => (string :: <string>)
+ => (string :: <string>)
   concatenate("0x",
               integer-to-string(frame.data,
                                 base: 16,
-                                size: byte-offset(frame-size(frame) + 7) * 2));
+                                size: byte-offset(frame-size(frame) + 7) * 2))
 end;
 
 define method read-frame (type :: subclass(<unsigned-integer-bit-frame>),
@@ -199,7 +202,7 @@ define method read-frame (type :: subclass(<unsigned-integer-bit-frame>),
   if (res < 0 | res > (2 ^ field-size(type) - 1))
     signal(make(<out-of-range-error>))
   end;
-  res;
+  res
 end;
 
 define open abstract class <fixed-size-byte-vector-frame> (<fixed-size-untranslated-leaf-frame>)
@@ -211,8 +214,9 @@ define macro n-byte-vector-definer
     => { define class "<" ## ?name ## ">" (<fixed-size-byte-vector-frame>)
          end;
 
-         define inline method field-size (type == "<" ## ?name ## ">") => (length :: <integer>)
-           ?n * 8;
+         define inline method field-size (type == "<" ## ?name ## ">")
+          => (length :: <integer>)
+           ?n * 8
          end;
 
          define leaf-frame-constructor(?name) end;
@@ -222,10 +226,11 @@ end;
 define sealed domain parse-frame (subclass(<fixed-size-byte-vector-frame>),
                                   <byte-sequence>);
 
-define method parse-frame (frame-type :: subclass(<fixed-size-byte-vector-frame>),
-                           packet :: <byte-sequence>,
-                           #key)
-  => (frame :: <fixed-size-byte-vector-frame>, next-unparsed :: <integer>)
+define method parse-frame
+    (frame-type :: subclass(<fixed-size-byte-vector-frame>),
+     packet :: <byte-sequence>,
+     #key)
+ => (frame :: <fixed-size-byte-vector-frame>, next-unparsed :: <integer>)
   let end-of-frame = field-size(frame-type);
   if (packet.size < byte-offset(end-of-frame))
     signal(make(<malformed-data-error>))
@@ -236,17 +241,21 @@ define method parse-frame (frame-type :: subclass(<fixed-size-byte-vector-frame>
   end;
 end;
 
-define method assemble-frame (frame :: <fixed-size-byte-vector-frame>) => (packet :: <byte-vector>)
-  frame.data;
+define method assemble-frame
+    (frame :: <fixed-size-byte-vector-frame>) => (packet :: <byte-vector>)
+  frame.data
 end;
 
-define method assemble-frame-into (frame :: <fixed-size-byte-vector-frame>,
-                                   packet :: <stretchy-byte-vector-subsequence>) => (res :: <integer>)
+define method assemble-frame-into
+    (frame :: <fixed-size-byte-vector-frame>,
+     packet :: <stretchy-byte-vector-subsequence>)
+ => (res :: <integer>)
   copy-bytes(packet, 0, frame.data, 0, byte-offset(frame-size(frame)));
   frame-size(frame)
 end;
 
-define method as (class == <string>, frame :: <fixed-size-byte-vector-frame>) => (res :: <string>)
+define method as (class == <string>, frame :: <fixed-size-byte-vector-frame>)
+ => (res :: <string>)
   let out-stream = make(<string-stream>, direction: #"output");
   block ()
     hexdump(out-stream, frame.data);
@@ -256,13 +265,14 @@ define method as (class == <string>, frame :: <fixed-size-byte-vector-frame>) =>
   end
 end;
 
-define method read-frame (frame-type :: subclass(<fixed-size-byte-vector-frame>),
-                          string :: <string>)
+define method read-frame
+    (frame-type :: subclass(<fixed-size-byte-vector-frame>),
+     string :: <string>)
  => (res)
   make(frame-type,
        data: copy-sequence(string,
                            start: 0,
-                           end: byte-offset(field-size(frame-type))));
+                           end: byte-offset(field-size(frame-type))))
 end;
 
 define method \= (frame1 :: <fixed-size-byte-vector-frame>,
@@ -288,13 +298,14 @@ define macro n-byte-unsigned-integer-definer
 
           define inline method high-level-type
               (low-level-type == ?name ## "-big-endian-unsigned-integer>")
-            => (res :: <type>)
+           => (res :: <type>)
             limited(<integer>, min: 0, max: 2 ^ (8 * ?n) - 1);
           end;
 
-          define inline method field-size (field == ?name ## "-big-endian-unsigned-integer>")
+          define inline method field-size
+              (field == ?name ## "-big-endian-unsigned-integer>")
            => (length :: <integer>)
-           ?n * 8
+            ?n * 8
           end;
 
           define class ?name ## "-little-endian-unsigned-integer>"
@@ -305,13 +316,14 @@ define macro n-byte-unsigned-integer-definer
 
           define inline method high-level-type
               (low-level-type == ?name ## "-little-endian-unsigned-integer>")
-            => (res :: <type>)
+           => (res :: <type>)
             limited(<integer>, min: 0, max: 2 ^ (8 * ?n) - 1);
           end;
 
-          define inline method field-size (field == ?name ## "-little-endian-unsigned-integer>")
+          define inline method field-size
+              (field == ?name ## "-little-endian-unsigned-integer>")
            => (length :: <integer>)
-           ?n * 8
+            ?n * 8
           end; }
 end;
 
@@ -319,12 +331,13 @@ define n-byte-unsigned-integer(<2byte; 2) end;
 define n-byte-unsigned-integer(<3byte; 3) end;
 //define n-byte-unsigned-integer(<4byte; 4) end;
 
-define sealed domain parse-frame (subclass(<big-endian-unsigned-integer-byte-frame>),
-                                  <byte-sequence>);
+define sealed domain parse-frame
+    (subclass(<big-endian-unsigned-integer-byte-frame>), <byte-sequence>);
 
-define method parse-frame (frame-type :: subclass(<big-endian-unsigned-integer-byte-frame>),
-                           packet :: <byte-sequence>,
-                           #key)
+define method parse-frame
+    (frame-type :: subclass(<big-endian-unsigned-integer-byte-frame>),
+     packet :: <byte-sequence>,
+     #key)
  => (value :: <integer>, next-unparsed :: <integer>)
  let result-size = byte-offset(field-size(frame-type));
  if (packet.size < result-size)
@@ -334,105 +347,117 @@ define method parse-frame (frame-type :: subclass(<big-endian-unsigned-integer-b
    for (i from 0 below result-size)
      result := packet[i] + ash(result, 8)
    end;
-   values(result, result-size * 8);
+   values(result, result-size * 8)
  end;
 end;
 
-define method assemble-frame (frame :: <big-endian-unsigned-integer-byte-frame>)
+define method assemble-frame
+    (frame :: <big-endian-unsigned-integer-byte-frame>)
  => (packet :: <byte-vector>)
-  assemble-frame-as(frame.object-class, frame.data);
+  assemble-frame-as(frame.object-class, frame.data)
 end;
 
-define method assemble-frame-as (frame-type :: subclass(<big-endian-unsigned-integer-byte-frame>),
-                                 data :: <integer>)
-  => (packet :: <byte-sequence>)
+define method assemble-frame-as
+    (frame-type :: subclass(<big-endian-unsigned-integer-byte-frame>),
+     data :: <integer>)
+ => (packet :: <byte-sequence>)
   let result = make(<stretchy-byte-vector-subsequence>, end: byte-offset(field-size(frame-type)));
   assemble-frame-into-as(frame-type, data, result);
-  result;
+  result
 end;
 
-define method assemble-frame-into-as (frame-type :: subclass(<big-endian-unsigned-integer-byte-frame>),
-                                      data :: <integer>,
-                                      packet :: <byte-sequence>) => (res :: <integer>)
+define method assemble-frame-into-as
+    (frame-type :: subclass(<big-endian-unsigned-integer-byte-frame>),
+     data :: <integer>,
+     packet :: <byte-sequence>)
+ => (res :: <integer>)
   for (i from 0 below byte-offset(field-size(frame-type)))
     packet[i] := logand(#xff, ash(data, - (field-size(frame-type) - i * 8 - 8)));
   end;
   field-size(frame-type)
 end;
 
-define method as (class == <string>, frame :: <big-endian-unsigned-integer-byte-frame>)
+define method as
+    (class == <string>, frame :: <big-endian-unsigned-integer-byte-frame>)
  => (string :: <string>)
- concatenate("0x", integer-to-string(frame.data,
-                                     base: 16,
-                                     size: ash(2 * field-size(frame.object-class), -3)));
+  concatenate("0x", integer-to-string(frame.data,
+                                      base: 16,
+                                      size: ash(2 * field-size(frame.object-class), -3)));
 end;
 
-define method read-frame (type :: subclass(<big-endian-unsigned-integer-byte-frame>),
-                          string :: <string>)
+define method read-frame
+    (type :: subclass(<big-endian-unsigned-integer-byte-frame>),
+     string :: <string>)
  => (res)
   let res = string-to-integer(string);
   if (res < 0 | res > (2 ^ field-size(type) - 1))
     signal(make(<out-of-range-error>))
   end;
-  res;
+  res
 end;
 
-define sealed domain parse-frame (subclass(<little-endian-unsigned-integer-byte-frame>),
-                                  <byte-sequence>);
+define sealed domain parse-frame
+    (subclass(<little-endian-unsigned-integer-byte-frame>), <byte-sequence>);
 
-define method parse-frame (frame-type :: subclass(<little-endian-unsigned-integer-byte-frame>),
-                           packet :: <byte-sequence>,
-                           #key)
+define method parse-frame
+    (frame-type :: subclass(<little-endian-unsigned-integer-byte-frame>),
+     packet :: <byte-sequence>,
+     #key)
  => (value :: <integer>, next-unparsed :: <integer>)
- let result-size = byte-offset(field-size(frame-type));
- if (packet.size < result-size)
-   signal(make(<malformed-data-error>))
- else
-   let result = 0;
-   for (i from result-size - 1 to 0 by -1)
-     result := packet[i] + ash(result, 8)
-   end;
-   values(result, result-size * 8);
- end;
+  let result-size = byte-offset(field-size(frame-type));
+  if (packet.size < result-size)
+    signal(make(<malformed-data-error>))
+  else
+    let result = 0;
+    for (i from result-size - 1 to 0 by -1)
+      result := packet[i] + ash(result, 8)
+    end;
+    values(result, result-size * 8)
+  end;
 end;
 
-define method assemble-frame (frame :: <little-endian-unsigned-integer-byte-frame>)
+define method assemble-frame
+    (frame :: <little-endian-unsigned-integer-byte-frame>)
  => (packet :: <byte-vector>)
-  assemble-frame-as(frame.object-class, frame.data);
+  assemble-frame-as(frame.object-class, frame.data)
 end;
 
-define method assemble-frame-as (frame-type :: subclass(<little-endian-unsigned-integer-byte-frame>),
-                                 data :: <integer>)
-  => (packet :: <stretchy-byte-vector-subsequence>)
+define method assemble-frame-as
+    (frame-type :: subclass(<little-endian-unsigned-integer-byte-frame>),
+     data :: <integer>)
+ => (packet :: <stretchy-byte-vector-subsequence>)
   let result = make(<stretchy-byte-vector-subsequence>, end: byte-offset(field-size(frame-type)));
   assemble-frame-into-as(frame-type, data, result);
-  result;
+  result
 end;
 
-define method assemble-frame-into-as (frame-type :: subclass(<little-endian-unsigned-integer-byte-frame>),
-                                      data :: <integer>,
-                                      packet :: <stretchy-byte-vector-subsequence>)
+define method assemble-frame-into-as
+    (frame-type :: subclass(<little-endian-unsigned-integer-byte-frame>),
+     data :: <integer>,
+     packet :: <stretchy-byte-vector-subsequence>)
   for (i from 0 below byte-offset(field-size(frame-type)))
     packet[i] := logand(#xff, ash(data, - i * 8));
   end;
-  field-size(frame-type);
+  field-size(frame-type)
 end;
 
-define method as (class == <string>, frame :: <little-endian-unsigned-integer-byte-frame>)
+define method as
+    (class == <string>, frame :: <little-endian-unsigned-integer-byte-frame>)
  => (string :: <string>)
- concatenate("0x", integer-to-string(frame.data,
-                                     base: 16,
-                                     size: ash(2 * field-size(frame.object-class), -3)));
+  concatenate("0x", integer-to-string(frame.data,
+                                      base: 16,
+                                      size: ash(2 * field-size(frame.object-class), -3)))
 end;
 
-define method read-frame (type :: subclass(<little-endian-unsigned-integer-byte-frame>),
-                          string :: <string>)
+define method read-frame
+    (type :: subclass(<little-endian-unsigned-integer-byte-frame>),
+     string :: <string>)
  => (res)
   let res = string-to-integer(string);
   if (res < 0 | res > (2 ^ field-size(type) - 1))
     signal(make(<out-of-range-error>))
   end;
-  res;
+  res
 end;
 
 
@@ -441,24 +466,28 @@ define abstract class <variable-size-byte-vector> (<variable-size-untranslated-l
   slot parent :: false-or(<container-frame>) = #f, init-keyword: parent:;
 end;
 
-define method frame-size (frame :: <variable-size-byte-vector>) => (res :: <integer>)
+define method frame-size (frame :: <variable-size-byte-vector>)
+ => (res :: <integer>)
   frame.data.size * 8
 end;
 
-define method parse-frame (frame-type :: subclass(<variable-size-byte-vector>),
-                           packet :: <byte-sequence>,
-                           #key parent)
+define method parse-frame
+    (frame-type :: subclass(<variable-size-byte-vector>),
+     packet :: <byte-sequence>,
+     #key parent)
  => (frame :: <variable-size-byte-vector>, next-unparsed :: <integer>)
    values(make(frame-type, data: packet, parent: parent), packet.size * 8)
 end;
 
 define method assemble-frame (frame :: <variable-size-byte-vector>)
  => (packet :: <byte-vector>)
- frame.data
+  frame.data
 end;
 
-define method assemble-frame-into (frame :: <variable-size-byte-vector>,
-                                   packet :: <stretchy-byte-vector-subsequence>) => (res :: <integer>)
+define method assemble-frame-into
+    (frame :: <variable-size-byte-vector>,
+     packet :: <stretchy-byte-vector-subsequence>)
+ => (res :: <integer>)
   copy-bytes(packet, 0, frame.data, 0, frame.data.size);
   frame-size(frame)
 end;
@@ -473,7 +502,7 @@ define method as (class == <string>, frame :: <externally-delimited-string>)
  => (res :: <string>)
   let res = make(<string>, size: byte-offset(frame-size(frame)));
   copy-bytes(res, 0, frame.data, 0, byte-offset(frame-size(frame)));
-  res;
+  res
 end;
 
 define method as (class == <externally-delimited-string>, string :: <string>)
@@ -481,7 +510,7 @@ define method as (class == <externally-delimited-string>, string :: <string>)
   let res = make(<externally-delimited-string>,
                  data: make(<byte-sequence>, capacity: string.size));
   copy-bytes(res.data, 0, string, 0, string.size);
-  res;
+  res
 end;
 
 
@@ -495,7 +524,7 @@ define method as (class == <string>, frame :: <raw-frame>) => (res :: <string>)
   let out-stream = make(<string-stream>, direction: #"output");
   block ()
     hexdump(out-stream, frame.data);
-    out-stream.stream-contents;
+    out-stream.stream-contents
   cleanup
     close(out-stream)
   end
@@ -507,7 +536,7 @@ define method as (class == <raw-frame>, bytes :: <collection>)
   let sv = make(<raw-frame>,
                 data: make(<byte-sequence>, capacity: bytes.size));
   copy-bytes(sv.data, 0, bytes, 0, bytes.size);
-  sv;
+  sv
 end;
 
 define method read-frame (type == <raw-frame>,
@@ -516,7 +545,7 @@ define method read-frame (type == <raw-frame>,
   let res = make(<raw-frame>,
                  data: make(<byte-sequence>, capacity: string.size));
   copy-bytes(res.data, 0, string, 0, string.size);
-  res;
+  res
 end;
 
 
@@ -547,7 +576,8 @@ define n-byte-vector(little-endian-unsigned-integer-4byte, 4) end;
 define n-byte-vector(big-endian-unsigned-integer-4byte, 4) end;
 
 
-define function float-to-byte-vector-be (float :: <float>) => (res :: <byte-vector>)
+define function float-to-byte-vector-be (float :: <float>)
+ => (res :: <byte-vector>)
   let res = make(<byte-vector>, size: 4, fill: 0);
   let r = float;
   for (i from 3 to 0 by -1)
@@ -555,10 +585,11 @@ define function float-to-byte-vector-be (float :: <float>) => (res :: <byte-vect
     r := this;
     res[i] := floor(remainder);
   end;
-  res;
+  res
 end;
 
-define function float-to-byte-vector-le (float :: <float>) => (res :: <byte-vector>)
+define function float-to-byte-vector-le (float :: <float>)
+ => (res :: <byte-vector>)
   let res = make(<byte-vector>, size: 4, fill: 0);
   let r = float;
   for (i from 0 below 4)
@@ -566,22 +597,26 @@ define function float-to-byte-vector-le (float :: <float>) => (res :: <byte-vect
     r := this;
     res[i] := floor(remainder);
   end;
-  res;
+  res
 end;
 
-define function byte-vector-to-float-le (bv :: <stretchy-byte-vector-subsequence>) => (res :: <float>)
+define function byte-vector-to-float-le
+    (bv :: <stretchy-byte-vector-subsequence>)
+ => (res :: <float>)
   let res = 0.0d0;
   for (ele in reverse(bv))
     res := ele + 256 * res;
   end;
-  res;
+  res
 end;
 
-define function byte-vector-to-float-be (bv :: <stretchy-byte-vector-subsequence>) => (res :: <float>)
+define function byte-vector-to-float-be
+    (bv :: <stretchy-byte-vector-subsequence>)
+ => (res :: <float>)
   let res = 0.0d0;
   for (ele in bv)
     res := ele + 256 * res;
   end;
-  res;
+  res
 end;
 
