@@ -458,7 +458,8 @@ define method parse-frame (frame-type :: subclass(<variably-typed-container-fram
                            packet :: <byte-sequence>,
                            #key parent :: false-or(<container-frame>),
                            default)
-  let superprotocol-frame = next-method();
+ => (value :: <variably-typed-container-frame>, next-unparsed :: <integer>)
+  let (superprotocol-frame, next) = next-method();
   let real-type = lookup-layer(frame-type, layer-magic(superprotocol-frame));
   if (real-type & (real-type ~== frame-type))
     parse-frame(real-type, packet, parent: parent);
@@ -466,7 +467,7 @@ define method parse-frame (frame-type :: subclass(<variably-typed-container-fram
     if (default)
       parse-frame(default, packet, parent: parent);
     else
-      superprotocol-frame
+      values(superprotocol-frame, next)
     end;
   end;
 end;
@@ -474,19 +475,22 @@ end;
 define method parse-frame (frame-type :: subclass(<container-frame>),
                            byte-packet :: <byte-sequence>,
                            #key parent :: false-or(<container-frame>))
+ => (value :: <container-frame>, next-unparsed :: <integer>)
   let frame = make(unparsed-class(frame-type),
                    packet: byte-packet,
                    parent: parent);
   let length = field-size(frame-type);
   if (length = $unknown-at-compile-time)
-    block (ret)
+    block ()
       let fr-length = container-frame-size(frame);
       if (fr-length)
         frame.packet := subsequence(frame.packet, length: fr-length);
-        ret(values(frame, fr-length));
+        values(frame, fr-length)
+      else
+        values(frame, frame.frame-size)
       end;
     exception (e :: <error>)
-      frame;
+      values(frame, frame.frame-size)
     end;
   else
     values(frame, length)

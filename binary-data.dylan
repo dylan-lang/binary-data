@@ -88,16 +88,17 @@ define abstract class <frame> (<object>)
 end;
 
 define open generic parse-frame
-  (frame-type :: subclass (<frame>),
+  (frame-type :: subclass(<frame>),
    packet :: <sequence>,
-   #rest rest, #key, #all-keys);
+   #rest rest, #key, #all-keys)
+  => (value :: <object>, next-unparsed :: <integer>);
 
 define method parse-frame
-  (frame-type :: subclass (<frame>),
+  (frame-type :: subclass(<frame>),
    packet :: <sequence>,
    #rest rest,
    #key, #all-keys)
- => (value :: <object>, next-unparsed :: false-or(<integer>));
+ => (value :: <object>, next-unparsed :: <integer>);
  let packet-subseq = as(<stretchy-byte-vector-subsequence>, packet);
  apply(parse-frame, frame-type, packet-subseq, rest);
 end;
