@@ -1,6 +1,7 @@
 library: binary-data
 files: library
   stretchy-byte-vector
+  arithmetics
   binary-data
   leaf-frames
   fields

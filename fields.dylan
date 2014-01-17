@@ -3,7 +3,6 @@ author: Andreas Bogk and Hannes Mehnert
 copyright: 2005-2011 Andreas Bogk and Hannes Mehnert. All rights reserved.
 license: see LICENSE.txt in this distribution
 
-
 define method find-field (field-name :: <string>, list :: <simple-vector>)
  => (res :: false-or(<field>))
   find-field(as(<symbol>, field-name), list);
@@ -63,31 +62,37 @@ define function compute-static-offset (list :: <simple-vector>)
   end;
 end;
 
-
 define open generic field-size (frame :: subclass(<frame>))
  => (length :: <number>);
 
 define inline method field-size (frame :: subclass(<frame>))
  => (length :: <unknown-at-compile-time>)
-  $unknown-at-compile-time;
+  $unknown-at-compile-time
 end;
 
 define abstract class <field> (<object>)
   slot index :: <integer>, init-keyword: index:;
   constant slot field-name, required-init-keyword: name:;
-  slot static-start :: <integer-or-unknown> = $unknown-at-compile-time, init-keyword: static-start:;
-  slot static-length :: <integer-or-unknown> = $unknown-at-compile-time, init-keyword: static-length:;
-  slot static-end :: <integer-or-unknown> = $unknown-at-compile-time, init-keyword: static-end:;
+  slot static-start :: <integer-or-unknown> = $unknown-at-compile-time,
+    init-keyword: static-start:;
+  slot static-length :: <integer-or-unknown> = $unknown-at-compile-time,
+    init-keyword: static-length:;
+  slot static-end :: <integer-or-unknown> = $unknown-at-compile-time,
+    init-keyword: static-end:;
   slot init-value = $unsupplied, init-keyword: init-value:;
   slot fixup-function :: false-or(<function>) = #f, init-keyword: fixup:;
   constant slot getter, required-init-keyword: getter:;
   constant slot setter, required-init-keyword: setter:;
-  constant slot dynamic-start :: false-or(<function>) = #f, init-keyword: dynamic-start:;
-  constant slot dynamic-end :: false-or(<function>) = #f, init-keyword: dynamic-end:;
-  constant slot dynamic-length :: false-or(<function>) = #f, init-keyword: dynamic-length:;
+  constant slot dynamic-start :: false-or(<function>) = #f,
+    init-keyword: dynamic-start:;
+  constant slot dynamic-end :: false-or(<function>) = #f,
+    init-keyword: dynamic-end:;
+  constant slot dynamic-length :: false-or(<function>) = #f,
+    init-keyword: dynamic-length:;
 end;
 
-define generic static-field-size (field :: <field>) => (res :: <integer-or-unknown>);
+define generic static-field-size (field :: <field>)
+ => (res :: <integer-or-unknown>);
 
 define method static-field-size (field :: <field>)
  => (res :: singleton($unknown-at-compile-time));
@@ -108,7 +113,8 @@ define class <enum-field> (<single-field>)
   slot mappings, required-init-keyword: mappings:;
 end;
 
-define method static-field-size (field :: <single-field>) => (res :: <integer-or-unknown>)
+define method static-field-size (field :: <single-field>)
+ => (res :: <integer-or-unknown>)
   if (field.static-length ~= $unknown-at-compile-time)
     field.static-length
   else
@@ -154,6 +160,6 @@ define method make (class == <repeated-field>,
         end,
         count: count,
         reached-end?: reached-end?,
-        rest);
+        rest)
 end;
 

@@ -3,7 +3,9 @@ author: Andreas Bogk and Hannes Mehnert
 copyright: 2005-2011 Andreas Bogk and Hannes Mehnert. All rights reserved.
 license: see LICENSE.txt in this distribution
 
-define function find-frame-field (frame :: <container-frame>, search :: type-union(<container-frame>, <raw-frame>))
+define function find-frame-field
+  (frame :: <container-frame>,
+   search :: type-union(<container-frame>, <raw-frame>))
  => (res :: false-or(type-union(<frame-field>, <rep-frame-field>)))
   block (ret)
     for (ff in frame.concrete-frame-fields)
@@ -17,26 +19,32 @@ define function find-frame-field (frame :: <container-frame>, search :: type-uni
         if (framefield.size = 1) ret(framefield[0]) end;
       end;
     end;
-    #f;
+    #f
   end;
 end;
 
-define open generic compute-absolute-offset (a :: <object>, b :: <object>) => (res :: <integer>);
-define method compute-absolute-offset (frame :: type-union(<container-frame>, <raw-frame>), relative-to) => (res :: <integer>)
+define open generic compute-absolute-offset
+  (a :: <object>, b :: <object>) => (res :: <integer>);
+
+define method compute-absolute-offset
+  (frame :: type-union(<container-frame>, <raw-frame>), relative-to)
+  => (res :: <integer>)
   if (frame.parent & frame ~= relative-to)
     let ff = find-frame-field(frame.parent, frame);
-    compute-absolute-offset(ff, relative-to);
+    compute-absolute-offset(ff, relative-to)
   else
-    0;
+    0
   end;
 end;
 
-define method compute-absolute-offset (ff :: <rep-frame-field>, relative-to)
+define method compute-absolute-offset
+  (ff :: <rep-frame-field>, relative-to)
  => (res :: <integer>)
-  start-offset(ff) + compute-absolute-offset(ff.parent-frame-field, relative-to);
+  start-offset(ff) + compute-absolute-offset(ff.parent-frame-field, relative-to)
 end;
 
-define method compute-absolute-offset (frame-field :: <frame-field>, relative-to)
+define method compute-absolute-offset
+ (frame-field :: <frame-field>, relative-to)
  => (res :: <integer>)
   start-offset(frame-field) + compute-absolute-offset(frame-field.frame, relative-to)
 end;
@@ -61,13 +69,14 @@ define method compute-length (frame-field :: <frame-field>) => (res :: <integer>
   end
 end;
 
-define method find-frame-at-offset (frame :: <container-frame>, offset :: <integer>)
+define method find-frame-at-offset
+  (frame :: <container-frame>, offset :: <integer>)
  => (result-frame)
   block (ret)
     for (ff in sorted-frame-fields(frame))
       if ((start-offset(ff) <= offset) & (end-offset(ff) >= offset))
         //format-out("looking in %s, offset %d\n", ff.field.field-name, offset - start-offset(ff));
-        ret(find-frame-at-offset(ff.value, offset - start-offset(ff)));
+        ret(find-frame-at-offset(ff.value, offset - start-offset(ff)))
       end;
     end;
   end;
@@ -87,6 +96,6 @@ define method find-frame-at-offset (frame :: <collection>, offset :: <integer>)
 end;
 
 define method find-frame-at-offset (frame :: <leaf-frame>, offset :: <integer>)
-  frame;
+  frame
 end;
 
