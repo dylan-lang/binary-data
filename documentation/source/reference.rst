@@ -163,10 +163,8 @@ defined (there might be need for other combinations in the future).
    :abstract:
    :open:
 
-   :description:
-
-      Superclass of all frame format described with the
-      :macro:`define binary-data`.
+   Superclass of all binary data definitions using the :macro:`define
+   binary-data` macro.
 
    :superclasses: :class:`<variable-size-untranslated-frame>`
 
@@ -176,6 +174,25 @@ defined (there might be need for other combinations in the future).
       - :gf:`fields`
       - :gf:`field-count`
       - :gf:`packet`
+
+.. class:: <header-frame>
+   :open:
+   :abstract:
+
+   Superclass of all binary data definitions which support layering,
+   thus have a header and payload.
+
+   :superclasses: :class:`<container-frame>`
+
+.. class:: <variably-typed-container-frame>
+   :open:
+   :abstract:
+
+   Superclass of all binary data definitions which have an abstract
+   header followed by more fields. In the header a specific
+   :class:`<layering-field>` determines which subclass to instantiate.
+
+   :superclasses: :class:`<container-frame>`
 
 
 Tool API
@@ -297,48 +314,144 @@ Information about Frame Types
 Fields
 ------
 
+Syntactic sugar in the :macro:`define binary-data` domain-specific
+language instantiates these fields.
+
 .. class:: <field>
    :abstract:
 
+   The abstract superclass of all fields.
+
    :superclasses: :drm:`<object>`
 
-   :keyword static-end:
-   :keyword static-length:
-   :keyword static-start:
-   :keyword dynamic-end:
-   :keyword dynamic-length:
-   :keyword dynamic-start:
-   :keyword fixup:
-   :keyword getter:
-   :keyword index:
-   :keyword init-value:
-   :keyword name:
-   :keyword setter:
+   :keyword name: The name of this field.
+   :keyword fixup: A unary Dylan function computing the value of this field, used if no default is supplied and none provided by the client, defaults to ``#f``.
+   :keyword init-value: The default value if the client did not provide any, default :drm:`$unsupplied`.
+   :keyword static-end: A Dylan expression determining the end, defaults to :const:`$unknown-at-compile-time`.
+   :keyword static-length: A Dylan expression determining the length, defaults to :const:`$unknown-at-compile-time`.
+   :keyword static-start: A Dylan expression determining the start, defaults to :const:`$unknown-at-compile-time`.
+   :keyword dynamic-end: A unary Dylan function computing the end, defaults to ``#f``.
+   :keyword dynamic-length: A unary Dylan function computing the length, defaults to ``#f``.
+   :keyword dynamic-start: A unary Dylan function computing the start, defaults to ``#f``.
+   :keyword getter: The getter method to extract this fields value out of a concrete frame.
+   :keyword setter: The setter method to set this fields to a concrete value in a concrete frame.
+   :keyword index: An :drm:`<integer>` which is an index of this field in its :class:`<container-frame>`.
 
+   :description:
 
-repeated fields
-count-repeated
-self-delimited
-variably-typed fields
+      All keyword arguments correspond to a slot, which can be
+      accessed.
+
+   :operations:
+
+      - :meth:`field-name(<field>)`
+      - :meth:`fixup-function(<field>)`
+      - :meth:`init-value(<field>)`
+      - :meth:`static-start(<field>)`
+      - :meth:`static-length(<field>)`
+      - :meth:`static-end(<field>)`
+      - :meth:`getter(<field>)`
+      - :meth:`setter(<field>)`
+
+   See also
+
+   * :macro:`define binary-data`
+   * :gf:`fields`
+
+.. class:: <variably-typed-field>
+
+   The class for fields of dynamic type.
+
+   :superclasses: :class:`<field>`
+
+   :keyword type-function: A unary Dylan function computing the type.
+
+   See also
+
+   * :func:`payload-type`
+   * :gf:`lookup-layer`
+   * :gf:`reverse-lookup-layer`
+
+.. class:: <statically-typed-field>
+   :abstract:
+
+   The abstract superclass of all statically typed fields.
+
+   :superclasses: :class:`<field>`
+
+   :keyword type: The static type, a subclass of :class:`<frame>`.
+
+   :operations:
+
+      - :meth:`type(<statically-typed-field>)`
+
+.. note:: restrict type in source code!
+
+.. class:: <single-field>
+
+   The common field. Nothing interesting going on here.
+
+   :superclasses: :class:`<statically-typed-field>`
+
+.. class:: <enum-field>
+
+   An enumeration field to map :drm:`<integer>` to :drm:`<symbol>`.
+
+   :superclasses: :class:`<single-field>`
+
+   :keyword mapping: A mapping from keys to values as :drm:`<collection>`.
+
+.. class:: <layering-field>
+
+   The layering field is used in :class:`<header-frame>` and
+   :class:`<variably-typed-container-frame>` to determine the concrete
+   type of the payload or which subclass to use.
+
+   :superclasses: :class:`<single-field>`
+
+   :description:
+
+   The ``fixup-function`` slot is bound to :gf:`fixup-protocol-magic`.
+
+.. class:: <repeated-field>
+   :abstract:
+
+   Abstract superclass of repeated fields. The ``init-value`` slot is
+   bound to ``#()``.
+
+   :superclasses: :class:`<statically-typed-field>`
+
+.. class:: <count-repeated-field>
+
+   A repeated field which number of repetitions is determined
+   externally.
+
+   :superclasses: :class:`<repeated-field>`
+
+   :keyword count: A unary function returning the number of occurences.
+
+.. class:: <self-delimited-repeated-field>
+
+   A repeated field which end is determined internally.
+
+   :superclasses: :class:`<repeated-field>`
+
+   :keyword reached-end?: A unary function returning a :drm:`<boolean>`.
 
 
 Layering of frames
 ------------------
 
-.. note:: Check whether it only works with integers, or any type
-.. note:: Needs a story
+.. function:: payload-type
 
-.. class:: <variably-typed-container-frame>
-   :open:
-   :abstract:
+   The type of the payload, It is just a wrapper around
+   :gf:`lookup-layer`, which returns :class:`<raw-frame>` if
+   ``lookup-layer`` returned false.
 
-   :superclasses: :class:`<container-frame>`
+   :signature: payload-type *frame* => *payload-type*
 
-.. class:: <header-frame>
-   :open:
-   :abstract:
-
-   :superclasses: :class:`<container-frame>`
+   :parameter frame: An instance of :class:`<container-frame>`.
+   :value payload-type: An instance of ``<type>``.
 
 
 .. generic-function:: lookup-layer
@@ -352,18 +465,12 @@ Layering of frames
    :parameter key: Any ``<integer>``.
    :value payload-type: The resulting type, an instance of ``false-or(<class>)``.
 
-.. function:: payload-type
-
-   The type of the payload, It is just a wrapper around
-   :gf:`lookup-layer`, which returns :class:`<raw-frame>` if
-   ``lookup-layer`` returned false.
-
-   :signature: payload-type *frame* => *payload-type*
-
-   :parameter frame: An instance of :class:`<container-frame>`.
-   :value payload-type: An instance of ``<type>``.
-
 .. generic-function:: reverse-lookup-layer
+
+
+
+.. note:: Check whether it only works with integers, or any type
+
 
 Database of Binary Data Formats
 -------------------------------
@@ -407,11 +514,21 @@ Utilities
 
 .. generic-function:: hexdump
 
-   :signature: hexdump (stream sequence) => (#rest results)
+   Prints the given *data* in hexadecimal on the given *stream*.
 
-   :parameter stream: An instance of ``<object>``.
-   :parameter sequence: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :signature: hexdump *stream* *data* => ()
+
+   :parameter stream: An instance of ``<stream>``.
+   :parameter data: An instance of ``<sequence>``.
+
+   :description:
+
+      Prints 8 bytes separated by a whitespace in hexadecimal,
+      followed by two whitespaces, and another 8 bytes.
+
+      If the given *data* has more than 16 elements, it prints
+      multiple lines, and prefix each with a line number (as 16 bit
+      hexadecimal).
 
 .. function:: byte-offset
 
@@ -488,7 +605,7 @@ Extension API
 Extending Binary Data Formats
 -----------------------------
 
-This domain specific language defines a subclass of
+This domain-specific language defines a subclass of
 :class:`<container-frame>`, and all required boilerplate.
 
 .. macro:: define binary-data
@@ -519,12 +636,12 @@ This domain specific language defines a subclass of
       sugar for specializing the pretty printer (*summary* specializes
       :gf:`summary`), providing a custom length implementation
       (*length* specializes :gf:`container-frame-size`), and provide
-      binary format `layering <layering-of-frames>`__ information via
-      *over-spec*. The remaining body is a list of *field-spec*. Each
-      *field-spec* line corresponds to a slot in the defined
-      class. Additionally, each *field-spec* instantiates an object of
-      :class:`<field>` to store the static metadata. The vector of
-      fields is available via the method :gf:`fields`.
+      binary format layering information via *over-spec*
+      (:class:`<layering-field>`). The remaining body is a list of
+      *field-spec*. Each *field-spec* line corresponds to a slot in
+      the defined class. Additionally, each *field-spec* instantiates
+      an object of :class:`<field>` to store the static metadata. The
+      vector of fields is available via the method :gf:`fields`.
 
       .. code-block:: dylan
 
@@ -535,13 +652,12 @@ This domain specific language defines a subclass of
 
       .. code-block:: dylan
 
-         over-spec: *binary-format* *layering-value*
+         over-spec: *over-binary-format* *layering-value*
 
-      The *binary-format* should be a subclass of
+      The *over-binary-format* should be a subclass of
       :class:`<header-frame>` or
       :class:`<variably-typed-container-frame>`. The *layering-value*
-      will be registered for the specified *binary-format*. For
-      further reference, look into `layering <layering-of-frames>`__.
+      will be registered for the specified *over-binary-format*.
 
 
       .. code-block:: dylan
@@ -552,25 +668,34 @@ This domain specific language defines a subclass of
 
          mapping: { *key* <=> *value* }
 
-      * *field-attribute*: For special fields, syntactic sugar is available.
       * *field-name*: Each field has a unique *field-name*, which is used as name for the getter and setter methods
       * *field-type*: The *field-type* can be any subclass of :class:`<frame>`, required unless ``variably-typed`` attribute provided.
       * *default-value*: The *default-value* should be an instance of the given *field-type*.
+      * *field-attribute*: Syntactic sugar for some common patterns is available via attributes.
+
+        - ``variably-typed`` instantiates a :class:`<variably-typed-field>`.
+        - ``layering`` instantiates a :class:`<layering-field>`.
+        - ``repeated`` instantiates a :class:`<repeated-field>`.
+        - ``enum`` instantiates a :class:`<enum-field>`.
+
       * *keyword-arguments*: Depending on the field type, various keywords are supported. Lots of values are standard Dylan expressions, where the current frame object is implicitly bound to ``frame``, indicated by *frame-expression*.
 
-        - fixup: A *frame-expression* computing the field value if no default was supplied, and the client didn't provide one.
+        - fixup: A *frame-expression* computing the field value if no default was supplied, and the client didn't provide one (handy for length fields).
         - start: A *frame-expression* computing the start bit of the field in the frame.
         - end: A *frame-expression* computing the end bit of the field in the frame.
         - length: A *frame-expression* computing the length of the field.
         - static-start: A Dylan *expression* stating the start of the field in the frame.
         - static-end: A Dylan *expression* stating the end of the field in the frame.
         - static-length: A Dylan *expression* stating the length of the field.
-        - type-function: A *frame-expression* computing the type of this ``variably-typed`` field
-        - count: A *frame-expression* computing the amount of repetitions of this ``repeated`` field.
-        - reached-end?: A *frame-expression* returning a :drm:`<boolean>` whether the ``repeated`` field has finished.
-        - mappings: A *mapping* for enumerated fields between values and :drm:`<symbol>`
+        - type-function: A *frame-expression* computing the type of this :class:`<variably-typed-field>`.
+        - count: A *frame-expression* computing the amount of repetitions of this :class:`<count-repeated-field>`.
+        - reached-end?: A *frame-expression* returning a :drm:`<boolean>` whether this :class:`<self-delimited-repeated-field>` has reached its end.
+        - mappings: A *mapping* for :class:`<enum-field>` between values and :drm:`<symbol>`
 
-
+      The list of fields is instantiated once for each binary data
+      definition. If a static start offset, length, and end offset can
+      be trivially computed (using constant folding), this is done
+      during macro processing.
 
 .. note:: rename start, end, length to dynamic-start, dynamic-end, dynamic-length
 

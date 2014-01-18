@@ -1,10 +1,10 @@
 Binary Data
 ===========
 
-The binary data library provides a domain specific language for
+The binary data library provides a domain-specific language for
 manipulation of binary data, or structured byte sequences, as they
 appear in everyday software such as networking tools or graphics file
-manipulation. The binary data domain specific language uses the
+manipulation. The binary data domain-specific language uses the
 metaprogramming features of Dylan to a large extent.
 
 The design goals are manifold: concise expressive syntax, efficient
@@ -14,7 +14,7 @@ technology). Inspiration for this library is taken among others from
 the defstorage system available as part of the `Genera Common Lisp
 operating system
 <http://en.wikipedia.org/wiki/Genera_%28operating_system%29>`_ and the
-swiss-army knife for network frames `scapy
+swiss-army knife for interactive packet manipulation `scapy
 <http://bb.secdev.org/scapy/wiki/Home>`__.
 
 A large body of implemented binary data formats using this library can

@@ -75,3 +75,4 @@ Container Frame Internals
  underlying byte vector and an instance of
  :class:`<decoded-container-frame>`.
 
+ Parsing strategy and length information (which can be contradictionary).
