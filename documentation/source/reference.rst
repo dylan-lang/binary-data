@@ -7,7 +7,7 @@ API Reference
 Overview
 ========
 
-This describes the API available from binary-data. It is organised in
+This describes the API available from binary-data. It is organized in
 the following sections, depending on different demands: using binary
 data in a tool, extending with a custom binary format, and the
 internal API.
@@ -16,8 +16,9 @@ Class hierarchy
 ===============
 
 The class hierarchy is rooted in ``<frame>``. Several direct
-subclasses exist, some are extensible. Not the entire continuum of
-possible mixins is defined, only those which were needed so far.
+subclasses exist, some are ``open`` and may be subclassed. Only those
+combinations of direct subclasses which were needed until now are
+defined (there might be need for other combinations in the future).
 
 .. class:: <frame>
    :abstract:
@@ -195,12 +196,12 @@ Parsing Frames
    :parameter packet: The byte vector as ``<sequence>``.
    :parameter #rest rest: An instance of ``<object>``.
    :value result: An instance of the given frame-type.
-   :value consumed-bits: The amount of bits consumed as ``<integer>``
+   :value consumed-bits: The number of bits consumed as ``<integer>``
 
 .. generic-function:: read-frame
    :open:
 
-   Converts a given string as an instance of the given leaf frame type.
+   Converts a given string to an instance of the given leaf frame type.
 
    :signature: read-frame *frame-type* *string* => *frame*
 
@@ -272,7 +273,7 @@ Information about Frame Types
 .. generic-function:: fields
    :open:
 
-      Returns a vector of :class:`<field>` for the given :class:`<container-frame>`
+   Returns a vector of :class:`<field>` for the given :class:`<container-frame>`
 
    :signature: fields *frame-type* => *fields*
 
@@ -284,7 +285,7 @@ Information about Frame Types
 .. generic-function:: frame-name
    :open:
 
-      Returns the name of the frame type.
+   Returns the name of the frame type.
 
    :signature: frame-name *frame-type* => *name*
 
@@ -855,9 +856,9 @@ Predefined Leaf Frames
 32 Bit Frames
 -------------
 
-Story is that the representation in Dylan are only 30 bits, thus we
-have some hacks around 32 bit frames which should be represented as a
-:drm:`<number>`. This workaround consists of using
+Story is that the :drm:`<integer>` representation in Dylan is only 30
+bits, thus we have some hacks around 32 bit frames which should be
+represented as a :drm:`<number>`. This workaround consists of using
 :class:`<fixed-size-byte-vector-frame>` and converting to
 :drm:`<double-float>` values.
 

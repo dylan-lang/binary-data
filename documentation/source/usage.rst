@@ -484,7 +484,7 @@ defined.
 For fixed sized fields, meaning single fields with a static and fixed
 size frame type, their length is propagated while the DSL iterates
 over the fields. All field offsets for the ``<ethernet-frame>`` are
-known at compile time. Accessing the ``payload`` is an subsequence
+known at compile time. Accessing the ``payload`` is a subsequence
 operation (performing zerocopy) starting at bit 112 (or byte 15) of
 the binary vector.
 
