@@ -74,7 +74,7 @@ defined (there might be need for other combinations in the future).
 
    :description:
 
-      The abstract superclass of all frames with a translation into a
+      The abstract superclass of all frames with a conversion into a
       native Dylan type.
 
    :superclasses: :class:`<frame>`
