@@ -71,8 +71,7 @@ define open generic parse-frame
 define method parse-frame
     (frame-type :: subclass(<frame>),
      packet :: <sequence>,
-     #rest rest,
-     #key, #all-keys)
+     #rest rest, #key)
  => (value :: <object>, next-unparsed :: <integer>);
  let packet-subseq = as(<stretchy-byte-vector-subsequence>, packet);
  apply(parse-frame, frame-type, packet-subseq, rest)

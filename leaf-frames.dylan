@@ -77,9 +77,7 @@ define class <unsigned-byte> (<fixed-size-translated-leaf-frame>)
 end;
 
 define method parse-frame
-    (frame-type == <unsigned-byte>,
-     packet :: <byte-sequence>,
-     #key)
+    (frame-type == <unsigned-byte>, packet :: <byte-sequence>, #key)
  => (value :: <byte>, next-unparsed :: <integer>)
   values(packet[0], 8)
 end;
@@ -153,7 +151,8 @@ define n-bit-unsigned-integer(<20bit-unsigned-integer>; 20) end;
 
 define method parse-frame
     (frame-type :: subclass(<unsigned-integer-bit-frame>),
-     packet :: <byte-sequence>, #key)
+     packet :: <byte-sequence>,
+     #key)
  => (value :: <integer>, next-unparsed :: <integer>)
   let result-size = field-size(frame-type);
   let subseq = subsequence(packet, length: result-size);
@@ -211,10 +210,10 @@ end;
 
 define macro n-byte-vector-definer
   { define n-byte-vector(?:name, ?n:*) end }
-    => { define class "<" ## ?name ## ">" (<fixed-size-byte-vector-frame>)
+    => { define class ?name (<fixed-size-byte-vector-frame>)
          end;
 
-         define inline method field-size (type == "<" ## ?name ## ">")
+         define inline method field-size (type == ?name)
           => (length :: <integer>)
            ?n * 8
          end;
@@ -339,16 +338,16 @@ define method parse-frame
      packet :: <byte-sequence>,
      #key)
  => (value :: <integer>, next-unparsed :: <integer>)
- let result-size = byte-offset(field-size(frame-type));
- if (packet.size < result-size)
-   signal(make(<malformed-data-error>))
- else
-   let result = 0;
-   for (i from 0 below result-size)
-     result := packet[i] + ash(result, 8)
-   end;
-   values(result, result-size * 8)
- end;
+  let result-size = byte-offset(field-size(frame-type));
+  if (packet.size < result-size)
+    signal(make(<malformed-data-error>))
+  else
+    let result = 0;
+    for (i from 0 below result-size)
+      result := packet[i] + ash(result, 8)
+    end;
+    values(result, result-size * 8)
+  end;
 end;
 
 define method assemble-frame
@@ -550,7 +549,7 @@ end;
 
 
 define macro leaf-frame-constructor-definer
-  { define leaf-frame-constructor(?:name) end }
+  { define leaf-frame-constructor("<" ## ?:name ## ">") end }
  =>
   {
     define method ?name (data :: <byte-vector>)
@@ -572,8 +571,8 @@ define macro leaf-frame-constructor-definer
 end;
 
 //FIXME
-define n-byte-vector(little-endian-unsigned-integer-4byte, 4) end;
-define n-byte-vector(big-endian-unsigned-integer-4byte, 4) end;
+define n-byte-vector(<little-endian-unsigned-integer-4byte>, 4) end;
+define n-byte-vector(<big-endian-unsigned-integer-4byte>, 4) end;
 
 
 define function float-to-byte-vector-be (float :: <float>)

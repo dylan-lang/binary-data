@@ -227,22 +227,22 @@ define macro decoded-class-definer
 end;
 
 define macro gen-classes
-  { gen-classes(?:name; ?superframe:name) }
+  { gen-classes("<" ## ?:name; "<" ## ?superframe:name) }
  => { define inline method unparsed-class
-          (type :: subclass("<" ## ?name ## ">"))
-       => (class == "<unparsed-" ## ?name ## ">")
-        "<unparsed-" ## ?name ## ">"
+          (type :: subclass("<" ## ?name))
+       => (class == "<unparsed-" ## ?name)
+        "<unparsed-" ## ?name
       end;
 
       define inline method decoded-class
-          (type :: subclass("<" ## ?name ## ">"))
-       => (class == "<decoded-" ## ?name ## ">")
-        "<decoded-" ## ?name ## ">"
+          (type :: subclass("<" ## ?name))
+       => (class == "<decoded-" ## ?name)
+        "<decoded-" ## ?name
       end;
 
-      define class "<unparsed-" ## ?name ## ">" ("<" ## ?name ## ">", "<unparsed-" ## ?superframe ## ">")
+      define class "<unparsed-" ## ?name ("<" ## ?name, "<unparsed-" ## ?superframe)
         //sadly, inherited slots can't specify a type (and generate a warning if you try)
-        inherited slot cache /* :: "<" ## ?name ## ">" */ = make("<decoded-" ## ?name ## ">"),
+        inherited slot cache /* :: "<" ## ?name */ = make("<decoded-" ## ?name),
           init-keyword: cache:;
       end; }
 end;
@@ -266,6 +266,8 @@ define macro unparsed-frame-field-generator
         end;
       end;
 
+      ignore(?name);
+
       define inline method ?name ## "-setter"
           (value, mframe :: ?frame-type) => (res)
         mframe.cache.?name := value;
@@ -274,6 +276,9 @@ define macro unparsed-frame-field-generator
         assemble-field-into(frame-field.field, mframe, subsequence(mframe.packet, start: start-offset(frame-field)));
         value;
       end;
+
+      ignore(?name ## "-setter");
+
  }
 end;
 
@@ -307,6 +312,8 @@ define macro enum-frame-field-generator
         end;
       end;
 
+      ignore(?name);
+
       define inline method ?name ## "-setter"
           (value :: <symbol>, mframe :: "<decoded-" ## ?frame-type) => (res)
         let field = fields(mframe)[?field-index];
@@ -326,6 +333,9 @@ define macro enum-frame-field-generator
         let val :: <integer> = enum-field-symbol-to-int(field, value);
         ?name ## "-setter" (val, mframe)
       end;
+
+      ignore(?name ## "-setter");
+
  }
 end;
 
@@ -361,6 +371,7 @@ define method parse-frame-field
     //           frame-field.field.field-name, start, end-of-field, full-frame-size);
     end-of-field := full-frame-size;
   end;
+  //format-out(" calling subsequence with start %d end %d (frame-size %d, my-length %d)\n", start, end-of-field, full-frame-size, my-length);
   let (value, length)
     = parse-frame-field-aux(frame-field.field,
                             frame-field.frame,
@@ -564,10 +575,12 @@ define macro summary-generator
 end;
 
 define macro container-frame-constructor
-  { container-frame-constructor(?:name) }
+  { container-frame-constructor("<" ## ?:name ## ">") }
  => { define inline method ?name (#rest args)
         apply(make, "<" ## ?name ## ">", args)
-      end }
+      end;
+
+      ignore(?name); }
 end;
 
 define macro binary-data-definer
@@ -575,17 +588,17 @@ define macro binary-data-definer
       summary ?summary:* ;
       ?fields:*
     end }
- => { summary-generator("<" ## ?name ## ">"; ?summary);
+ => { summary-generator(?name; ?summary);
       define ?attrs binary-data ?name (?superprotocol) ?fields end; }
 
-  { define ?attrs:* binary-data ?:name (container-frame) end }
- => { define abstract class "<" ## ?name ## ">" (<container-frame>) end;
+  { define ?attrs:* binary-data "<" ## ?:name (<container-frame>) end }
+ => { define abstract class "<" ## ?name (<container-frame>) end;
 
-      define abstract class "<decoded-" ## ?name ## ">"
-        ("<" ## ?name ## ">", <decoded-container-frame>)
+      define abstract class "<decoded-" ## ?name
+        ("<" ## ?name, <decoded-container-frame>)
       end;
 
-      gen-classes(?name; container-frame); }
+      gen-classes("<" ## ?name; <container-frame>); }
 
   { define ?attrs:* binary-data ?:name (?superprotocol:name)
       over ?super:name ?magic:expression;
@@ -596,11 +609,11 @@ define macro binary-data-definer
       define method lookup-layer
           (frame :: subclass(?super), value == ?magic)
        => (class :: <class>)
-        "<" ## ?name ## ">"
+        ?name
       end;
 
       define method reverse-lookup-layer
-          (frame :: subclass(?super), payload :: "<" ## ?name ## ">")
+          (frame :: subclass(?super), payload :: ?name)
        => (value :: <integer>)
         ?magic
       end; }
@@ -612,25 +625,25 @@ define macro binary-data-definer
  => { define ?attrs binary-data ?name (?superprotocol) ?fields end;
 
       define inline method container-frame-size
-          (?=frame :: "<" ## ?name ## ">") => (res :: <integer>)
+          (?=frame :: ?name) => (res :: <integer>)
         ?container-frame-length
       end; }
 
-  { define ?attrs:* binary-data ?:name (?superprotocol:name)
+  { define ?attrs:* binary-data "<" ## ?:name ("<" ## ?superprotocol:name)
       ?fields:*
     end }
- => { real-class-definer(?attrs; "<" ## ?name ## ">"; "<" ## ?superprotocol ## ">"; ?fields);
+ => { real-class-definer(?attrs; "<" ## ?name; "<" ## ?superprotocol; ?fields);
 
-      decoded-class-definer("<decoded-" ## ?name ## ">";
-                            "<" ## ?name ## ">", "<decoded-" ## ?superprotocol ## ">";
+      decoded-class-definer("<decoded-" ## ?name;
+                            "<" ## ?name, "<decoded-" ## ?superprotocol;
                             ?fields);
 
-      gen-classes(?name; ?superprotocol);
+      gen-classes("<" ## ?name; "<" ## ?superprotocol);
 
-      frame-field-generator("<unparsed-" ## ?name ## ">";
-                            field-count("<unparsed-" ## ?superprotocol ## ">");
+      frame-field-generator("<unparsed-" ## ?name;
+                            field-count("<unparsed-" ## ?superprotocol);
                             ?fields);
 
-      container-frame-constructor(?name); }
+      container-frame-constructor("<" ## ?name); }
 end;
 
