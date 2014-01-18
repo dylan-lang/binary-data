@@ -621,8 +621,8 @@ This domain-specific language defines a subclass of
            [*field-spec*] [;]
          end
 
-   :parameter binary-format-name: The name of the defined class will surrounded by angle brackets.
-   :parameter super-binary-format: The superprotocol name without surrounding angle brackets.
+   :parameter binary-format-name: A standard Dylan class name.
+   :parameter super-binary-format: A standard Dylan name, used superclass.
    :parameter summary: A Dylan expression consisting of a format-string and a list of arguments.
    :parameter over-spec: A pair of binary format and value.
    :parameter length-expression: A Dylan expression computing the length of a frame instance.
@@ -805,14 +805,15 @@ available to define frame types of common patterns.
          define n-byte-vector (*class-name* , *bytes*)
          end
 
-   :parameter class-name: A Dylan class name without the angle brackets, which is defined by this macro.
+   :parameter class-name: A standard Dylan class name.
    :parameter bytes: The number of bytes represented by this frame.
 
    :description:
 
-      Defines the class ``<`` *class-name* ``>``, as subclass of
-      :class:`<fixed-size-byte-vector-frame>`. Calls
-      :macro:`define leaf-frame-constructor` with the given *class-name*
+      Defines the class *class-name*, as subclass of
+      :class:`<fixed-size-byte-vector-frame>`. Calls :macro:`define
+      leaf-frame-constructor` with the given *class-name* (without
+      surrounding angle brackets).
 
    :operations:
 

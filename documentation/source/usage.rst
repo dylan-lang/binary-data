@@ -205,7 +205,7 @@ binary data definition.
 
 .. code-block:: dylan
 
-    define binary-data ethernet-frame (header-frame)
+    define binary-data <ethernet-frame> (<header-frame>)
       summary "ETH %= -> %=", source-address, destination-address;
       field destination-address :: <mac-address>;
       field source-address :: <mac-address>;
@@ -215,10 +215,8 @@ binary data definition.
 
 FIXME: why is payload-type not the default type-function of a variable-typed field?
 
-The first line specifies the name ``ethernet-frame``, and its
-superframe, :class:`<header-frame>`. We support inheritance of binary
-data, the fields in the superframe are prepended to the list of given
-fields.
+The first line specifies the name ``<ethernet-frame>``, and its
+superclass, :class:`<header-frame>`.
 
 The second line specialises the method :gf:`summary` on an
 ``<ethernet-frame>`` to print ``ETH``, the source address and the
@@ -244,7 +242,7 @@ details).
 
 .. code-block:: dylan
 
-    define binary-data vlan-tag (header-frame)
+    define binary-data <vlan-tag> (<header-frame>)
       over <ethernet-frame> #x8100;
       summary "VLAN: %=", vlan-id;
       field priority :: <3bit-unsigned-integer> = 0;
@@ -275,31 +273,31 @@ The running example are the `options of a IPv4 packet
 header (``copy-flag`` and ``option-type``), but a concrete option
 might have additional fields. The end of the option is determined by
 the ``header-length`` field of an IPv4 packet and by the
-``end-of-option`` (which ``option-type`` is 0).
+``<end-option>`` (which ``option-type`` is 0).
 
 .. code-block:: dylan
 
-    define abstract binary-data ip-option-frame (variably-typed-container-frame)
+    define abstract binary-data <ip-option-frame> (<variably-typed-container-frame>)
       field copy-flag :: <1bit-unsigned-integer>;
       layering field option-type :: <7bit-unsigned-integer>;
     end;
 
-    define binary-data end-of-option-ip-option (ip-option-frame)
+    define binary-data <end-option> (<ip-option-frame>)
       over <ip-option-frame> 0;
     end;
 
-    define binary-data router-alert-ip-option (ip-option-frame)
+    define binary-data <router-alert> (<ip-option-frame>)
       over <ip-option-frame> 20;
       field router-alert-length :: <unsigned-byte> = 4;
       field router-alert-value :: <2byte-big-endian-unsigned-integer>;
     end;
 
-This defines the ``<end-of-option-ip-option>`` which has the
-``option-type`` field in the ip-option frame set to ``0``. An
-``<end-of-option-ip-option>`` does not contain any further fields,
-thus only has the two fields inherited from the ``<ip-option-frame>``.
+This defines the ``<end-option>`` which has the ``option-type`` field
+in the ip-option frame set to ``0``. An ``<end-option>`` does not
+contain any further fields, thus only has the two fields inherited
+from the ``<ip-option-frame>``.
 
-The ``<router-alert-ip-option>`` specifies two more fields, which are
+The ``<router-alert>`` specifies two more fields, which are
 appended to the inherited fields.
 
 
