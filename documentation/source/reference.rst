@@ -184,6 +184,19 @@ defined (there might be need for other combinations in the future).
 
    :superclasses: :class:`<container-frame>`
 
+   :description:
+
+      The method :gf:`payload` projects the payload of the header
+      frame. The method :gf:`payload-setter` is also defined. The
+      specialized method :gf:`fixup!` calls :gf:`fixup!` on the
+      payload of the header frame instance.
+
+   :operations:
+
+      - :gf:`payload`
+      - :gf:`payload-setter`
+      - :gf:`fixup!`
+
 .. class:: <variably-typed-container-frame>
    :open:
    :abstract:
@@ -238,24 +251,6 @@ Assembling Frames
 
    :parameter frame: An instance of :class:`<frame>`.
    :value packet: An instance of ``<object>``.
-
-.. generic-function:: fixup!
-   :open:
-
-   Fixes data in an assembled container frame.
-
-   :signature: fixup! *frame* => ()
-
-   :parameter frame: A union of :class:`<container-frame>` and
-                     :class:`<raw-frame>`. Usually specialized on a
-                     subclass of :class:`<unparsed-container-frame>`.
-
-   :description:
-
-      Used for post-assembly of certain fields, such as checksum
-      calculations in IPv4, ICMP, TCP frames, compression of domain
-      names in DNS fragments.
-
 
 Information about Frames
 ------------------------
@@ -429,7 +424,8 @@ language instantiates these fields.
 
    :description:
 
-   The ``fixup-function`` slot is bound to :gf:`fixup-protocol-magic`.
+   The ``fixup-function`` slot is bound to use the available layering
+   information. No need to specify a fixup.
 
 .. class:: <repeated-field>
    :abstract:
@@ -475,19 +471,27 @@ Layering of frames
 .. generic-function:: lookup-layer
    :open:
 
-   Given a frame type and a key, returns the type of the payload.
+   Given a *frame-type* and a *key*, returns the type of the payload.
 
    :signature: lookup-layer *frame-type* *key* => *payload-type*
 
-   :parameter frame-type: Any subclass of ``<frame>``.
-   :parameter key: Any ``<integer>``.
+   :parameter frame-type: Any subclass of :class:`<frame>`.
+   :parameter key: Any :drm:`<integer>`.
    :value payload-type: The resulting type, an instance of ``false-or(<class>)``.
 
 .. generic-function:: reverse-lookup-layer
+   :open:
+
+   Given a frame type and a payload, returns the value for the layering field.
+
+   :signature: reverse-lookup-layer *frame-type* *payload* => *layering-value*
+
+   :parameter frame-type: Any subclass of :class:`<frame>`.
+   :parameter payload: Any :class:`<frame>` instance.
+   :value value: The returned layering field value, an :drm:`<integer>`.
 
 
-
-.. note:: Check whether it only works with integers, or any type
+.. note:: Check whether it can work with other types than integers
 
 
 Database of Binary Data Formats
@@ -720,14 +724,28 @@ This domain-specific language defines a subclass of
 
       - :gf:`fixup!`
       - :gf:`summary`
-      - :gf:`assemble-frame-into`
       - :gf:`parse-frame`
 
 .. note:: rename start, end, length to dynamic-start, dynamic-end, dynamic-length
 
 .. note:: Check whether those field attributes compose in some way
 
+.. generic-function:: fixup!
+   :open:
 
+   Fixes data in an assembled container frame.
+
+   :signature: fixup! *frame* => ()
+
+   :parameter frame: A union of :class:`<container-frame>` and
+                     :class:`<raw-frame>`. Usually specialized on a
+                     subclass of :class:`<unparsed-container-frame>`.
+
+   :description:
+
+      Used for post-assembly of certain fields, such as checksum
+      calculations in IPv4, ICMP, TCP frames, compression of domain
+      names in DNS fragments.
 
 Defining a Custom Leaf Frame
 ----------------------------
@@ -757,6 +775,31 @@ available to define frame types of common patterns.
 
    :parameter frame-type: An instance of ``subclass(<frame>)``.
    :value type: An instance of ``<type>``.
+
+.. generic-function:: assemble-frame-into
+   :open:
+
+   Shuffle the bits in the given *packet* so that the *frame* is
+   encoded correctly.
+
+   :signature: assemble-frame-into *frame* *packet* => *length*
+
+   :parameter frame: An instance of :class:`<frame>`.
+   :parameter packet: An instance of :class:`<stretchy-vector-subsequence>`.
+   :value length: An instance of :drm:`<integer>`.
+
+.. generic-function:: assemble-frame-into-as
+   :open:
+
+   Shuffle the bits in the given *packet* so that the *frame* is
+   encoded correctly as the given *frame-type*.
+
+   :signature: assemble-frame-into-as *frame-type* *frame* *packet* => *length*
+
+   :parameter frame-type: A subclass of :class:`<translated-frame>`.
+   :parameter frame: An instance of :drm:`<object>`.
+   :parameter packet: An instance of :class:`<stretchy-vector-subsequence>`.
+   :value length: An instance of :drm:`<integer>`.
 
 .. macro:: define n-bit-unsigned-integer
    :defining:

@@ -4,6 +4,8 @@ Internals
 .. current-library:: binary-data
 .. current-module:: binary-data
 
+.. note:: just a collection of random things.. not very useful at the moment
+
 Internal API
 ============
 
@@ -14,12 +16,10 @@ field-count
 fields-initializer
 unparsed-class
 decoded-class
+fixup-protocol-magic
 
 .. generic-function:: layer-magic
    :open:
-
-.. generic-function:: fixup
-
 
 .. generic-function:: container-frame-size
    :open:
@@ -43,26 +43,6 @@ decoded-class
 
    :parameter frame: An instance of :class:`<frame>`.
    :value #rest results: An instance of ``<object>``.
-
-.. generic-function:: assemble-frame-as
-
-   :signature: assemble-frame-as (frame-type data) => (packet)
-
-   :parameter frame-type: An instance of ``subclass(<frame>)``.
-   :parameter data: An instance of ``<object>``.
-   :value packet: An instance of ``<object>``.
-
-.. generic-function:: assemble-frame-into
-   :open:
-
-   :signature: assemble-frame-into (frame packet) => (length)
-
-   :parameter frame: An instance of :class:`<frame>`.
-   :parameter packet: An instance of :class:`<stretchy-vector-subsequence>`.
-   :value length: An instance of :drm:`<integer>`.
-
-
-   * :gf:`copy-frame` returns a copy of the frame
 
 Container Frame Internals
 =========================

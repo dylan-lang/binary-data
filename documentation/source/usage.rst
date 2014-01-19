@@ -437,11 +437,10 @@ There are two generic functions which should be specialized by every
 Fixed size frames must specialize :gf:`field-size`, variable sized
 ones :gf:`frame-size`.
 
-Translated frames must specialize :gf:`high-level-type`, together with
-:gf:`assemble-frame-as` and :gf:`assemble-frame-into-as`.
+Translated frames must specialize :gf:`high-level-type` and
+:gf:`assemble-frame-into-as`.
 
-Untranslated frames must specialize :gf:`assemble-frame` and
-:gf:`assemble-frame-into`.
+Untranslated frames must specialize :gf:`assemble-frame-into`.
 
 There are already several classes and macros implemented where these
 methods are defined.
