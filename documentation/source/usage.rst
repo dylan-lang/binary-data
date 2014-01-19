@@ -10,15 +10,15 @@ Usage
 Terminology
 ===========
 
-A vector of bytes that has an associated definition for
-its interpretation is a *frame*. These come in two variants: some
-cannot be broken down further structurally, we call those
-*leaf frames*. The others have a composite structure, those
-are *container frames*. They consist of a number of *fields*,
-which are the named components of that frame. Every field
-in a container frame is a frame in itself, leading to a recursive
-definition of frames.  The description of the structure of a
-container frame in our DSL is referred to as a *binary data
+A vector of bytes that has an associated definition for its
+interpretation is a *frame*. These come in two variants: some cannot
+be broken down further structurally, we call those *leaf frames*. The
+others have a composite structure, those are *container frames*. They
+consist of a number of *fields*, which are the named components of
+that frame. Every field in a container frame is a frame in itself,
+leading to a recursive definition of frames.  The description of the
+structure of a container frame in our domain-specific language
+:macro:`define binary-data` is referred to as a *binary data
 definition*.
 
 Representation in Dylan
@@ -72,11 +72,12 @@ which is translated into a Dylan :drm:`<integer>`. This is referred to
 as a *translated frame* while frames without a matching Dylan type are
 known as *untranslated frames* (:class:`<untranslated-frame>`).
 
-The appropriate classes and accessor functions are not written directly for
-container frames. Rather, they are created by invocation of the ``define
-binary-data`` macro. This serves two purposes: it allows a more compact
-representation, eliminating the need to write boilerplate code over and
-over again, and it hides implementation details from the user of the DSL.
+The appropriate classes and accessor functions are not written
+directly for container frames. Rather, they are created by invocation
+of the macro :macro:`define binary-data`. This serves two purposes: it
+allows a more compact representation, eliminating the need to write
+boilerplate code over and over again, and it hides implementation
+details from the user of the DSL.
 
 Frame Types
 ===========
@@ -190,9 +191,7 @@ Methods defined on :class:`<container-frame>`:
    * :gf:`field-count` returns the size of the list
    * :gf:`frame-name` returns a short identifier of the frame
 
-FIXME: some defer to methods defined on the class, not on instances!
-
-The definer macro :macro:`binary-data-definer` translates the
+The definer macro :macro:`define binary-data` translates the
 binary-data DSL into a class definition which is a subclass of
 :class:`<container-frame>` (and other useful stuff).
 
@@ -202,11 +201,11 @@ consist of a header (addressing, etc) and some payload, which might
 also be a container-frame of variable type.
 
 The running example is an ``<ethernet-frame>``, which is shown as
-binary-data definition.
+binary data definition.
 
 .. code-block:: dylan
 
-    define binary-data ethernet-frame (header-frame)
+    define binary-data <ethernet-frame> (<header-frame>)
       summary "ETH %= -> %=", source-address, destination-address;
       field destination-address :: <mac-address>;
       field source-address :: <mac-address>;
@@ -216,10 +215,8 @@ binary-data definition.
 
 FIXME: why is payload-type not the default type-function of a variable-typed field?
 
-The first line specifies the name ``ethernet-frame``, and its
-superframe, ``header-frame``. We support inheritance of binary data,
-the fields in the superframe are prepended to the list of given
-fields.
+The first line specifies the name ``<ethernet-frame>``, and its
+superclass, :class:`<header-frame>`.
 
 The second line specialises the method :gf:`summary` on an
 ``<ethernet-frame>`` to print ``ETH``, the source address and the
@@ -227,12 +224,14 @@ destination address.
 
 The remaining lines represent each one field in the ethernet frame
 structure. The ``source-address`` and ``destination-address`` are each
-of type ``<mac-address>``. The ``type-code`` field is a 16 bit
-integer, and it is a ``layering`` field. This means that its value is
-used to determine the type of its payload! Also, when assembling such
-a frame, the layering field will be filled out automatically depending
+of type ``<mac-address>``.
+
+The ``type-code`` field is a 16 bit integer, and it is a ``layering``
+field (:class:`<layering-field>`). This means that its value is used
+to determine the type of its payload! Also, when assembling such a
+frame, the layering field will be filled out automatically depending
 on the payload type.  There can be at most one ``layering`` field in a
-binary-data definition.
+binary data definition.
 
 The last field is the payload, whose type is variable and given by
 applying the function ``payload-type`` to the concrete frame instance.
@@ -243,7 +242,7 @@ details).
 
 .. code-block:: dylan
 
-    define binary-data vlan-tag (header-frame)
+    define binary-data <vlan-tag> (<header-frame>)
       over <ethernet-frame> #x8100;
       summary "VLAN: %=", vlan-id;
       field priority :: <3bit-unsigned-integer> = 0;
@@ -256,6 +255,9 @@ details).
 Default values for fields can be provided, similar to Dylan class
 definitions, after the equal sign (``=``) after the field type.
 
+A more detailed description of the binary data language can be found
+in its reference :macro:`define binary-data`.
+
 Inheritance: Variably Typed Container Frames
 --------------------------------------------
 
@@ -263,126 +265,114 @@ A container frame can inherit from another container frame which
 already has some field structure. The
 :class:`<variably-typed-container-frame>` class is used in container
 frames which have the type information encoded in the frame. Parsing
-of the layering field of these container frames is needed to find out
-the actual type.
+of the layering field (:class:`<layering-field>`) of these container
+frames is needed to find out the actual type.
 
-For example:
+The running example are the `options of a IPv4 packet
+<https://en.wikipedia.org/wiki/IPv4#Options>`__. These share a common
+header (``copy-flag`` and ``option-type``), but a concrete option
+might have additional fields. The end of the option is determined by
+the ``header-length`` field of an IPv4 packet and by the
+``<end-option>`` (which ``option-type`` is 0).
 
 .. code-block:: dylan
 
-    define abstract binary-data ip-option-frame (variably-typed-container-frame)
+    define abstract binary-data <ip-option-frame> (<variably-typed-container-frame>)
       field copy-flag :: <1bit-unsigned-integer>;
       layering field option-type :: <7bit-unsigned-integer>;
     end;
 
-    define binary-data end-of-option-ip-option (ip-option-frame)
+    define binary-data <end-option> (<ip-option-frame>)
       over <ip-option-frame> 0;
     end;
 
-    define binary-data router-alert-ip-option (ip-option-frame)
+    define binary-data <router-alert> (<ip-option-frame>)
       over <ip-option-frame> 20;
       field router-alert-length :: <unsigned-byte> = 4;
       field router-alert-value :: <2byte-big-endian-unsigned-integer>;
     end;
 
-This defines the ``<end-of-option-ip-option>`` which has the ``option-type``
-field in the ip-option frame set to ``0``. An ``<end-of-option-ip-option>``
-does not contain any further fields, thus only has the two fields inherited from
-the ``<ip-option-frame>``.
+This defines the ``<end-option>`` which has the ``option-type`` field
+in the ip-option frame set to ``0``. An ``<end-option>`` does not
+contain any further fields, thus only has the two fields inherited
+from the ``<ip-option-frame>``.
 
-The ``<router-alert-ip-option>`` specifies two more fields, which are
+The ``<router-alert>`` specifies two more fields, which are
 appended to the inherited fields.
-
-Container Frame Options
------------------------
-
-``length`` *expression*:
-   A Dylan expression which emits the length of the frame. A binding
-   to the frame instance is available as the local variable ``frame``.
-
-``over`` *binary-data-type* *value*:
-   This frame can be stacked as payload to *binary-data-type* with the
-   *value* in the layering field.
-
-``summary`` *format-string*, *arguments*:
-   The generic function :gf:`summary` is specialized using
-   :gf:`format-to-string` on the *format-string*, applying the frame
-   instance to all *arguments*, which should be unary functions.
-
 
 
 Fields
 ======
 
-The instantiation of fields is encapsulated into the binary data DSL,
-there is no need to instantiate any of these classes directly, but
-instead the DSL provides syntactic sugar for these fields.
+The domain-specific language :macro:`define binary-data` provides
+syntactic sugar to create :class:`<field>` instances. A client should
+not need to instantiate these directly. A field contains the static
+information (such as type, length, default value) of a sequence of
+bits inside of a :class:`<container-frame>`.
 
-There are two disjoint classes of the abstract superclass
-:class:`<field>`: normal fields with a static type,
-:class:`<statically-typed-field>`, and fields with a variable type :class:`<variably-typed-field>` (``variably-typed`` syntax).
+Binary data formats have some common patterns which are directly
+integrated into this library:
 
-Further class hierarchy distinguishes between fields which occur once
-in a frame (class :class:`<single-field>`) and fields occuring
-multiple times (class :class:`<repeated-field>`).
+* *variably-typed* fields for payloads
+* *layering* of protocols in the OSI network stack
+* *enumeration* where the bit value has a direct correspondence to a :drm:`<symbol>`
+* *repeating* occurences of a field, such as key-value pairs
 
-We already came across fields used for layering, these are represented
-by the class :class:`<layering-field>` (``layering`` syntax).
+.. note:: There might be more patterns, if you find any, please tell us!
 
-It is common for binary data formats to contain enumeration fields: in
-binary they are only a sequence of bits, but in the binary data
-specification there are symbols available for each different bit
-sequence. These are represented by :class:`<enum-fields>` .
+Variably-typed
+--------------
 
-There are two types of :class:`<repeated-field>`: those which occur a
-specified number of times (class :class:`<count-repeated-field>`), and
-those which occur until a special token (e.g. a zero byte) is read
-(class :class:`<self-delimited-repeated-field>`).
+Most fields have the same type in all frame instances, these are
+statically typed. But the type of a field can depend on the value of
+another field in the same :class:`<container-frame>`. This library
+provides direct support for this demand, by introducing
+:class:`<variably-typed-field>` which does not have a static type, but
+an expression determining the type for a concrete frame object.
 
-Normal Fields
--------------
-
-Fields can have the following parameters specified:
-
-``static-start:`` *expression*:
-   A Dylan expression returning the static offset of this field into
-   the bit-vector, if known and not trivial.
-
-``static-length:`` *expression*:
-   A Dylan expression returning the static size of this field, if
-   known and not trivial.
-
-``static-end:`` *expression*:
-   A Dylan expression returning the static offset of the end of this
-   field into the bit-vector, if known and not trivial.
-
-``start:`` *expression*:
-   A Dylan expression where ``frame`` is bound to the concrete
-   instance. The expected return value is the offset of this field
-   into the bit-vector.
-
-``length:`` *expression*;
-   A Dylan expression where ``frame`` is bound to the concrete
-   instance. The expected return value is the bit length this field.
-
-``end:``
-   A Dylan expression where ``frame`` is bound to the concrete
-   instance. The expected return value is the offset of this field
-   end into the bit-vector.
-
-``fixup:`` *expression*:
-   A Dylan expression where ``frame`` is bound to the concrete
-   instance. When assembling a frame into a byte vector, if the value
-   of a field has not been specified, the fixup expression will be
-   evaluated and its return value will be used.
+This example uses the ``variably-typed field`` syntax. The
+``type-function`` keyword has ``frame`` bound to the concrete frame
+object.
 
 
-Enumerated Fields
------------------
+.. code-block:: dylan
 
-An enumerated field provides a set of mappings from the binary value
-to a Dylan symbol. Note that the binary value must be a numerical
-type so that the mapping is from an integer to a symbol.
+    field length-type :: <2bit-unsigned-integer>;
+    variably-typed field body-length,
+      type-function: select (frame.length-type)
+                       0 => <unsigned-byte>;
+                       1 => <2byte-big-endian-unsigned-integer>;
+                       2 => <4byte-big-endian-unsigned-integer>;
+                       3 => <null-frame>;
+                     end;
+
+Layering
+--------
+
+Binary data format stacking is omnipresent in network protocols. An
+ethernet frame can contain different types of payload, amongst others
+ARP frames, IPv4 frames. This library provides syntactic sugar
+``layering`` to define which field in a frame determines the type of
+the payload. A binary data definition can also specify which value is
+used to be the payload of another binary data format.
+
+A layering field (:class:`<layering-field>`) provides the information
+that the value of this field controls the type of the payload, and
+establishes a registry for field values and matching payload types.
+
+The registry can be extended with the ``over`` syntax of
+:macro:`define binary-data`, and it can be queried using the
+convinience function :func:`payload-type`, or :gf:`lookup-layer` and
+:gf:`reverse-lookup-layer`.
+
+
+Enumeration
+-----------
+
+An enumerated field (:class:`<enum-field>`) provides a set of mappings
+from the binary value to a Dylan :drm:`<symbol>`. Note that the binary
+value must be a numerical type so that the mapping is from an integer
+to a symbol.
 
 In this example, accessing the value of the field would return one of
 the symbols rather than the value of the :class:`<unsigned-byte>`. For
@@ -395,25 +385,16 @@ mappings not specified, the integer value is used:
                     2 <=> #"bind",
                     3 <=> #"udp associate" };
 
-Layering Fields
----------------
+Repeating
+---------
 
-A layering field provides the information that the value of this field
-controls the type of the payload, and introduces a registry for field
-values and matching payload types.
-
-The registry can be extended with the ``over`` syntax of the DSL, and
-it can be queried using the method :gf:`lookup-layer` (or the
-convinience function :func:`payload-type`).
-
-Repeated Fields
----------------
-
-Repeated fields have a list of values of the field type, instead of just
-a single one. We support multiple typed of repeated fields, which differ
-by the way the compute the number of elements in a repeated field. Choices
-are: self-delimited (some magic end of list value present) or count (some
-other field specifies a count of elements in the repeated field).
+Repeated fields (:class:`<repeated-field>`) have a list of values of
+the field type, instead of just a single one. We support multiple
+typed of repeated fields, which differ by the way the compute the
+number of elements in a repeated field. Choices are: self-delimited
+(:class:`<self-delimited-repeated-field>`, some magic end of list
+value present) or count (:class:`<count-repeated-field>`), some other
+field specifies a number of elements in the repeated field).
 
 A self-delimited field definition uses an expression to evaluate whether
 or not the end has been reached, usually by checking for a magic value.
@@ -439,29 +420,56 @@ Note the use of the ``fixup`` keyword on the ``number-methods`` field to
 calculate a value for use by :gf:`assemble-frame` if the value is not
 otherwise specified.
 
-Variably Typed Fields
----------------------
-
-Most fields have the same type in all frame instances, these are statically
-typed. Some fields depend on the value of another field of the same protocol,
-these are variably typed. To figure out the type, a type function has to be
-provided for the variably typed field using the ``type-function:``:
-
-.. code-block:: dylan
-
-    field length-type :: <2bit-unsigned-integer>;
-    variably-typed field body-length,
-      type-function: select (frame.length-type)
-                       0 => <unsigned-byte>;
-                       1 => <2byte-big-endian-unsigned-integer>;
-                       2 => <4byte-big-endian-unsigned-integer>;
-                       3 => <null-frame>;
-                     end;
-
-Extending binary-data
-=====================
-
 Adding a New Leaf Frame Type
 ----------------------------
 
-...
+
+
+
+Efficiency Considerations
+=========================
+
+The design goal of this library is, as usual in object-centered
+programming, that the time and space overhead are minimal (the
+compiler should remove all the indirections!).
+
+This library is carefully designed to achieve this goal, while not
+limiting the expressiveness, sacrificing the safety, or burdening the
+developer with inconvenient syntactic noise. A story about binary data
+is that there are often big chunks of data, and deeply nested pieces
+of data. The good news is that most applications do not need all
+binary data.
+
+The binary data library was designed with lazy parsing in mind: if a
+byte vector is received, the high-level object does not parse the byte
+vector completely, but only the requested fields. To achieve this, we
+gather information about each field, specifically its start and end
+offset, and also its length, already at compile time, using a number
+system consisting of the type union between :drm:`<integer>` and
+:const:`$unknown-at-compile-time`, for which basic arithmetics is
+defined.
+
+For fixed sized fields, meaning single fields with a static and fixed
+size frame type, their length is propagated while the DSL iterates
+over the fields. All field offsets for the ``<ethernet-frame>`` are
+known at compile time. Accessing the ``payload`` is a subsequence
+operation (performing zerocopy) starting at bit 112 (or byte 15) of
+the binary vector.
+
+While at the user level arithmetics is on the bit level, accesses at
+byte boundaries are done directly into the byte vector. This is
+encapsulated in the class :class:`<stretchy-byte-vector-subsequence>`
+
+FIXME: move <stretchy-byte-vector-subsequence> to a separate module
+
+Each binary data macro call defines a container class with two direct
+subclasses, a high-level decoded class
+(:class:`<decoded-container-frame>`) and a partially parsed one with
+an attached byte-vector (:class:`<unparsed-container-frame>`).  The
+decoded class has a list of :class:`<frame-field>` instances, which
+contain the metadata (size, fixup function, reference to the field,
+etc.) of each field. The partially parsed class reuses this class in
+its ``cache`` slot, and keeps a reference to its byte vector in
+another slot.
+
+
