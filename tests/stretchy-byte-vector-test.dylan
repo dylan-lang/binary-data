@@ -275,7 +275,3 @@ define suite stretchy-byte-vector-suite ()
   test decode-and-encode-test;
 end;
 
-begin
-  run-test-application(stretchy-byte-vector-suite); //, arguments: #("-debug"));
-end;
-

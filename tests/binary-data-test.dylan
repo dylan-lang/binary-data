@@ -685,8 +685,14 @@ define suite binary-data-assemble-suite ()
   test abstract-user-assemble-test;
 end;
 
-begin
-  run-test-application(binary-data-suite); //, arguments: #("-debug"));
-  run-test-application(binary-data-assemble-suite); //, arguments: #("-debug"));
+define suite binary-data-complete-suite ()
+  suite stretchy-byte-vector-suite;
+  suite binary-data-suite;
+  suite binary-data-assemble-suite;
 end;
+
+begin
+  run-test-application(binary-data-complete-suite);
+end;
+
 
