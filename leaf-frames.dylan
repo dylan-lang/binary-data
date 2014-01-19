@@ -160,21 +160,6 @@ define method parse-frame
   values(value, result-size)
 end;
 
-define method assemble-frame (frame :: <unsigned-integer-bit-frame>)
- => (packet :: <stretchy-byte-vector-subsequence>)
-  assemble-frame-as(frame.object-class, frame.data)
-end;
-
-define method assemble-frame-as
-    (frame-type :: subclass(<unsigned-integer-bit-frame>),
-     data :: <integer>)
- => (packet :: <byte-sequence>)
-  let result-size = field-size(frame-type);
-  let result = make(<byte-sequence>, end: byte-offset(result-size + 7));
-  assemble-frame-into-as(frame-type, data, result);
-  result
-end;
-
 define method assemble-frame-into-as
     (frame-type :: subclass(<unsigned-integer-bit-frame>),
      data :: <integer>,
@@ -238,11 +223,6 @@ define method parse-frame
                 data: packet),
            end-of-frame)
   end;
-end;
-
-define method assemble-frame
-    (frame :: <fixed-size-byte-vector-frame>) => (packet :: <byte-vector>)
-  frame.data
 end;
 
 define method assemble-frame-into
@@ -350,21 +330,6 @@ define method parse-frame
   end;
 end;
 
-define method assemble-frame
-    (frame :: <big-endian-unsigned-integer-byte-frame>)
- => (packet :: <byte-vector>)
-  assemble-frame-as(frame.object-class, frame.data)
-end;
-
-define method assemble-frame-as
-    (frame-type :: subclass(<big-endian-unsigned-integer-byte-frame>),
-     data :: <integer>)
- => (packet :: <byte-sequence>)
-  let result = make(<stretchy-byte-vector-subsequence>, end: byte-offset(field-size(frame-type)));
-  assemble-frame-into-as(frame-type, data, result);
-  result
-end;
-
 define method assemble-frame-into-as
     (frame-type :: subclass(<big-endian-unsigned-integer-byte-frame>),
      data :: <integer>,
@@ -415,25 +380,11 @@ define method parse-frame
   end;
 end;
 
-define method assemble-frame
-    (frame :: <little-endian-unsigned-integer-byte-frame>)
- => (packet :: <byte-vector>)
-  assemble-frame-as(frame.object-class, frame.data)
-end;
-
-define method assemble-frame-as
-    (frame-type :: subclass(<little-endian-unsigned-integer-byte-frame>),
-     data :: <integer>)
- => (packet :: <stretchy-byte-vector-subsequence>)
-  let result = make(<stretchy-byte-vector-subsequence>, end: byte-offset(field-size(frame-type)));
-  assemble-frame-into-as(frame-type, data, result);
-  result
-end;
-
 define method assemble-frame-into-as
     (frame-type :: subclass(<little-endian-unsigned-integer-byte-frame>),
      data :: <integer>,
      packet :: <stretchy-byte-vector-subsequence>)
+ => (res :: <integer>)
   for (i from 0 below byte-offset(field-size(frame-type)))
     packet[i] := logand(#xff, ash(data, - i * 8));
   end;
@@ -476,11 +427,6 @@ define method parse-frame
      #key parent)
  => (frame :: <variable-size-byte-vector>, next-unparsed :: <integer>)
    values(make(frame-type, data: packet, parent: parent), packet.size * 8)
-end;
-
-define method assemble-frame (frame :: <variable-size-byte-vector>)
- => (packet :: <byte-vector>)
-  frame.data
 end;
 
 define method assemble-frame-into

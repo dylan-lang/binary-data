@@ -92,9 +92,9 @@ define module binary-data
     parse-frame,
     assemble-frame,
     assemble-frame-into,
+    assemble-frame-into-as,
     assemble-frame!,
     copy-frame,
-    assemble-frame-as,
     read-frame,
     summary;
 

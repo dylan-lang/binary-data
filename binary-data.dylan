@@ -79,8 +79,15 @@ end;
 
 
 define open generic assemble-frame-into
-    (frame :: <frame>, packet :: <stretchy-vector-subsequence>)
+    (frame :: <frame>, packet :: <byte-sequence>)
  => (length :: <integer>);
+
+define open generic assemble-frame-into-as
+    (frame-type :: subclass(<translated-frame>),
+     data :: <object>,
+     packet :: <byte-sequence>)
+ => (length :: <integer>);
+
 
 define generic assemble-frame (frame :: <frame>) => (packet /* :: <vector> */);
 
@@ -88,20 +95,6 @@ define method assemble-frame
     (frame :: <unparsed-container-frame>)
  => (packet :: <unparsed-container-frame>)
   frame
-end;
-
-define generic assemble-frame-as
-    (frame-type :: subclass(<frame>), data :: <object>)
- => (packet /* :: <vector> */);
-
-define method assemble-frame-as
-    (frame-type :: subclass(<frame>), data :: <object>)
- => (packet /* :: <byte-vector> */)
-  if (instance?(data, frame-type))
-    assemble-frame(data)
-  else
-    error("Don't know how to convert representation!")
-  end
 end;
 
 define open generic high-level-type (low-level-type :: subclass(<frame>))
