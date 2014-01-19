@@ -30,6 +30,11 @@ define function compute-static-offset (list :: <simple-vector>)
         field.fixup-function := fixup-protocol-magic;
       end;
     end;
+    if (instance?(field, <variably-typed-field>))
+      unless (slot-initialized?(field, type-function))
+        field.type-function := payload-type;
+      end;
+    end;
     if (start ~= $unknown-at-compile-time)
       unless (field.dynamic-start)
         if (field.static-start = $unknown-at-compile-time)
@@ -124,7 +129,7 @@ end;
 
 define class <variably-typed-field> (<field>)
   //type-function has to return a subclass of <container-frame>
-  slot type-function, required-init-keyword: type-function:;
+  slot type-function, init-keyword: type-function:;
 end;
 
 define abstract class <repeated-field> (<statically-typed-field>)

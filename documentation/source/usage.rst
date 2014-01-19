@@ -213,8 +213,6 @@ binary data definition.
       variably-typed field payload, type-function: frame.payload-type;
     end;
 
-FIXME: why is payload-type not the default type-function of a variable-typed field?
-
 The first line specifies the name ``<ethernet-frame>``, and its
 superclass, :class:`<header-frame>`.
 
@@ -235,6 +233,8 @@ binary data definition.
 
 The last field is the payload, whose type is variable and given by
 applying the function ``payload-type`` to the concrete frame instance.
+The default type-function of a :class:`<variably-typed-field>` is
+:func:`payload-type`.
 
 A payload for an ``<ethernet-frame>`` might be a ``<vlan-tag>``, if
 the ``type-code`` is ``#x8100`` (the keyword ``over`` does the hairy
