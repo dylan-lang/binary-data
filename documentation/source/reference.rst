@@ -377,12 +377,7 @@ language instantiates these fields.
 
    :superclasses: :class:`<field>`
 
-   :keyword type-function: A unary Dylan function computing the type of the field.
-
-   :description:
-
-      The default value for the *type-function* keyword is
-      :func:`payload-type`.
+   :keyword type-function: A unary Dylan function computing the type of the field, defaults to :func:`payload-type`.
 
    See also
 
