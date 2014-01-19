@@ -239,6 +239,24 @@ Assembling Frames
    :parameter frame: An instance of :class:`<frame>`.
    :value packet: An instance of ``<object>``.
 
+.. generic-function:: fixup!
+   :open:
+
+   Fixes data in an assembled container frame.
+
+   :signature: fixup! *frame* => ()
+
+   :parameter frame: A union of :class:`<container-frame>` and
+                     :class:`<raw-frame>`. Usually specialized on a
+                     subclass of :class:`<unparsed-container-frame>`.
+
+   :description:
+
+      Used for post-assembly of certain fields, such as checksum
+      calculations in IPv4, ICMP, TCP frames, compression of domain
+      names in DNS fragments.
+
+
 Information about Frames
 ------------------------
 
@@ -606,7 +624,7 @@ Extending Binary Data Formats
 -----------------------------
 
 This domain-specific language defines a subclass of
-:class:`<container-frame>`, and all required boilerplate.
+:class:`<container-frame>`, and lots of boilerplate.
 
 .. macro:: define binary-data
    :defining:
@@ -696,6 +714,14 @@ This domain-specific language defines a subclass of
       definition. If a static start offset, length, and end offset can
       be trivially computed (using constant folding), this is done
       during macro processing.
+
+      Several generic functions can be specialized on the
+      *binary-format-name* for custom behaviour:
+
+      - :gf:`fixup!`
+      - :gf:`summary`
+      - :gf:`assemble-frame-into`
+      - :gf:`parse-frame`
 
 .. note:: rename start, end, length to dynamic-start, dynamic-end, dynamic-length
 

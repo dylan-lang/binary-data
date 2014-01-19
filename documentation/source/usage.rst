@@ -109,7 +109,7 @@ destination. A mac address is the unique address of each network
 interface, assigned by the IEEE. It consists of 6 bytes and is usually
 printed in hexadecimal, each byte separated by ``:``.
 
-The definition of the ``<mac-address>`` in Dylan is:
+The definition of the ``<mac-address>`` class in Dylan is:
 
 .. code-block:: dylan
 
@@ -122,17 +122,17 @@ The definition of the ``<mac-address>`` in Dylan is:
     end;
 
     define method mac-address (data :: <byte-vector>)
-     => (res :: <mac-address>);
+     => (res :: <mac-address>)
       parse-frame(<mac-address>, data)
     end;
 
     define method mac-address (data :: <string>)
-     => (res :: <mac-address>);
+     => (res :: <mac-address>)
       read-frame(<mac-address>, data)
     end;
 
-    define method read-frame(type == <mac-address>, string :: <string>)
-     => (res)
+    define method read-frame (type == <mac-address>, string :: <string>)
+     => (res :: <mac-address>)
       let res = as-lowercase(string);
       if (any?(method(x) x = ':' end, res))
         //input: 00:de:ad:be:ef:00
@@ -143,7 +143,7 @@ The definition of the ``<mac-address>`` in Dylan is:
         make(<mac-address>,
              data: map-as(<stretchy-vector-subsequence>,
                           rcurry(string-to-integer, base: 16),
-                          fields));
+                          fields))
       else
         //input: 00deadbeef00
         ...
@@ -151,7 +151,7 @@ The definition of the ``<mac-address>`` in Dylan is:
     end;
 
     define method as (class == <string>, frame :: <mac-address>)
-     => (string :: <string>);
+     => (string :: <string>)
       reduce1(method(a, b) concatenate(a, ":", b) end,
               map-as(<stretchy-vector>,
                      rcurry(integer-to-string, base: 16, size: 2),
@@ -423,7 +423,45 @@ otherwise specified.
 Adding a New Leaf Frame Type
 ----------------------------
 
+Depending on the properties of the frame, there are different methods
+which should be specialized. In general, there need to be a
+specialization of the size, how to parse, and how to assemble the
+frame.
 
+There are two generic functions which should be specialized by every
+:class:`<leaf-frame>` subclass: :gf:`parse-frame` and
+:gf:`read-frame`.
+
+.. note:: there should be a ``print-frame`` as well, rather than using ``as(<string>, frame)``.
+
+Fixed size frames must specialize :gf:`field-size`, variable sized
+ones :gf:`frame-size`.
+
+Translated frames must specialize :gf:`high-level-type`, together with
+:gf:`assemble-frame-as` and :gf:`assemble-frame-into-as`.
+
+Untranslated frames must specialize :gf:`assemble-frame` and
+:gf:`assemble-frame-into`.
+
+There are already several classes and macros implemented where these
+methods are defined.
+
+See also
+
+- :class:`<leaf-frame>`
+- :class:`<fixed-size-translated-leaf-frame>`
+- :class:`<variable-size-translated-leaf-frame>`
+- :class:`<fixed-size-untranslated-leaf-frame>`
+- :class:`<variable-size-untranslated-leaf-frame>`
+- :macro:`define n-byte-vector`
+- :macro:`define n-bit-unsigned-integer`
+- :macro:`define n-byte-unsigned-integer`
+- :class:`<unsigned-integer-bit-frame>`
+- :class:`<variable-size-byte-vector>`
+- :class:`<externally-delimited-string>`
+- :class:`<fixed-size-byte-vector-frame>`
+- :class:`<big-endian-unsigned-integer-byte-frame>`
+- :class:`<little-endian-unsigned-integer-byte-frame>`
 
 
 Efficiency Considerations
