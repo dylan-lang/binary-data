@@ -9,17 +9,18 @@ metaprogramming features of Dylan to a large extent.
 
 The design goals are manifold: concise expressive syntax, efficient
 conversion between byte vectors and high level objects (in both
-directions, by using zerocopy and lazy parsing
-technology). Inspiration for this library is taken among others from
-the defstorage system available as part of the `Genera Common Lisp
-operating system
+directions, by using zerocopy and lazy parsing technology). The source
+code of this library is available under a MIT license at `GitHub
+<https://github.com/dylan-lang/binary-data>`__. A large body of
+implemented binary data formats using this library is also available
+at `GitHub
+<https://github.com/dylan-hackers/network-night-vision/tree/master/protocols>`__.
+
+Inspiration for this library is taken among others from the defstorage
+system available as part of the `Genera Common Lisp operating system
 <http://en.wikipedia.org/wiki/Genera_%28operating_system%29>`_ and the
 swiss-army knife for interactive packet manipulation `scapy
 <http://bb.secdev.org/scapy/wiki/Home>`__.
-
-A large body of implemented binary data formats using this library can
-be found at `GitHub
-<https://github.com/dylan-hackers/network-night-vision/tree/master/protocols>`__.
 
 For further information, you might want to read our published papers
 about a TCP/IP stack written entirely in Dylan:
