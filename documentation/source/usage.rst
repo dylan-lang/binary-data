@@ -237,8 +237,8 @@ The default type-function of a :class:`<variably-typed-field>` is
 :func:`payload-type`.
 
 A payload for an ``<ethernet-frame>`` might be a ``<vlan-tag>``, if
-the ``type-code`` is ``#x8100`` (the keyword ``over`` does the hairy
-details).
+the ``type-code`` is ``#x8100`` (the ``over`` keyword takes care of
+the hairy details).
 
 .. code-block:: dylan
 
@@ -253,7 +253,7 @@ details).
     end;
 
 Default values for fields can be provided, similar to Dylan class
-definitions, after the equal sign (``=``) after the field type.
+definitions, using the equals sign (``=``) after the field type.
 
 A more detailed description of the binary data language can be found
 in its reference :macro:`define binary-data`.
@@ -261,19 +261,19 @@ in its reference :macro:`define binary-data`.
 Inheritance: Variably Typed Container Frames
 --------------------------------------------
 
-A container frame can inherit from another container frame which
-already has some field structure. The
+A container frame can inherit from another container frame that
+already has some fields defined. The
 :class:`<variably-typed-container-frame>` class is used in container
-frames which have the type information encoded in the frame. Parsing
-of the layering field (:class:`<layering-field>`) of these container
-frames is needed to find out the actual type.
+frames which have the type information encoded in the frame. The 
+layering field (:class:`<layering-field>`) of such container
+frames must be parsed in order to determine the actual type.
 
-The running example are the `options of a IPv4 packet
-<https://en.wikipedia.org/wiki/IPv4#Options>`__. These share a common
-header (``copy-flag`` and ``option-type``), but a concrete option
-might have additional fields. The end of the option is determined by
+Continuing with the ``<ethernet-frame>`` example, consider the `options of an
+IPv4 packet <https://en.wikipedia.org/wiki/IPv4#Options>`__. These share a 
+common header (``copy-flag`` and ``option-type``), but a concrete option
+might have additional fields. The end of the options list is determined by
 the ``header-length`` field of an IPv4 packet and by the
-``<end-option>`` (which ``option-type`` is 0).
+``<end-option>`` (whose ``option-type`` is 0).
 
 .. code-block:: dylan
 
@@ -323,12 +323,12 @@ integrated into this library:
 Variably-typed
 --------------
 
-Most fields have the same type in all frame instances, these are
-statically typed. But the type of a field can depend on the value of
-another field in the same :class:`<container-frame>`. This library
-provides direct support for this demand, by introducing
-:class:`<variably-typed-field>` which does not have a static type, but
-an expression determining the type for a concrete frame object.
+Most fields have the same type in all frame instances, i.e. they are
+statically typed. In some cases however, the type of a field can 
+depend on the value of another field in the same :class:`<container-frame>`.
+Such fields can be defined using :class:`<variably-typed-field>` which does
+not have a static type, but an expression determining the field type for a 
+concrete frame instance.
 
 This example uses the ``variably-typed field`` syntax. The
 ``type-function`` keyword has ``frame`` bound to the concrete frame
@@ -389,25 +389,24 @@ Repeating
 ---------
 
 Repeated fields (:class:`<repeated-field>`) have a list of values of
-the field type, instead of just a single one. We support multiple
-typed of repeated fields, which differ by the way the compute the
-number of elements in a repeated field. Choices are: self-delimited
-(:class:`<self-delimited-repeated-field>`, some magic end of list
-value present) or count (:class:`<count-repeated-field>`), some other
-field specifies a number of elements in the repeated field).
+the field type, instead of just a single one. Currently two kinds
+of repeated fields are supported, :class:`<self-delimited-repeated-field>`
+and :class:`<count-repeated-field>`, they only differ in the way the
+the number of elements in the repeated field is determined.
 
 A self-delimited field definition uses an expression to evaluate whether
-or not the end has been reached, usually by checking for a magic value.
-This expression should return ``#t`` when the field is fully parsed:
+or not the end of the list of values has been reached, usually by checking
+for a magic value. This expression should return ``#t`` when the field is
+fully parsed. For example:
 
 .. code-block:: dylan
 
     repeated field options :: <ip-option-frame>,
       reached-end?:
-        instance?(frame, <end-of-option-ip-option>);
+        instance?(frame, <end-option>);
 
-Counted field definitions use another field in the frame to determine
-how many elements are in the field:
+A count field definition uses another field in the frame to determine
+how many elements are in the field. For example:
 
 .. code-block:: dylan
 

@@ -437,7 +437,7 @@ language instantiates these fields.
 
 .. class:: <count-repeated-field>
 
-   A repeated field which number of repetitions is determined
+   A repeated field whose number of repetitions is determined
    externally.
 
    :superclasses: :class:`<repeated-field>`
@@ -446,7 +446,7 @@ language instantiates these fields.
 
 .. class:: <self-delimited-repeated-field>
 
-   A repeated field which end is determined internally.
+   A repeated field whose end is determined internally.
 
    :superclasses: :class:`<repeated-field>`
 
@@ -821,7 +821,7 @@ available to define frame types of common patterns.
       Defines the class *class-name* with
       :class:`<unsigned-integer-bit-frame>` as its superclass.
 
-      Predefined are several class of the form
+      There are several predefined classes of the form
       ``<Kbit-unsigned-integer>`` with *K* between 1 and 15, and 20.
 
    :operations:
@@ -852,7 +852,7 @@ available to define frame types of common patterns.
       *class-name-prefix* ``-little-endian-unsigned-integer>``
       (superclass :class:`<little-endian-unsigned-integer-byte-frame>`.
 
-      Predefined are ``<2byte-big-endian-unsigned-integer>``,
+      The following classes are predefined: ``<2byte-big-endian-unsigned-integer>``,
       ``<2byte-little-endian-unsigned-integer>``,
       ``<3byte-big-endian-unsigned-integer>``, and
       ``<3byte-little-endian-unsigned-integer>``.
@@ -879,7 +879,7 @@ available to define frame types of common patterns.
 
    :description:
 
-      Defines the class *class-name*, as subclass of
+      Defines the class *class-name*, as a subclass of
       :class:`<fixed-size-byte-vector-frame>`. Calls :macro:`define
       leaf-frame-constructor` with the given *class-name* (without
       surrounding angle brackets).
@@ -919,7 +919,7 @@ Predefined Leaf Frames
 .. class:: <unsigned-integer-bit-frame>
    :abstract:
 
-   The superclass of all bit frame, concrete classes are defined with
+   The superclass of all bit frames, concrete classes are defined with
    the :macro:`define n-bit-unsigned-integer`.
 
    :superclasses: :class:`<fixed-size-translated-leaf-frame>`
@@ -975,8 +975,8 @@ Predefined Leaf Frames
 .. class:: <raw-frame>
 
    The bottom of the type hierarchy: if nothing is known, a
-   ``<raw-frame>`` is all you can have. At least :gf:`hexdump` is
-   defined on raw frames to investigate further.
+   ``<raw-frame>`` is all you can have. :gf:`hexdump` can
+   be used to inspect the frame contents.
 
    :superclasses: :class:`<variable-size-byte-vector>`
 
@@ -1005,7 +1005,7 @@ Predefined Leaf Frames
 .. class:: <big-endian-unsigned-integer-byte-frame>
    :abstract:
 
-   A frame representing a :drm:`<integer>` of a certain size,
+   A frame representing an :drm:`<integer>` of a certain size,
    depending on the size of the underlyaing byte vector.
 
    The macro :macro:`define n-byte-unsigned-integer-definer` defines
@@ -1028,8 +1028,8 @@ Predefined Leaf Frames
 .. class:: <little-endian-unsigned-integer-byte-frame>
    :abstract:
 
-   A frame representing a :drm:`<integer>` of a certain size,
-   depending on the size of the underlyaing byte vector.
+   A frame representing an :drm:`<integer>` of a certain size,
+   depending on the size of the underlying byte vector.
 
    The macro :macro:`define n-byte-unsigned-integer-definer` defines
    subclasses with a certain size.
@@ -1051,9 +1051,9 @@ Predefined Leaf Frames
 32 Bit Frames
 -------------
 
-Story is that the :drm:`<integer>` representation in Dylan is only 30
-bits, thus we have some hacks around 32 bit frames which should be
-represented as a :drm:`<number>`. This workaround consists of using
+The :drm:`<integer>` type in Dylan is represented by only 30
+bits, thus 32 bit frames which should be represented as a 
+:drm:`<number>` require a workaround. The workaround consists of using
 :class:`<fixed-size-byte-vector-frame>` and converting to
 :drm:`<double-float>` values.
 
