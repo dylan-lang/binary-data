@@ -687,6 +687,34 @@ define test boolean-bit-leaf-test ()
   check-equal("false assembles correctly", 0, assembled-frame.packet[0]);
 end;
 
+define test null-test-0 ()
+  let (nothing, zero) = parse-frame(<null-frame>, #(0));
+  check-equal("zero is zero", 0, zero);
+  check-true("nothing is a null-frame", instance?(nothing, <null-frame>));
+  let pack = assemble-frame-into
+               (nothing,
+                make(<stretchy-byte-vector-subsequence>,
+                     data: as(<stretchy-byte-vector>, #[0])));
+  check-equal("pack is zero", 0, pack);
+end;
+
+define binary-data <null-frame-test> (<container-frame>)
+  field zero :: <null-frame>;
+  field one :: <null-frame>;
+  field two :: <null-frame>;
+  field data :: <boolean-bit> = #f;
+end;
+
+define test null-test ()
+  let (nothing, l) = parse-frame(<null-frame-test>, #(0));
+  frame-field-checker(0, nothing, 0, 0, 0);
+  frame-field-checker(1, nothing, 0, 0, 0);
+  frame-field-checker(2, nothing, 0, 0, 0);
+  frame-field-checker(3, nothing, 0, 1, 1);
+  check-equal("length is 1", 1, l);
+  check-equal("data is false", #f, nothing.data);
+end;
+
 define suite binary-data-suite ()
   test binary-data-parser;
   test binary-data-dynamic-parser;
@@ -739,6 +767,8 @@ end;
 define suite binary-data-leaf-frames-suite ()
   test unsigned-bit-leaf-test;
   test boolean-bit-leaf-test;
+  test null-test;
+  test null-test-0;
 end;
 
 define suite binary-data-complete-suite ()

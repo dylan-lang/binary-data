@@ -195,6 +195,8 @@ end;
 define class <null-frame> (<fixed-size-untranslated-leaf-frame>)
 end;
 
+define constant $null-frame = make(<null-frame>);
+
 define inline method field-size (type == <null-frame>)
   => (length :: <integer>)
   0
@@ -203,7 +205,7 @@ end;
 define method parse-frame
     (type == <null-frame>, packet :: <byte-sequence>, #key)
   => (result :: <null-frame>, consumed-bits :: <integer>)
-  values(make(<null-frame>), 0);
+  values($null-frame, 0);
 end;
 
 define method assemble-frame-into
