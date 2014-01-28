@@ -637,6 +637,25 @@ define test abstract-user-assemble-test ()
   check-equal("byte10 of abstract-user is correct", 23, as.packet[9]);
 end;
 
+define binary-data <boolean-bit-test> (<container-frame>)
+  field foo :: <boolean-bit>;
+end;
+
+define test boolean-bit-leaf-test ()
+  let true = parse-frame(<boolean-bit-test>, #(#x80));
+  frame-field-checker(0, true, 0, 1, 1);
+  check-equal("true field maps to #t",
+              #t, true.foo);
+  let false = parse-frame(<boolean-bit-test>, #(0));
+  check-equal("false field maps to #f",
+              #f, false.foo);
+  let frame = make(<boolean-bit-test>, foo: #t);
+  let assembled-frame = assemble-frame(frame);
+  check-equal("true assembles correctly", #x80, assembled-frame.packet[0]);
+  assembled-frame.foo := #f;
+  check-equal("false assembles correctly", 0, assembled-frame.packet[0]);
+end;
+
 define suite binary-data-suite ()
   test binary-data-parser;
   test binary-data-dynamic-parser;
@@ -685,14 +704,17 @@ define suite binary-data-assemble-suite ()
   test abstract-user-assemble-test;
 end;
 
+define suite binary-data-leaf-frames-suite ()
+  test boolean-bit-leaf-test;
+end;
+
 define suite binary-data-complete-suite ()
   suite stretchy-byte-vector-suite;
   suite binary-data-suite;
   suite binary-data-assemble-suite;
+  suite binary-data-leaf-frames-suite;
 end;
 
 begin
   run-test-application(binary-data-complete-suite);
 end;
-
-
