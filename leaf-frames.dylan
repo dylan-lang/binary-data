@@ -189,6 +189,27 @@ define method read-frame (type :: subclass(<unsigned-integer-bit-frame>),
   res
 end;
 
+// A completely empty frame.
+define class <null-frame> (<fixed-size-untranslated-leaf-frame>)
+end;
+
+define inline method field-size (type == <null-frame>)
+  => (length :: <integer>)
+  0
+end;
+
+define method parse-frame
+    (type == <null-frame>, packet :: <byte-sequence>, #key)
+  => (result :: <null-frame>, consumed-bits :: <integer>)
+  values(make(<null-frame>), 0);
+end;
+
+define method assemble-frame-into
+    (frame :: <null-frame>, packet :: <stretchy-byte-vector-subsequence>)
+  => (length :: <integer>)
+  0
+end;
+
 define open abstract class <fixed-size-byte-vector-frame> (<fixed-size-untranslated-leaf-frame>)
   slot data :: <byte-sequence>, required-init-keyword: data:;
 end;

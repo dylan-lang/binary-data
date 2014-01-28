@@ -91,6 +91,7 @@ untranslated. Examples are:
 .. hlist::
 
    * :class:`<raw-frame>` has a variable size and no translation
+   * :class:`<null-frame>` has a zero size and no translation
    * :class:`<fixed-size-byte-vector-frame>` (e.g. an IPv4 address) has a fixed size and no translation
    * :class:`<2byte-big-endian-unsigned-integer>` has a fixed size of 16 bits, and its translation is a Dylan :drm:`<integer>`.
 
@@ -345,6 +346,10 @@ object.
                        2 => <4byte-big-endian-unsigned-integer>;
                        3 => <null-frame>;
                      end;
+
+Note that whenever the actual type of a variably-typed field resolves to the
+<null-frame> type it means that the field is completely missing from the
+container frame.
 
 Layering
 --------
