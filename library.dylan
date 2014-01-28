@@ -56,6 +56,8 @@ define module binary-data
     <big-endian-unsigned-integer-4byte>, big-endian-unsigned-integer-4byte,
     <little-endian-unsigned-integer-4byte>, little-endian-unsigned-integer-4byte,;
 
+  export <null-frame>;
+
   export <fixed-size-translated-leaf-frame>, <byte-sequence>,
     <fixed-size-byte-vector-frame>;
 
