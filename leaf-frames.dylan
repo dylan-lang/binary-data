@@ -40,7 +40,9 @@ define class <boolean-bit> (<fixed-size-translated-leaf-frame>) end;
 define method parse-frame
     (frame-type == <boolean-bit>, packet :: <byte-sequence>, #key)
  => (value :: <boolean>, next-unparsed :: <integer>)
-  values(logand(packet[0], #x80) == #x80, 1)
+  let subseq = subsequence(packet, length: 1);
+  let value = decode-integer(subseq, 1);
+  values(if (value == 1) #t else #f end, 1)
 end;
 
 define method assemble-frame-into-as
