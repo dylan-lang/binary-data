@@ -463,6 +463,17 @@ define binary-data <bits> (<container-frame>)
   field f :: <1bit-unsigned-integer> = 1;
 end;
 
+define test bits-parsing ()
+  let (fr, used) = parse-frame(<bits>, #(#x55));
+  check-equal("only 6 bits used", 6, used);
+  check-equal("field a is 0", 0, fr.a);
+  check-equal("field b is 1", 1, fr.b);
+  check-equal("field c is 0", 0, fr.c);
+  check-equal("field d is 1", 1, fr.d);
+  check-equal("field e is 0", 0, fr.e);
+  check-equal("field f is 1", 1, fr.f);
+end;
+
 define test bits-assemble ()
   let f = make(<bits>);
   let as = assemble-frame(f);
@@ -637,7 +648,27 @@ define test abstract-user-assemble-test ()
   check-equal("byte10 of abstract-user is correct", 23, as.packet[9]);
 end;
 
+define binary-data <unsigned-bit-test> (<container-frame>)
+  field foo :: <1bit-unsigned-integer>;
+end;
+
+define test unsigned-bit-leaf-test ()
+  let true = parse-frame(<unsigned-bit-test>, #(#x80));
+  frame-field-checker(0, true, 0, 1, 1);
+  check-equal("foo field maps to 1",
+              1, true.foo);
+  let false = parse-frame(<unsigned-bit-test>, #(0));
+  check-equal("foo field maps to 0",
+              0, false.foo);
+  let frame = make(<unsigned-bit-test>, foo: 1);
+  let assembled-frame = assemble-frame(frame);
+  check-equal("1 assembles correctly", #x80, assembled-frame.packet[0]);
+  assembled-frame.foo := 0;
+  check-equal("0 assembles correctly", 0, assembled-frame.packet[0]);
+end;
+
 define binary-data <boolean-bit-test> (<container-frame>)
+  //field foo :: <1bit-unsigned-integer>;
   field foo :: <boolean-bit>;
 end;
 
@@ -669,6 +700,7 @@ define suite binary-data-suite ()
   test inheritance-dynamic-length;
   test dyn-length;
   test dynamic-length;
+  test bits-parsing;
   test half-byte-parsing;
   test dns-foo-parsing;
   test dynlength;
@@ -705,6 +737,7 @@ define suite binary-data-assemble-suite ()
 end;
 
 define suite binary-data-leaf-frames-suite ()
+  test unsigned-bit-leaf-test;
   test boolean-bit-leaf-test;
 end;
 
