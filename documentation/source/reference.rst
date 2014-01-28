@@ -159,6 +159,17 @@ defined (there might be need for other combinations in the future).
 
    :superclasses: :class:`<leaf-frame>`, :class:`<variable-size-untranslated-frame>`
 
+.. class:: <null-frame>
+   :description:
+
+      A concrete zero size leaf frame without a translation. This frame type 
+      can be used as one of the types of a variably-typed field to make the 
+      field optional. A field with a type <null-frame> is considered to be 
+      missing from the container frame. Conversion of a <null-frame> to string
+      or vice versa is not supported (because it wouldn't make much sense).
+
+   :superclasses: :class:`<fixed-size-untranslated-leaf-frame>`
+
 .. class:: <container-frame>
    :abstract:
    :open:
