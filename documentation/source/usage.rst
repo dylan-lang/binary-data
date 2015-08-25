@@ -265,12 +265,12 @@ Inheritance: Variably Typed Container Frames
 A container frame can inherit from another container frame that
 already has some fields defined. The
 :class:`<variably-typed-container-frame>` class is used in container
-frames which have the type information encoded in the frame. The 
+frames which have the type information encoded in the frame. The
 layering field (:class:`<layering-field>`) of such container
 frames must be parsed in order to determine the actual type.
 
 Continuing with the ``<ethernet-frame>`` example, consider the `options of an
-IPv4 packet <https://en.wikipedia.org/wiki/IPv4#Options>`__. These share a 
+IPv4 packet <https://en.wikipedia.org/wiki/IPv4#Options>`__. These share a
 common header (``copy-flag`` and ``option-type``), but a concrete option
 might have additional fields. The end of the options list is determined by
 the ``header-length`` field of an IPv4 packet and by the
@@ -325,10 +325,10 @@ Variably-typed
 --------------
 
 Most fields have the same type in all frame instances, i.e. they are
-statically typed. In some cases however, the type of a field can 
+statically typed. In some cases however, the type of a field can
 depend on the value of another field in the same :class:`<container-frame>`.
 Such fields can be defined using :class:`<variably-typed-field>` which does
-not have a static type, but an expression determining the field type for a 
+not have a static type, but an expression determining the field type for a
 concrete frame instance.
 
 This example uses the ``variably-typed field`` syntax. The
