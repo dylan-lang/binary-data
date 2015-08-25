@@ -160,6 +160,7 @@ defined (there might be need for other combinations in the future).
    :superclasses: :class:`<leaf-frame>`, :class:`<variable-size-untranslated-frame>`
 
 .. class:: <null-frame>
+
    :description:
 
       A concrete zero size leaf frame without a translation. This frame type 
