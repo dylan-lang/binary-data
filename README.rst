@@ -16,9 +16,7 @@ http://opendylan.org/documentation/binary-data/.
 
 There are two papers about this project:
 
-* `Secure networking`_ [2006]
-* `A domain-specific language for manipulation of binary data in Dylan`_ [2007]
+* `Secure networking <documentation/secure-networking.pdf>`_ [2006]
+* `A domain-specific language for manipulation of binary data in Dylan <documentation/a-DSL-for-manipulation-of-binary-data.pdf>`_ [2007]
 
 .. _Genera Common Lisp operating system: http://en.wikipedia.org/wiki/Genera_%28operating_system%29
-.. _Secure networking: http://opendylan.org/~hannes/secure-networking.pdf
-.. _A domain-specific language for manipulation of binary data in Dylan: http://opendylan.org/~hannes/ilc07-final.pdf
