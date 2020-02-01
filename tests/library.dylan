@@ -13,5 +13,7 @@ end library binary-data-test;
 define module binary-data-test
   use common-dylan;
   use binary-data, exclude: { type-code, data };
+  use simple-format,
+    import: { format-to-string  };
   use testworks;
 end module binary-data-test;
