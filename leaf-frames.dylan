@@ -113,7 +113,7 @@ define inline method high-level-type (low-level-type == <unsigned-byte>)
 end;
 
 
-define abstract class <unsigned-integer-bit-frame> (<fixed-size-translated-leaf-frame>)
+define open abstract class <unsigned-integer-bit-frame> (<fixed-size-translated-leaf-frame>)
 end;
 
 define macro n-bit-unsigned-integer-definer
@@ -285,11 +285,11 @@ define method \= (frame1 :: <fixed-size-byte-vector-frame>,
   frame1.data = frame2.data
 end method;
 
-define abstract class <big-endian-unsigned-integer-byte-frame> (<fixed-size-translated-leaf-frame>)
+define open abstract class <big-endian-unsigned-integer-byte-frame> (<fixed-size-translated-leaf-frame>)
   //slot data :: <integer>, required-init-keyword: data:;
 end;
 
-define abstract class <little-endian-unsigned-integer-byte-frame> (<fixed-size-translated-leaf-frame>)
+define open abstract class <little-endian-unsigned-integer-byte-frame> (<fixed-size-translated-leaf-frame>)
 end;
 
 define macro n-byte-unsigned-integer-definer
