@@ -25,8 +25,8 @@ swiss-army knife for interactive packet manipulation `scapy
 For further information, you might want to read our published papers
 about a TCP/IP stack written entirely in Dylan:
 
-* `A domain-specific language for manipulation of binary data in Dylan <http://www.itu.dk/people/hame/ilc07-final.pdf>`__ (by Hannes Mehnert and Andreas Bogk at ILC 2007)
-* `Secure Networking <http://www.itu.dk/people/hame/secure-networking.pdf>`__ (by Andreas Bogk and Hannes Mehnert in 2006)
+* :download:`A domain-specific language for manipulation of binary data in Dylan <../a-DSL-for-manipulation-of-binary-data.pdf>` (by Hannes Mehnert and Andreas Bogk at ILC 2007)
+* :download:`Secure Networking <../secure-networking.pdf>` (by Andreas Bogk and Hannes Mehnert in 2006)
 
 .. toctree::
    :maxdepth: 3
