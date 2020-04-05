@@ -34,6 +34,8 @@ end;
 
 define test binary-data-parser ()
   let frame = parse-frame(<test-protocol>, #(#x23, #x42));
+  assert-equal(frame.foo, #x23);
+  assert-equal(frame.bar, #x42);
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, 8, 16);
@@ -62,6 +64,11 @@ end;
 
 define test binary-data-dynamic-parser ()
   let frame = parse-frame(<dynamic-test>, #(#x2, #x0, #x0, #x3, #x4, #x5));
+  assert-equal(frame.foobar, #x2);
+
+  // payload starts at foobar = 2 bytes into the frame so first 0 byte ignored.
+  assert-equal(bd/data(frame.payload), #(#x0, #x3, #x4, #x5));
+
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], $unknown-at-compile-time, $unknown-at-compile-time, $unknown-at-compile-time);
@@ -87,6 +94,9 @@ end;
 define test static-start-test ()
   let frame = parse-frame(<static-start-frame>, #(#x3, #x4, #x5, #x6));
   let field-list = fields(frame);
+  assert-equal(frame.a, #x3);
+  // static-start at 24 bits means #x4 and #x5 are skipped.
+  assert-equal(bd/data(frame.b), #(#x6));
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 24, $unknown-at-compile-time, $unknown-at-compile-time);
   frame-field-checker(0, frame, 0, 8, 8);
