@@ -272,6 +272,17 @@ define test label-assign1 ()
               bv2.packet);
 end;
 
+/* This test was commented out of the suites before I deleted them. --cgay
+   It was failing like this:
+  label-assign2 failed
+    Frame-field has length failed [120 and 128 are not =.]
+    Frame-field has end failed [128 and 136 are not =.]
+    Frame-field has start failed [128 and 136 are not =.]
+    Frame-field has end failed [136 and 144 are not =.]
+    bv2 has correct size failed [17 and 18 are not =.]
+    label assign2 failed [{<simple-byte-vector> sequence 66, 35, 2, 16, 17, 35, 3, 4, 5, 6, 35, 4, 7, 8, 9, 16, 35} and {<stretchy-byte-vector-subsequence> sequence 66, 35, 2, 16, 17, 35, 3, 4, 5, 6, 35, 4, 7, 8, 9, 16, 16, 35} are not =.  sizes differ (17 and 18), element 16 is the first non-matching element]
+
+
 define test label-assign2 ()
   let frames = as(<stretchy-vector>,
                   list(make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x1, #x2, #x3)))),
@@ -290,6 +301,7 @@ define test label-assign2 ()
               as(<byte-vector>, #(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23)),
               bv2.packet);
 end;
+*/
 
 define test label-assign3 ()
   let fr = parse-frame(<labe>, as(<byte-vector>, #(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23, #x00, #x23)));
@@ -715,69 +727,6 @@ define test null-test ()
   check-equal("data is false", #f, nothing.data);
 end;
 
-define suite binary-data-suite ()
-  test binary-data-parser;
-  test binary-data-dynamic-parser;
-  test static-start-test;
-  test repeated-test;
-  test repeated-and-dynamic-test;
-  test repeated-and-dynamic-test2;
-  test count-repeated-test;
-  test label-test;
-  test inheritance-test;
-  test inheritance-dynamic-length;
-  test dyn-length;
-  test dynamic-length;
-  test bits-parsing;
-  test half-byte-parsing;
-  test dns-foo-parsing;
-  test dynlength;
-  test dyn-length-client;
-  test dyn-length-client2;
-  test enum-parse-test;
-  test abstract-parse-test;
-  test abstract-user-parse-test;
-end;
-
-define suite binary-data-assemble-suite ()
-  test binary-data-assemble;
-  test binary-data-modify;
-  test binary-data-dynamic-assemble;
-  test static-start-assemble;
-  test repeated-assemble;
-  test repeated-and-dynamic-assemble;
-  test count-repeated-assemble;
-  test label-assemble;
-  test label-assign1;
-  //test label-assign2;
-  test label-assign3;
-  test inheritance-assemble;
-  test inheritance-dynamic-length-assemble;
-  test half-byte-assembling;
-  test half-byte-modify;
-  test half-bytes-assembling;
-  test bits-assemble;
-  test dns-foo-assemble;
-  test dynlength-assemble;
-  test enum-assemble-test;
-  test abstract-assemble-test;
-  test abstract-user-assemble-test;
-end;
-
-define suite binary-data-leaf-frames-suite ()
-  test unsigned-bit-leaf-test;
-  test boolean-bit-leaf-test;
-  test null-test;
-  test null-test-0;
-end;
-
-define suite binary-data-complete-suite ()
-  suite stretchy-byte-vector-suite;
-  suite binary-data-suite;
-  suite binary-data-assemble-suite;
-  suite binary-data-leaf-frames-suite;
-end;
-
 begin
-  run-test-application(binary-data-complete-suite);
-end;
+  run-test-application();
+end
