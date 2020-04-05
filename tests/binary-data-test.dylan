@@ -3,6 +3,11 @@ author: Andreas Bogk and Hannes Mehnert
 copyright: 2005-2011 Andreas Bogk and Hannes Mehnert. All rights reserved.
 license: see LICENSE.txt in this distribution
 
+// for brevity; we do this a lot
+define function bv (#rest bytes)
+  as(<byte-vector>, bytes)
+end;
+
 define function static-checker
   (field :: <field>,
    start :: <integer-or-unknown>,
@@ -46,14 +51,14 @@ end;
 define test binary-data-assemble ()
   let frame = make(<test-protocol>, foo: #x23, bar: #x42);
   let byte-vector = assemble-frame(frame);
-  check-equal("Assembled frame is correct", as(<byte-vector>, #(#x23, #x42)), byte-vector.packet);
+  check-equal("Assembled frame is correct", bv(#x23, #x42), byte-vector.packet);
 end;
 
 define test binary-data-modify ()
   let frame = parse-frame(<test-protocol>, #(#x23, #x42));
   frame.bar := #x69;
   let byte-vector = assemble-frame(frame);
-  check-equal("Modified frame is correct", as(<byte-vector>, #(#x23, #x69)), byte-vector.packet);
+  check-equal("Modified frame is correct", bv(#x23, #x69), byte-vector.packet);
 end;
 
 define binary-data <dynamic-test> (<header-frame>)
@@ -79,7 +84,7 @@ end;
 define test binary-data-dynamic-assemble ()
   let frame = make(<dynamic-test>,
                    foobar: #x3,
-                   payload: parse-frame(<raw-frame>, as(<byte-vector>, #(#x23, #x42, #x23, #x42))));
+                   payload: parse-frame(<raw-frame>, bv(#x23, #x42, #x23, #x42)));
   let byte-vector = assemble-frame(frame);
   check-equal("Assembling dynamic frame is correct (including padding)",
               as(<stretchy-byte-vector-subsequence>, #(#x3, #x0, #x0, #x23, #x42, #x23, #x42)),
@@ -104,10 +109,10 @@ define test static-start-test ()
 end;
 
 define test static-start-assemble ()
-  let frame = make(<static-start-frame>, a: #x23, b: parse-frame(<raw-frame>, as(<byte-vector>, #(#x2, #x3, #x4, #x5))));
+  let frame = make(<static-start-frame>, a: #x23, b: parse-frame(<raw-frame>, bv(#x2, #x3, #x4, #x5)));
   let byte-vector = assemble-frame(frame);
   check-equal("Assembling static start frame is correct (including padding)",
-              as(<byte-vector>, #(#x23, #x0, #x0, #x2, #x3, #x4, #x5)),
+              bv(#x23, #x0, #x0, #x2, #x3, #x4, #x5),
               byte-vector.packet);
 end;
 
@@ -136,7 +141,7 @@ define test repeated-assemble ()
                    after: #x44);
   let byte-vector = assemble-frame(frame);
   check-equal("Assemble frame with repeated field",
-              as(<byte-vector>, #(#x23, #x23, #x42, #x23, #x42, #x0, #x44)),
+              bv(#x23, #x23, #x42, #x23, #x42, #x0, #x44),
               byte-vector.packet);
 end;
 
@@ -178,10 +183,10 @@ end;
 define test repeated-and-dynamic-assemble ()
   let frame = make(<repeated-and-dynamic-test-frame>,
                    options: as(<stretchy-vector>, #(#x23, #x42, #x23, #x42, #x23, #x0)),
-                   payload: parse-frame(<raw-frame>, as(<byte-vector>, #(#x0, #x1, #x2, #x3, #x4))));
+                   payload: parse-frame(<raw-frame>, bv(#x0, #x1, #x2, #x3, #x4)));
   let byte-vector = assemble-frame(frame);
   check-equal("Repeated and dynamic assemble",
-              as(<byte-vector>, #(#x8, #x23, #x23, #x42, #x23, #x42, #x23, #x0, #x0, #x1, #x2, #x3, #x4)),
+              bv(#x8, #x23, #x23, #x42, #x23, #x42, #x23, #x0, #x0, #x1, #x2, #x3, #x4),
               byte-vector.packet);
 end;
 
@@ -211,7 +216,7 @@ define test count-repeated-assemble ()
                    last-field: #x23);
   let byte-vector = assemble-frame(frame);
   check-equal("Count repeated assemble",
-              as(<byte-vector>, #(#x7, #x1, #x2, #x3, #x4, #x5, #x6, #x7, #x23)),
+              bv(#x7, #x1, #x2, #x3, #x4, #x5, #x6, #x7, #x23),
               byte-vector.packet);
 end;
 
@@ -243,42 +248,42 @@ end;
 
 define test label-assemble ()
   let frames = as(<stretchy-vector>,
-                  list(make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x1, #x2, #x3)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x4, #x5, #x6)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x7, #x8, #x9, #x10))))));
+                  list(make(<frag>, data: parse-frame(<raw-frame>, bv(#x1, #x2, #x3))),
+                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x4, #x5, #x6))),
+                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x7, #x8, #x9, #x10)))));
   let frame = make(<labe>, a: #x23, b: frames, c: #x42);
   let byte-vector = assemble-frame(frame);
   check-equal("label assemble",
-              as(<byte-vector>, #(#x23, #x23, #x3, #x1, #x2, #x3, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x42)),
+              bv(#x23, #x23, #x3, #x1, #x2, #x3, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x42),
               byte-vector.packet);
 end;
 
 define test label-assign1 ()
   let frames = as(<stretchy-vector>,
-                  list(make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x1, #x2, #x3)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x4, #x5, #x6)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x7, #x8, #x9, #x10))))));
+                  list(make(<frag>, data: parse-frame(<raw-frame>, bv(#x1, #x2, #x3))),
+                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x4, #x5, #x6))),
+                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x7, #x8, #x9, #x10)))));
   let frame = make(<labe>, a: #x23, b: frames, c: #x42);
-  frame.b[1] := make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x5, #x6, #x7))));
+  frame.b[1] := make(<frag>, data: parse-frame(<raw-frame>, bv(#x5, #x6, #x7)));
   let byte-vector = assemble-frame(frame);
   check-equal("label assign",
-              as(<byte-vector>, #(#x23, #x23, #x3, #x1, #x2, #x3, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x42)),
+              bv(#x23, #x23, #x3, #x1, #x2, #x3, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x42),
               byte-vector.packet);
-  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x6, #x7, #x8))));
+  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, bv(#x6, #x7, #x8)));
   byte-vector.b := frames;
   check-equal("label assign - 2",
-              as(<byte-vector>, #(#x23, #x23, #x3, #x6, #x7, #x8, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x42)),
+              bv(#x23, #x23, #x3, #x6, #x7, #x8, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x42),
               byte-vector.packet);
   let fr2 = make(<labe>, a: #x42, b: byte-vector.b, c: #x23);
   let bv2 = assemble-frame(fr2);
   check-equal("label assign - 3",
-              as(<byte-vector>, #(#x42, #x23, #x3, #x6, #x7, #x8, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x23)),
+              bv(#x42, #x23, #x3, #x6, #x7, #x8, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x23),
               bv2.packet);
-  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x10, #x11, #x12))));
+  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, bv(#x10, #x11, #x12)));
   bv2.b := frames;
   frame-field-checker(1, bv2, 8, 128, 136);
   check-equal("label assign - 4",
-              as(<byte-vector>, #(#x42, #x23, #x3, #x10, #x11, #x12, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x23)),
+              bv(#x42, #x23, #x3, #x10, #x11, #x12, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x23),
               bv2.packet);
 end;
 
@@ -295,26 +300,26 @@ end;
 
 define test label-assign2 ()
   let frames = as(<stretchy-vector>,
-                  list(make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x1, #x2, #x3)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x4, #x5, #x6)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x7, #x8, #x9, #x10))))));
+                  list(make(<frag>, data: parse-frame(<raw-frame>, bv(#x1, #x2, #x3))),
+                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x4, #x5, #x6))),
+                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x7, #x8, #x9, #x10)))));
   let frame = make(<labe>, a: #x23, b: frames, c: #x42);
   let byte-vector = assemble-frame(frame);
   let fr2 = make(<labe>, a: #x42, b: byte-vector.b, c: #x23);
   let bv2 = assemble-frame(fr2);
-  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x10, #x11))));
+  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, bv(#x10, #x11)));
   bv2.b := frames;
   frame-field-checker(1, bv2, 8, 120, 128);
   frame-field-checker(2, bv2, 128, 8, 136);
   check-equal("bv2 has correct size", 17, bv2.packet.size);
   check-equal("label assign2",
-              as(<byte-vector>, #(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23)),
+              bv(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23),
               bv2.packet);
 end;
 */
 
 define test label-assign3 ()
-  let fr = parse-frame(<labe>, as(<byte-vector>, #(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23, #x00, #x23)));
+  let fr = parse-frame(<labe>, bv(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23, #x00, #x23));
   frame-field-checker(0, fr, 0, 8, 8);
   frame-field-checker(1, fr, 8, 136, 144);
   frame-field-checker(2, fr, 144, 8, 152);
@@ -331,14 +336,14 @@ define test label-assign3 ()
   frame-field-checker(0, res, 0, 8, 8);
   frame-field-checker(1, res, 8, 136, 144);
   frame-field-checker(2, res, 144, 8, 152);
-  let bv = assemble-frame(res);
-  frame-field-checker(0, bv, 0, 8, 8);
-  frame-field-checker(1, bv, 8, 136, 144);
-  frame-field-checker(2, bv, 144, 8, 152);
-  check-equal("size of bv is correct", 19, bv.packet.size);
+  let bytes = assemble-frame(res);
+  frame-field-checker(0, bytes, 0, 8, 8);
+  frame-field-checker(1, bytes, 8, 136, 144);
+  frame-field-checker(2, bytes, 144, 8, 152);
+  check-equal("size of bytes is correct", 19, bytes.packet.size);
   check-equal("label assign3",
-              as(<byte-vector>, #(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23, #x00, #x23)),
-              bv.packet);
+              bv(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23, #x00, #x23),
+              bytes.packet);
 end;
 
 define binary-data <a-super> (<container-frame>)
@@ -363,7 +368,7 @@ end;
 define test inheritance-assemble ()
   let frame = make(<a-sub>, type-code: #x42, a: #x23);
   let byte-vector = assemble-frame(frame);
-  check-equal("inheritance assemble", as(<byte-vector>, #(#x42, #x23)), byte-vector.packet);
+  check-equal("inheritance assemble", bv(#x42, #x23), byte-vector.packet);
 end;
 
 define binary-data <b-sub> (<a-super>)
@@ -417,10 +422,10 @@ define test dynamic-length ()
 end;
 
 define test inheritance-dynamic-length-assemble ()
-  let frame = make(<b-sub>, type-code: #x42, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x23, #x42, #x23, #x42))));
+  let frame = make(<b-sub>, type-code: #x42, data: parse-frame(<raw-frame>, bv(#x23, #x42, #x23, #x42)));
   let byte-vector = assemble-frame(frame);
   check-equal("Inheritance dynamic length assemble",
-              as(<byte-vector>, #(#x42, #x4, #x23, #x42, #x23, #x42)),
+              bv(#x42, #x4, #x23, #x42, #x23, #x42),
               byte-vector.packet);
 end;
 
