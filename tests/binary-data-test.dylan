@@ -76,7 +76,8 @@ define test binary-data-dynamic-parser ()
 
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
-  static-checker(field-list[1], $unknown-at-compile-time, $unknown-at-compile-time, $unknown-at-compile-time);
+  static-checker(field-list[1], $unknown-at-compile-time, $unknown-at-compile-time,
+                 $unknown-at-compile-time);
   frame-field-checker(0, frame, 0, 8, 8);
   frame-field-checker(1, frame, 16, 32, 48);
 end;
@@ -87,7 +88,8 @@ define test binary-data-dynamic-assemble ()
                    payload: parse-frame(<raw-frame>, bv(#x23, #x42, #x23, #x42)));
   let byte-vector = assemble-frame(frame);
   check-equal("Assembling dynamic frame is correct (including padding)",
-              as(<stretchy-byte-vector-subsequence>, #(#x3, #x0, #x0, #x23, #x42, #x23, #x42)),
+              as(<stretchy-byte-vector-subsequence>,
+                 #(#x3, #x0, #x0, #x23, #x42, #x23, #x42)),
               byte-vector.packet);
 end;
 
@@ -109,7 +111,9 @@ define test static-start-test ()
 end;
 
 define test static-start-assemble ()
-  let frame = make(<static-start-frame>, a: #x23, b: parse-frame(<raw-frame>, bv(#x2, #x3, #x4, #x5)));
+  let frame = make(<static-start-frame>,
+                   a: #x23,
+                   b: parse-frame(<raw-frame>, bv(#x2, #x3, #x4, #x5)));
   let byte-vector = assemble-frame(frame);
   check-equal("Assembling static start frame is correct (including padding)",
               bv(#x23, #x0, #x0, #x2, #x3, #x4, #x5),
@@ -124,7 +128,8 @@ define binary-data <repeated-test-frame> (<container-frame>)
 end;
 
 define test repeated-test ()
-  let frame = parse-frame(<repeated-test-frame>, #(#x23, #x42, #x43, #x44, #x67, #x0, #x55));
+  let frame = parse-frame(<repeated-test-frame>,
+                          #(#x23, #x42, #x43, #x44, #x67, #x0, #x55));
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, $unknown-at-compile-time, $unknown-at-compile-time);
@@ -147,7 +152,9 @@ end;
 
 define binary-data <repeated-and-dynamic-test-frame> (<header-frame>)
   field header-length :: <unsigned-byte>,
-// FIXME:    fixup: byte-offset(frame-size(frame.header-length) + frame-size(frame.type-code) + frame-size(frame.options));
+// FIXME:    fixup: byte-offset(frame-size(frame.header-length)
+//                              + frame-size(frame.type-code)
+//                              + frame-size(frame.options));
     fixup: frame.options.size + 2;
   field type-code :: <unsigned-byte> = #x23;
   repeated field options :: <unsigned-byte>,
@@ -158,12 +165,14 @@ end;
 
 define test repeated-and-dynamic-test ()
   let frame = parse-frame(<repeated-and-dynamic-test-frame>,
-                          #(#x8, #x23, #x42, #x43, #x44, #x45, #x46, #x47, #x80, #x81, #x82));
+                          #(#x8, #x23, #x42, #x43, #x44, #x45, #x46, #x47,
+                            #x80, #x81, #x82));
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, 8, 16);
   static-checker(field-list[2], 16, $unknown-at-compile-time, $unknown-at-compile-time);
-  static-checker(field-list[3], $unknown-at-compile-time, $unknown-at-compile-time, $unknown-at-compile-time);
+  static-checker(field-list[3], $unknown-at-compile-time, $unknown-at-compile-time,
+                 $unknown-at-compile-time);
   frame-field-checker(0, frame, 0, 8, 8);
   frame-field-checker(1, frame, 8, 8, 16);
   frame-field-checker(2, frame, 16, 48, 64);
@@ -172,7 +181,8 @@ end;
 
 define test repeated-and-dynamic-test2 ()
   let frame = parse-frame(<repeated-and-dynamic-test-frame>,
-                          #(#x8, #x23, #x42, #x43, #x44, #x0, #x46, #x47, #x80, #x81, #x82));
+                          #(#x8, #x23, #x42, #x43, #x44, #x0, #x46, #x47,
+                            #x80, #x81, #x82));
   let field-list = fields(frame);
   frame-field-checker(0, frame, 0, 8, 8);
   frame-field-checker(1, frame, 8, 8, 16);
@@ -200,7 +210,8 @@ end;
 
 define test count-repeated-test ()
   let frame = parse-frame(<count-repeated-test-frame>,
-                          #(#x3, #x23, #x42, #x43, #x44, #x0, #x46, #x47, #x80, #x81, #x82));
+                          #(#x3, #x23, #x42, #x43, #x44, #x0, #x46, #x47,
+                            #x80, #x81, #x82));
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, $unknown-at-compile-time, $unknown-at-compile-time);
@@ -236,7 +247,9 @@ define binary-data <labe> (<container-frame>)
 end;
 
 define test label-test ()
-  let frame = parse-frame(<labe>, #(#x23, #x42, #x01, #x02, #x42, #x03, #x33, #x33, #x33, #x42, #x00, #x42));
+  let frame = parse-frame(<labe>,
+                          #(#x23, #x42, #x01, #x02, #x42, #x03, #x33, #x33,
+                            #x33, #x42, #x00, #x42));
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, $unknown-at-compile-time, $unknown-at-compile-time);
@@ -250,11 +263,14 @@ define test label-assemble ()
   let frames = as(<stretchy-vector>,
                   list(make(<frag>, data: parse-frame(<raw-frame>, bv(#x1, #x2, #x3))),
                        make(<frag>, data: parse-frame(<raw-frame>, bv(#x4, #x5, #x6))),
-                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x7, #x8, #x9, #x10)))));
+                       make(<frag>, data: parse-frame(<raw-frame>,
+                                                      bv(#x7, #x8, #x9, #x10)))));
   let frame = make(<labe>, a: #x23, b: frames, c: #x42);
   let byte-vector = assemble-frame(frame);
   check-equal("label assemble",
-              bv(#x23, #x23, #x3, #x1, #x2, #x3, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x42),
+              bv(#x23, #x23, #x03, #x01, #x02, #x03, #x23, #x03,
+                 #x04, #x05, #x06, #x23, #x04, #x07, #x08, #x09,
+                 #x10, #x42),
               byte-vector.packet);
 end;
 
@@ -262,28 +278,37 @@ define test label-assign1 ()
   let frames = as(<stretchy-vector>,
                   list(make(<frag>, data: parse-frame(<raw-frame>, bv(#x1, #x2, #x3))),
                        make(<frag>, data: parse-frame(<raw-frame>, bv(#x4, #x5, #x6))),
-                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x7, #x8, #x9, #x10)))));
+                       make(<frag>, data: parse-frame(<raw-frame>,
+                                                      bv(#x7, #x8, #x9, #x10)))));
   let frame = make(<labe>, a: #x23, b: frames, c: #x42);
   frame.b[1] := make(<frag>, data: parse-frame(<raw-frame>, bv(#x5, #x6, #x7)));
   let byte-vector = assemble-frame(frame);
   check-equal("label assign",
-              bv(#x23, #x23, #x3, #x1, #x2, #x3, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x42),
+              bv(#x23, #x23, #x03, #x01, #x02, #x03, #x23, #x03,
+                 #x05, #x06, #x07, #x23, #x04, #x07, #x08, #x09,
+                 #x10, #x42),
               byte-vector.packet);
   frames[0] := make(<frag>, data: parse-frame(<raw-frame>, bv(#x6, #x7, #x8)));
   byte-vector.b := frames;
   check-equal("label assign - 2",
-              bv(#x23, #x23, #x3, #x6, #x7, #x8, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x42),
+              bv(#x23, #x23, #x03, #x06, #x07, #x08, #x23, #x03,
+                 #x05, #x06, #x07, #x23, #x04, #x07, #x08, #x09,
+                 #x10, #x42),
               byte-vector.packet);
   let fr2 = make(<labe>, a: #x42, b: byte-vector.b, c: #x23);
   let bv2 = assemble-frame(fr2);
   check-equal("label assign - 3",
-              bv(#x42, #x23, #x3, #x6, #x7, #x8, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x23),
+              bv(#x42, #x23, #x03, #x06, #x07, #x08, #x23, #x03,
+                 #x05, #x06, #x07, #x23, #x04, #x07, #x08, #x09,
+                 #x10, #x23),
               bv2.packet);
   frames[0] := make(<frag>, data: parse-frame(<raw-frame>, bv(#x10, #x11, #x12)));
   bv2.b := frames;
   frame-field-checker(1, bv2, 8, 128, 136);
   check-equal("label assign - 4",
-              bv(#x42, #x23, #x3, #x10, #x11, #x12, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x23),
+              bv(#x42, #x23, #x03, #x10, #x11, #x12, #x23, #x03,
+                 #x05, #x06, #x07, #x23, #x04, #x07, #x08, #x09,
+                 #x10, #x23),
               bv2.packet);
 end;
 
@@ -319,7 +344,10 @@ end;
 */
 
 define test label-assign3 ()
-  let fr = parse-frame(<labe>, bv(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23, #x00, #x23));
+  let fr = parse-frame(<labe>,
+                       bv(#x42, #x23, #x02, #x10, #x11, #x23, #x03, #x04,
+                          #x05, #x06, #x23, #x04, #x07, #x08, #x09, #x10,
+                          #x23, #x00, #x23));
   frame-field-checker(0, fr, 0, 8, 8);
   frame-field-checker(1, fr, 8, 136, 144);
   frame-field-checker(2, fr, 144, 8, 152);
@@ -329,9 +357,11 @@ define test label-assign3 ()
   check-equal("b is of size 4", 4, size(fr.b));
   check-true("all of b are <frag>", every?(rcurry(instance?, <frag>), fr.b));
   check-true("frame-size of b is 136", reduce1(\+, map(frame-size, fr.b)));
-  check-true("all of b are <unparsed-frag>", every?(rcurry(instance?, <unparsed-frag>), fr.b));
+  check-true("all of b are <unparsed-frag>",
+             every?(rcurry(instance?, <unparsed-frag>), fr.b));
   check-true("fr is an <unparsed-labe>", instance?(fr, <unparsed-labe>));
-  check-equal("sizes of bs are correct", as(<stretchy-vector>, #(32, 40, 48, 16)), map(frame-size, fr.b));
+  check-equal("sizes of bs are correct",
+              as(<stretchy-vector>, #(32, 40, 48, 16)), map(frame-size, fr.b));
   let res = labe(a: fr.a, b: fr.b, c: fr.c);
   frame-field-checker(0, res, 0, 8, 8);
   frame-field-checker(1, res, 8, 136, 144);
@@ -342,7 +372,9 @@ define test label-assign3 ()
   frame-field-checker(2, bytes, 144, 8, 152);
   check-equal("size of bytes is correct", 19, bytes.packet.size);
   check-equal("label assign3",
-              bv(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23, #x00, #x23),
+              bv(#x42, #x23, #x02, #x10, #x11, #x23, #x03, #x04,
+                 #x05, #x06, #x23, #x04, #x07, #x08, #x09, #x10,
+                 #x23, #x00, #x23),
               bytes.packet);
 end;
 
@@ -422,7 +454,9 @@ define test dynamic-length ()
 end;
 
 define test inheritance-dynamic-length-assemble ()
-  let frame = make(<b-sub>, type-code: #x42, data: parse-frame(<raw-frame>, bv(#x23, #x42, #x23, #x42)));
+  let frame = make(<b-sub>,
+                   type-code: #x42,
+                   data: parse-frame(<raw-frame>, bv(#x23, #x42, #x23, #x42)));
   let byte-vector = assemble-frame(frame);
   check-equal("Inheritance dynamic length assemble",
               bv(#x42, #x4, #x23, #x42, #x23, #x42),
@@ -534,14 +568,16 @@ end;
 
 define test dynlength ()
   let f = parse-frame(<dyn-length-in-container>, #(#x00, #x02));
-  check-equal("length frame.my-length; size of simple frame is correct", 16, f.frame-size);
+  check-equal("length frame.my-length; size of simple frame is correct",
+              16, f.frame-size);
   let field-list = fields(f);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, 8, 16);
   frame-field-checker(0, f, 0, 8, 8);
   frame-field-checker(1, f, 8, 8, 16);
   let g = parse-frame(<dyn-length-in-container>, #(#x00, #x03, #x02));
-  check-equal("length frame.my-length; size of frame with padding is correct", 24, g.frame-size);
+  check-equal("length frame.my-length; size of frame with padding is correct",
+              24, g.frame-size);
   frame-field-checker(0, g, 0, 8, 8);
   frame-field-checker(1, g, 8, 8, 16);
   //this tells us: we need padding frame fields!
@@ -570,13 +606,15 @@ define test dyn-length-client ()
   check-equal("size of dyn-length-client is correct", 32, f.frame-size);
   let field-list = fields(f);
   static-checker(field-list[0], 0, $unknown-at-compile-time, $unknown-at-compile-time);
-  static-checker(field-list[1], $unknown-at-compile-time, $unknown-at-compile-time, $unknown-at-compile-time);
+  static-checker(field-list[1], $unknown-at-compile-time, $unknown-at-compile-time,
+                 $unknown-at-compile-time);
   frame-field-checker(0, f, 0, 16, 16);
   frame-field-checker(1, f, 16, 16, 32);
 end;
 
 define test dyn-length-client2 ()
-  let f = parse-frame(<dyn-length-as-client-field>, #(#x00, #x03, #x04, #x00, #x04, #x01, #x02));
+  let f = parse-frame(<dyn-length-as-client-field>,
+                      #(#x00, #x03, #x04, #x00, #x04, #x01, #x02));
   check-equal("size of dyn-length-client2 is correct", 56, f.frame-size);
   frame-field-checker(0, f, 0, 24, 24);
   frame-field-checker(1, f, 24, 32, 56);
