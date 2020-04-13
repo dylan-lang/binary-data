@@ -3,6 +3,11 @@ author: Andreas Bogk and Hannes Mehnert
 copyright: 2005-2011 Andreas Bogk and Hannes Mehnert. All rights reserved.
 license: see LICENSE.txt in this distribution
 
+// for brevity; we do this a lot
+define function bv (#rest bytes)
+  as(<byte-vector>, bytes)
+end;
+
 define function static-checker
   (field :: <field>,
    start :: <integer-or-unknown>,
@@ -34,6 +39,8 @@ end;
 
 define test binary-data-parser ()
   let frame = parse-frame(<test-protocol>, #(#x23, #x42));
+  assert-equal(frame.foo, #x23);
+  assert-equal(frame.bar, #x42);
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, 8, 16);
@@ -44,14 +51,14 @@ end;
 define test binary-data-assemble ()
   let frame = make(<test-protocol>, foo: #x23, bar: #x42);
   let byte-vector = assemble-frame(frame);
-  check-equal("Assembled frame is correct", as(<byte-vector>, #(#x23, #x42)), byte-vector.packet);
+  check-equal("Assembled frame is correct", bv(#x23, #x42), byte-vector.packet);
 end;
 
 define test binary-data-modify ()
   let frame = parse-frame(<test-protocol>, #(#x23, #x42));
   frame.bar := #x69;
   let byte-vector = assemble-frame(frame);
-  check-equal("Modified frame is correct", as(<byte-vector>, #(#x23, #x69)), byte-vector.packet);
+  check-equal("Modified frame is correct", bv(#x23, #x69), byte-vector.packet);
 end;
 
 define binary-data <dynamic-test> (<header-frame>)
@@ -62,9 +69,15 @@ end;
 
 define test binary-data-dynamic-parser ()
   let frame = parse-frame(<dynamic-test>, #(#x2, #x0, #x0, #x3, #x4, #x5));
+  assert-equal(frame.foobar, #x2);
+
+  // payload starts at foobar = 2 bytes into the frame so first 0 byte ignored.
+  assert-equal(bd/data(frame.payload), #(#x0, #x3, #x4, #x5));
+
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
-  static-checker(field-list[1], $unknown-at-compile-time, $unknown-at-compile-time, $unknown-at-compile-time);
+  static-checker(field-list[1], $unknown-at-compile-time, $unknown-at-compile-time,
+                 $unknown-at-compile-time);
   frame-field-checker(0, frame, 0, 8, 8);
   frame-field-checker(1, frame, 16, 32, 48);
 end;
@@ -72,10 +85,11 @@ end;
 define test binary-data-dynamic-assemble ()
   let frame = make(<dynamic-test>,
                    foobar: #x3,
-                   payload: parse-frame(<raw-frame>, as(<byte-vector>, #(#x23, #x42, #x23, #x42))));
+                   payload: parse-frame(<raw-frame>, bv(#x23, #x42, #x23, #x42)));
   let byte-vector = assemble-frame(frame);
   check-equal("Assembling dynamic frame is correct (including padding)",
-              as(<stretchy-byte-vector-subsequence>, #(#x3, #x0, #x0, #x23, #x42, #x23, #x42)),
+              as(<stretchy-byte-vector-subsequence>,
+                 #(#x3, #x0, #x0, #x23, #x42, #x23, #x42)),
               byte-vector.packet);
 end;
 
@@ -87,6 +101,9 @@ end;
 define test static-start-test ()
   let frame = parse-frame(<static-start-frame>, #(#x3, #x4, #x5, #x6));
   let field-list = fields(frame);
+  assert-equal(frame.a, #x3);
+  // static-start at 24 bits means #x4 and #x5 are skipped.
+  assert-equal(bd/data(frame.b), #(#x6));
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 24, $unknown-at-compile-time, $unknown-at-compile-time);
   frame-field-checker(0, frame, 0, 8, 8);
@@ -94,10 +111,12 @@ define test static-start-test ()
 end;
 
 define test static-start-assemble ()
-  let frame = make(<static-start-frame>, a: #x23, b: parse-frame(<raw-frame>, as(<byte-vector>, #(#x2, #x3, #x4, #x5))));
+  let frame = make(<static-start-frame>,
+                   a: #x23,
+                   b: parse-frame(<raw-frame>, bv(#x2, #x3, #x4, #x5)));
   let byte-vector = assemble-frame(frame);
   check-equal("Assembling static start frame is correct (including padding)",
-              as(<byte-vector>, #(#x23, #x0, #x0, #x2, #x3, #x4, #x5)),
+              bv(#x23, #x0, #x0, #x2, #x3, #x4, #x5),
               byte-vector.packet);
 end;
 
@@ -109,7 +128,8 @@ define binary-data <repeated-test-frame> (<container-frame>)
 end;
 
 define test repeated-test ()
-  let frame = parse-frame(<repeated-test-frame>, #(#x23, #x42, #x43, #x44, #x67, #x0, #x55));
+  let frame = parse-frame(<repeated-test-frame>,
+                          #(#x23, #x42, #x43, #x44, #x67, #x0, #x55));
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, $unknown-at-compile-time, $unknown-at-compile-time);
@@ -126,13 +146,15 @@ define test repeated-assemble ()
                    after: #x44);
   let byte-vector = assemble-frame(frame);
   check-equal("Assemble frame with repeated field",
-              as(<byte-vector>, #(#x23, #x23, #x42, #x23, #x42, #x0, #x44)),
+              bv(#x23, #x23, #x42, #x23, #x42, #x0, #x44),
               byte-vector.packet);
 end;
 
 define binary-data <repeated-and-dynamic-test-frame> (<header-frame>)
   field header-length :: <unsigned-byte>,
-// FIXME:    fixup: byte-offset(frame-size(frame.header-length) + frame-size(frame.type-code) + frame-size(frame.options));
+// FIXME:    fixup: byte-offset(frame-size(frame.header-length)
+//                              + frame-size(frame.type-code)
+//                              + frame-size(frame.options));
     fixup: frame.options.size + 2;
   field type-code :: <unsigned-byte> = #x23;
   repeated field options :: <unsigned-byte>,
@@ -143,12 +165,14 @@ end;
 
 define test repeated-and-dynamic-test ()
   let frame = parse-frame(<repeated-and-dynamic-test-frame>,
-                          #(#x8, #x23, #x42, #x43, #x44, #x45, #x46, #x47, #x80, #x81, #x82));
+                          #(#x8, #x23, #x42, #x43, #x44, #x45, #x46, #x47,
+                            #x80, #x81, #x82));
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, 8, 16);
   static-checker(field-list[2], 16, $unknown-at-compile-time, $unknown-at-compile-time);
-  static-checker(field-list[3], $unknown-at-compile-time, $unknown-at-compile-time, $unknown-at-compile-time);
+  static-checker(field-list[3], $unknown-at-compile-time, $unknown-at-compile-time,
+                 $unknown-at-compile-time);
   frame-field-checker(0, frame, 0, 8, 8);
   frame-field-checker(1, frame, 8, 8, 16);
   frame-field-checker(2, frame, 16, 48, 64);
@@ -157,7 +181,8 @@ end;
 
 define test repeated-and-dynamic-test2 ()
   let frame = parse-frame(<repeated-and-dynamic-test-frame>,
-                          #(#x8, #x23, #x42, #x43, #x44, #x0, #x46, #x47, #x80, #x81, #x82));
+                          #(#x8, #x23, #x42, #x43, #x44, #x0, #x46, #x47,
+                            #x80, #x81, #x82));
   let field-list = fields(frame);
   frame-field-checker(0, frame, 0, 8, 8);
   frame-field-checker(1, frame, 8, 8, 16);
@@ -168,10 +193,10 @@ end;
 define test repeated-and-dynamic-assemble ()
   let frame = make(<repeated-and-dynamic-test-frame>,
                    options: as(<stretchy-vector>, #(#x23, #x42, #x23, #x42, #x23, #x0)),
-                   payload: parse-frame(<raw-frame>, as(<byte-vector>, #(#x0, #x1, #x2, #x3, #x4))));
+                   payload: parse-frame(<raw-frame>, bv(#x0, #x1, #x2, #x3, #x4)));
   let byte-vector = assemble-frame(frame);
   check-equal("Repeated and dynamic assemble",
-              as(<byte-vector>, #(#x8, #x23, #x23, #x42, #x23, #x42, #x23, #x0, #x0, #x1, #x2, #x3, #x4)),
+              bv(#x8, #x23, #x23, #x42, #x23, #x42, #x23, #x0, #x0, #x1, #x2, #x3, #x4),
               byte-vector.packet);
 end;
 
@@ -185,7 +210,8 @@ end;
 
 define test count-repeated-test ()
   let frame = parse-frame(<count-repeated-test-frame>,
-                          #(#x3, #x23, #x42, #x43, #x44, #x0, #x46, #x47, #x80, #x81, #x82));
+                          #(#x3, #x23, #x42, #x43, #x44, #x0, #x46, #x47,
+                            #x80, #x81, #x82));
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, $unknown-at-compile-time, $unknown-at-compile-time);
@@ -201,7 +227,7 @@ define test count-repeated-assemble ()
                    last-field: #x23);
   let byte-vector = assemble-frame(frame);
   check-equal("Count repeated assemble",
-              as(<byte-vector>, #(#x7, #x1, #x2, #x3, #x4, #x5, #x6, #x7, #x23)),
+              bv(#x7, #x1, #x2, #x3, #x4, #x5, #x6, #x7, #x23),
               byte-vector.packet);
 end;
 
@@ -221,7 +247,9 @@ define binary-data <labe> (<container-frame>)
 end;
 
 define test label-test ()
-  let frame = parse-frame(<labe>, #(#x23, #x42, #x01, #x02, #x42, #x03, #x33, #x33, #x33, #x42, #x00, #x42));
+  let frame = parse-frame(<labe>,
+                          #(#x23, #x42, #x01, #x02, #x42, #x03, #x33, #x33,
+                            #x33, #x42, #x00, #x42));
   let field-list = fields(frame);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, $unknown-at-compile-time, $unknown-at-compile-time);
@@ -233,66 +261,93 @@ end;
 
 define test label-assemble ()
   let frames = as(<stretchy-vector>,
-                  list(make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x1, #x2, #x3)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x4, #x5, #x6)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x7, #x8, #x9, #x10))))));
+                  list(make(<frag>, data: parse-frame(<raw-frame>, bv(#x1, #x2, #x3))),
+                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x4, #x5, #x6))),
+                       make(<frag>, data: parse-frame(<raw-frame>,
+                                                      bv(#x7, #x8, #x9, #x10)))));
   let frame = make(<labe>, a: #x23, b: frames, c: #x42);
   let byte-vector = assemble-frame(frame);
   check-equal("label assemble",
-              as(<byte-vector>, #(#x23, #x23, #x3, #x1, #x2, #x3, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x42)),
+              bv(#x23, #x23, #x03, #x01, #x02, #x03, #x23, #x03,
+                 #x04, #x05, #x06, #x23, #x04, #x07, #x08, #x09,
+                 #x10, #x42),
               byte-vector.packet);
 end;
 
 define test label-assign1 ()
   let frames = as(<stretchy-vector>,
-                  list(make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x1, #x2, #x3)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x4, #x5, #x6)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x7, #x8, #x9, #x10))))));
+                  list(make(<frag>, data: parse-frame(<raw-frame>, bv(#x1, #x2, #x3))),
+                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x4, #x5, #x6))),
+                       make(<frag>, data: parse-frame(<raw-frame>,
+                                                      bv(#x7, #x8, #x9, #x10)))));
   let frame = make(<labe>, a: #x23, b: frames, c: #x42);
-  frame.b[1] := make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x5, #x6, #x7))));
+  frame.b[1] := make(<frag>, data: parse-frame(<raw-frame>, bv(#x5, #x6, #x7)));
   let byte-vector = assemble-frame(frame);
   check-equal("label assign",
-              as(<byte-vector>, #(#x23, #x23, #x3, #x1, #x2, #x3, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x42)),
+              bv(#x23, #x23, #x03, #x01, #x02, #x03, #x23, #x03,
+                 #x05, #x06, #x07, #x23, #x04, #x07, #x08, #x09,
+                 #x10, #x42),
               byte-vector.packet);
-  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x6, #x7, #x8))));
+  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, bv(#x6, #x7, #x8)));
   byte-vector.b := frames;
   check-equal("label assign - 2",
-              as(<byte-vector>, #(#x23, #x23, #x3, #x6, #x7, #x8, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x42)),
+              bv(#x23, #x23, #x03, #x06, #x07, #x08, #x23, #x03,
+                 #x05, #x06, #x07, #x23, #x04, #x07, #x08, #x09,
+                 #x10, #x42),
               byte-vector.packet);
   let fr2 = make(<labe>, a: #x42, b: byte-vector.b, c: #x23);
   let bv2 = assemble-frame(fr2);
   check-equal("label assign - 3",
-              as(<byte-vector>, #(#x42, #x23, #x3, #x6, #x7, #x8, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x23)),
+              bv(#x42, #x23, #x03, #x06, #x07, #x08, #x23, #x03,
+                 #x05, #x06, #x07, #x23, #x04, #x07, #x08, #x09,
+                 #x10, #x23),
               bv2.packet);
-  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x10, #x11, #x12))));
+  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, bv(#x10, #x11, #x12)));
   bv2.b := frames;
   frame-field-checker(1, bv2, 8, 128, 136);
   check-equal("label assign - 4",
-              as(<byte-vector>, #(#x42, #x23, #x3, #x10, #x11, #x12, #x23, #x3, #x5, #x6, #x7, #x23, #x4, #x7, #x8, #x9, #x10, #x23)),
+              bv(#x42, #x23, #x03, #x10, #x11, #x12, #x23, #x03,
+                 #x05, #x06, #x07, #x23, #x04, #x07, #x08, #x09,
+                 #x10, #x23),
               bv2.packet);
 end;
 
+/* This test was commented out of the suites before I deleted them. --cgay
+   It was failing like this:
+  label-assign2 failed
+    Frame-field has length failed [120 and 128 are not =.]
+    Frame-field has end failed [128 and 136 are not =.]
+    Frame-field has start failed [128 and 136 are not =.]
+    Frame-field has end failed [136 and 144 are not =.]
+    bv2 has correct size failed [17 and 18 are not =.]
+    label assign2 failed [{<simple-byte-vector> sequence 66, 35, 2, 16, 17, 35, 3, 4, 5, 6, 35, 4, 7, 8, 9, 16, 35} and {<stretchy-byte-vector-subsequence> sequence 66, 35, 2, 16, 17, 35, 3, 4, 5, 6, 35, 4, 7, 8, 9, 16, 16, 35} are not =.  sizes differ (17 and 18), element 16 is the first non-matching element]
+
+
 define test label-assign2 ()
   let frames = as(<stretchy-vector>,
-                  list(make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x1, #x2, #x3)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x4, #x5, #x6)))),
-                       make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x7, #x8, #x9, #x10))))));
+                  list(make(<frag>, data: parse-frame(<raw-frame>, bv(#x1, #x2, #x3))),
+                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x4, #x5, #x6))),
+                       make(<frag>, data: parse-frame(<raw-frame>, bv(#x7, #x8, #x9, #x10)))));
   let frame = make(<labe>, a: #x23, b: frames, c: #x42);
   let byte-vector = assemble-frame(frame);
   let fr2 = make(<labe>, a: #x42, b: byte-vector.b, c: #x23);
   let bv2 = assemble-frame(fr2);
-  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x10, #x11))));
+  frames[0] := make(<frag>, data: parse-frame(<raw-frame>, bv(#x10, #x11)));
   bv2.b := frames;
   frame-field-checker(1, bv2, 8, 120, 128);
   frame-field-checker(2, bv2, 128, 8, 136);
   check-equal("bv2 has correct size", 17, bv2.packet.size);
   check-equal("label assign2",
-              as(<byte-vector>, #(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23)),
+              bv(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23),
               bv2.packet);
 end;
+*/
 
 define test label-assign3 ()
-  let fr = parse-frame(<labe>, as(<byte-vector>, #(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23, #x00, #x23)));
+  let fr = parse-frame(<labe>,
+                       bv(#x42, #x23, #x02, #x10, #x11, #x23, #x03, #x04,
+                          #x05, #x06, #x23, #x04, #x07, #x08, #x09, #x10,
+                          #x23, #x00, #x23));
   frame-field-checker(0, fr, 0, 8, 8);
   frame-field-checker(1, fr, 8, 136, 144);
   frame-field-checker(2, fr, 144, 8, 152);
@@ -302,21 +357,25 @@ define test label-assign3 ()
   check-equal("b is of size 4", 4, size(fr.b));
   check-true("all of b are <frag>", every?(rcurry(instance?, <frag>), fr.b));
   check-true("frame-size of b is 136", reduce1(\+, map(frame-size, fr.b)));
-  check-true("all of b are <unparsed-frag>", every?(rcurry(instance?, <unparsed-frag>), fr.b));
+  check-true("all of b are <unparsed-frag>",
+             every?(rcurry(instance?, <unparsed-frag>), fr.b));
   check-true("fr is an <unparsed-labe>", instance?(fr, <unparsed-labe>));
-  check-equal("sizes of bs are correct", as(<stretchy-vector>, #(32, 40, 48, 16)), map(frame-size, fr.b));
+  check-equal("sizes of bs are correct",
+              as(<stretchy-vector>, #(32, 40, 48, 16)), map(frame-size, fr.b));
   let res = labe(a: fr.a, b: fr.b, c: fr.c);
   frame-field-checker(0, res, 0, 8, 8);
   frame-field-checker(1, res, 8, 136, 144);
   frame-field-checker(2, res, 144, 8, 152);
-  let bv = assemble-frame(res);
-  frame-field-checker(0, bv, 0, 8, 8);
-  frame-field-checker(1, bv, 8, 136, 144);
-  frame-field-checker(2, bv, 144, 8, 152);
-  check-equal("size of bv is correct", 19, bv.packet.size);
+  let bytes = assemble-frame(res);
+  frame-field-checker(0, bytes, 0, 8, 8);
+  frame-field-checker(1, bytes, 8, 136, 144);
+  frame-field-checker(2, bytes, 144, 8, 152);
+  check-equal("size of bytes is correct", 19, bytes.packet.size);
   check-equal("label assign3",
-              as(<byte-vector>, #(#x42, #x23, #x2, #x10, #x11, #x23, #x3, #x4, #x5, #x6, #x23, #x4, #x7, #x8, #x9, #x10, #x23, #x00, #x23)),
-              bv.packet);
+              bv(#x42, #x23, #x02, #x10, #x11, #x23, #x03, #x04,
+                 #x05, #x06, #x23, #x04, #x07, #x08, #x09, #x10,
+                 #x23, #x00, #x23),
+              bytes.packet);
 end;
 
 define binary-data <a-super> (<container-frame>)
@@ -341,7 +400,7 @@ end;
 define test inheritance-assemble ()
   let frame = make(<a-sub>, type-code: #x42, a: #x23);
   let byte-vector = assemble-frame(frame);
-  check-equal("inheritance assemble", as(<byte-vector>, #(#x42, #x23)), byte-vector.packet);
+  check-equal("inheritance assemble", bv(#x42, #x23), byte-vector.packet);
 end;
 
 define binary-data <b-sub> (<a-super>)
@@ -395,10 +454,12 @@ define test dynamic-length ()
 end;
 
 define test inheritance-dynamic-length-assemble ()
-  let frame = make(<b-sub>, type-code: #x42, data: parse-frame(<raw-frame>, as(<byte-vector>, #(#x23, #x42, #x23, #x42))));
+  let frame = make(<b-sub>,
+                   type-code: #x42,
+                   data: parse-frame(<raw-frame>, bv(#x23, #x42, #x23, #x42)));
   let byte-vector = assemble-frame(frame);
   check-equal("Inheritance dynamic length assemble",
-              as(<byte-vector>, #(#x42, #x4, #x23, #x42, #x23, #x42)),
+              bv(#x42, #x4, #x23, #x42, #x23, #x42),
               byte-vector.packet);
 end;
 
@@ -507,14 +568,16 @@ end;
 
 define test dynlength ()
   let f = parse-frame(<dyn-length-in-container>, #(#x00, #x02));
-  check-equal("length frame.my-length; size of simple frame is correct", 16, f.frame-size);
+  check-equal("length frame.my-length; size of simple frame is correct",
+              16, f.frame-size);
   let field-list = fields(f);
   static-checker(field-list[0], 0, 8, 8);
   static-checker(field-list[1], 8, 8, 16);
   frame-field-checker(0, f, 0, 8, 8);
   frame-field-checker(1, f, 8, 8, 16);
   let g = parse-frame(<dyn-length-in-container>, #(#x00, #x03, #x02));
-  check-equal("length frame.my-length; size of frame with padding is correct", 24, g.frame-size);
+  check-equal("length frame.my-length; size of frame with padding is correct",
+              24, g.frame-size);
   frame-field-checker(0, g, 0, 8, 8);
   frame-field-checker(1, g, 8, 8, 16);
   //this tells us: we need padding frame fields!
@@ -543,13 +606,15 @@ define test dyn-length-client ()
   check-equal("size of dyn-length-client is correct", 32, f.frame-size);
   let field-list = fields(f);
   static-checker(field-list[0], 0, $unknown-at-compile-time, $unknown-at-compile-time);
-  static-checker(field-list[1], $unknown-at-compile-time, $unknown-at-compile-time, $unknown-at-compile-time);
+  static-checker(field-list[1], $unknown-at-compile-time, $unknown-at-compile-time,
+                 $unknown-at-compile-time);
   frame-field-checker(0, f, 0, 16, 16);
   frame-field-checker(1, f, 16, 16, 32);
 end;
 
 define test dyn-length-client2 ()
-  let f = parse-frame(<dyn-length-as-client-field>, #(#x00, #x03, #x04, #x00, #x04, #x01, #x02));
+  let f = parse-frame(<dyn-length-as-client-field>,
+                      #(#x00, #x03, #x04, #x00, #x04, #x01, #x02));
   check-equal("size of dyn-length-client2 is correct", 56, f.frame-size);
   frame-field-checker(0, f, 0, 24, 24);
   frame-field-checker(1, f, 24, 32, 56);
@@ -715,69 +780,6 @@ define test null-test ()
   check-equal("data is false", #f, nothing.data);
 end;
 
-define suite binary-data-suite ()
-  test binary-data-parser;
-  test binary-data-dynamic-parser;
-  test static-start-test;
-  test repeated-test;
-  test repeated-and-dynamic-test;
-  test repeated-and-dynamic-test2;
-  test count-repeated-test;
-  test label-test;
-  test inheritance-test;
-  test inheritance-dynamic-length;
-  test dyn-length;
-  test dynamic-length;
-  test bits-parsing;
-  test half-byte-parsing;
-  test dns-foo-parsing;
-  test dynlength;
-  test dyn-length-client;
-  test dyn-length-client2;
-  test enum-parse-test;
-  test abstract-parse-test;
-  test abstract-user-parse-test;
-end;
-
-define suite binary-data-assemble-suite ()
-  test binary-data-assemble;
-  test binary-data-modify;
-  test binary-data-dynamic-assemble;
-  test static-start-assemble;
-  test repeated-assemble;
-  test repeated-and-dynamic-assemble;
-  test count-repeated-assemble;
-  test label-assemble;
-  test label-assign1;
-  //test label-assign2;
-  test label-assign3;
-  test inheritance-assemble;
-  test inheritance-dynamic-length-assemble;
-  test half-byte-assembling;
-  test half-byte-modify;
-  test half-bytes-assembling;
-  test bits-assemble;
-  test dns-foo-assemble;
-  test dynlength-assemble;
-  test enum-assemble-test;
-  test abstract-assemble-test;
-  test abstract-user-assemble-test;
-end;
-
-define suite binary-data-leaf-frames-suite ()
-  test unsigned-bit-leaf-test;
-  test boolean-bit-leaf-test;
-  test null-test;
-  test null-test-0;
-end;
-
-define suite binary-data-complete-suite ()
-  suite stretchy-byte-vector-suite;
-  suite binary-data-suite;
-  suite binary-data-assemble-suite;
-  suite binary-data-leaf-frames-suite;
-end;
-
 begin
-  run-test-application(binary-data-complete-suite);
-end;
+  run-test-application();
+end

@@ -12,7 +12,9 @@ end library binary-data-test;
 
 define module binary-data-test
   use common-dylan;
-  use binary-data, exclude: { type-code, data };
+  use binary-data,
+    rename: { type-code => bd/type-code,
+              data => bd/data };
   use simple-format,
     import: { format-to-string  };
   use testworks;

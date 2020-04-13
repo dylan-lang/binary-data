@@ -256,22 +256,3 @@ define test decode-and-encode-test ()
     end;
   end;
 end;
-
-define suite stretchy-byte-vector-suite ()
-  test byte-vector-subsequence-read;
-  test byte-vector-subsequence-modify;
-  test byte-vector-subsequence-iteration;
-  test byte-vector-subsequence-iteration-modify;
-  test byte-vector-subsequence-error-test;
-  test byte-vector-subsequence-stretchy-test;
-  test byte-vector-subsequence-nested-test;
-  test byte-vector-subsequence-with-offset-read;
-  test byte-vector-subsequence-with-offset-advanced;
-  test byte-vector-subsequence-with-offset-iteration;
-  test byte-vector-subsequence-with-offset-modify;
-  test encode-integer-test;
-  test encode-integer-test2;
-  test decode-integer-test;
-  test decode-and-encode-test;
-end;
-

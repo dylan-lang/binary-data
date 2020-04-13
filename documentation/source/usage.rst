@@ -397,7 +397,7 @@ Repeated fields (:class:`<repeated-field>`) have a list of values of
 the field type, instead of just a single one. Currently two kinds
 of repeated fields are supported, :class:`<self-delimited-repeated-field>`
 and :class:`<count-repeated-field>`, they only differ in the way the
-the number of elements in the repeated field is determined.
+number of elements in the repeated field is determined.
 
 A self-delimited field definition uses an expression to evaluate whether
 or not the end of the list of values has been reached, usually by checking
@@ -487,7 +487,7 @@ vector completely, but only the requested fields. To achieve this, we
 gather information about each field, specifically its start and end
 offset, and also its length, already at compile time, using a number
 system consisting of the type union between :drm:`<integer>` and
-:const:`$unknown-at-compile-time`, for which basic arithmetics is
+:const:`$unknown-at-compile-time`, for which basic arithmetic is
 defined.
 
 For fixed sized fields, meaning single fields with a static and fixed
@@ -497,7 +497,7 @@ known at compile time. Accessing the ``payload`` is a subsequence
 operation (performing zerocopy) starting at bit 112 (or byte 15) of
 the binary vector.
 
-While at the user level arithmetics is on the bit level, accesses at
+While at the user level arithmetic is on the bit level, accesses at
 byte boundaries are done directly into the byte vector. This is
 encapsulated in the class :class:`<stretchy-byte-vector-subsequence>`
 
