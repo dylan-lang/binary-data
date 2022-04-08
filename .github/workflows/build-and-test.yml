@@ -21,7 +21,7 @@ jobs:
       - uses: dylan-lang/install-opendylan@v1
 
       - name: Build binary-data-tests
-        run: ./dylan-compiler -build binary-data-tests
+        run: ./dylan-compiler -build binary-data-test
 
       - name: Run binary-data-tests-tests
-        run: _build/bin/binary-data-tests
+        run: _build/bin/binary-data-test
