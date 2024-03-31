@@ -351,7 +351,7 @@ language instantiates these fields.
 
    :keyword name: The name of this field.
    :keyword fixup: A unary Dylan function computing the value of this field, used if no default is supplied and none provided by the client, defaults to ``#f``.
-   :keyword init-value: The default value if the client did not provide any, default :drm:`$unsupplied`.
+   :keyword init-value: The default value if the client did not provide any, default `$unsupplied <https://opendylan.org/library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions:$unsupplied>`_.
    :keyword static-end: A Dylan expression determining the end, defaults to :const:`$unknown-at-compile-time`.
    :keyword static-length: A Dylan expression determining the length, defaults to :const:`$unknown-at-compile-time`.
    :keyword static-start: A Dylan expression determining the start, defaults to :const:`$unknown-at-compile-time`.
@@ -958,11 +958,13 @@ Predefined Leaf Frames
 
 .. class:: <unsigned-byte>
 
-   A single byte, represented as a :drm:`<byte>`.
+   A single byte, represented as a `<byte>
+   <https://opendylan.org/library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:[byte]>`_.
 
    :operations:
 
-      - :gf:`high-level-type` returns :drm:`<byte>`.
+      - :gf:`high-level-type` returns `<byte>
+        https://opendylan.org/library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:[byte]`_.
       - :gf:`field-size` returns 8.
 
    :superclasses: :class:`<fixed-size-translated-leaf-frame>`

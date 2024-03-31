@@ -12,7 +12,10 @@
 # serve to show the default.
 
 import sys, os
-import sphinxcontrib.dylan.themes as dylan_themes
+
+sys.path.insert(0, os.path.abspath('../../_packages/sphinx-extensions/current/src/sphinxcontrib'))
+
+import dylan.themes as dylan_themes
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -26,7 +29,9 @@ import sphinxcontrib.dylan.themes as dylan_themes
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinxcontrib.dylan.domain']
+extensions = [
+    'dylan.domain'
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -98,7 +103,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = dylan_themes.get_html_theme_default()
+html_theme = 'furo'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -271,3 +276,6 @@ epub_copyright = u'2013, Dylan Hackers'
 
 # If false, no index is generated.
 #epub_use_index = True
+
+# Ignore certification verification
+tls_verify = False

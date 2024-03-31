@@ -3,10 +3,14 @@ name: build-and-test
 on:
   push:
     # all branches
+    paths-ignore:
+      - 'documentation/**'
   pull_request:
     branches:
       - main
       - master
+    paths-ignore:
+      - 'documentation/**'
 
   # This enables the Run Workflow button on the Actions tab.
   workflow_dispatch:
@@ -16,12 +20,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - uses: dylan-lang/install-opendylan@v2
+      - uses: dylan-lang/install-opendylan@v3
+
+      - name: Update packages
+        run: dylan update
 
       - name: Build binary-data-test
-        run: ./dylan-compiler -build binary-data-test
+        run: dylan build binary-data-test
 
       - name: Run binary-data-tests-test
-        run: _build/bin/binary-data-test
+        run: _build/bin/binary-data-test --progress none --report surefire > _build/TEST-binary-data.xml
+
+      - name: Publish Test Report
+        if: success() || failure()
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: '**/_build/TEST-*.xml
