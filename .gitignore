@@ -1,5 +1,8 @@
+*~
 *.hdp
 *.iml
 _build
 .idea
 documentation/build
+registry/
+_packages/
