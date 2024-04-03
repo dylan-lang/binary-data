@@ -1,0 +1,729 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API Reference" href="reference.html" /><link rel="prev" title="Binary Data" href="index.html" />
+
+    <!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+        <title>Usage - Binary Data 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Binary Data 0.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">Binary Data 0.1 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">Internals</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h1>
+<section id="terminology">
+<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading">#</a></h2>
+<p>A vector of bytes that has an associated definition for its
+interpretation is a <em>frame</em>. These come in two variants: some cannot
+be broken down further structurally, we call those <em>leaf frames</em>. The
+others have a composite structure, those are <em>container frames</em>. They
+consist of a number of <em>fields</em>, which are the named components of
+that frame. Every field in a container frame is a frame in itself,
+leading to a recursive definition of frames.  The description of the
+structure of a container frame in our domain-specific language
+<a class="reference internal" href="reference.html#binary-data:binary-data:definebinary-data"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">binary-data</span></code></a> is referred to as a <em>binary data
+definition</em>.</p>
+</section>
+<section id="representation-in-dylan">
+<h2>Representation in Dylan<a class="headerlink" href="#representation-in-dylan" title="Permalink to this heading">#</a></h2>
+<p>The binary-data library provides an extension to Dylan for manipulating frames,
+with a representation of frames as Dylan objects, and a set of functions on
+these objects to perform the manipulation. The representation used
+introduces a class hierarchy rooted at the abstract superclass <a class="reference internal" href="reference.html#binary-data:binary-data:[frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code></a>,
+with the two disjoint abstract subclasses <a class="reference internal" href="reference.html#binary-data:binary-data:[leaf-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;leaf-frame&gt;</span></code></a> and
+<a class="reference internal" href="reference.html#binary-data:binary-data:[container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;container-frame&gt;</span></code></a>. Every type of frame in the system is represented
+as a concrete subclass of either one, and actual frames are instances of
+these classes. A pair of generic functions, <a class="reference internal" href="reference.html#binary-data:binary-data:parse-frame"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">parse-frame</span></code></a> and
+<a class="reference internal" href="reference.html#binary-data:binary-data:assemble-frame"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">assemble-frame</span></code></a>, convert a given byte vector into the appropriate
+high-level instance of <a class="reference internal" href="reference.html#binary-data:binary-data:[frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code></a>, or vice versa.</p>
+<p>Typical code that handles a frame then looks like this:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parse-frame</span><span class="p">(</span><span class="nc">&lt;ethernet-frame&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">some-byte-vector</span><span class="p">);</span>
+<span class="n">format-out</span><span class="p">(</span><span class="s">&quot;This packet goes from %= to %=</span><span class="se">\n\&quot;</span><span class="s">,</span>
+<span class="w">           </span><span class="n">frame</span><span class="p">.</span><span class="n">source-address</span><span class="p">,</span>
+<span class="w">           </span><span class="n">frame</span><span class="p">.</span><span class="n">destination-address</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The first line binds the variable frame to an instance of some subclass of
+<code class="docutils literal notranslate"><span class="pre">&lt;ethernet-frame&gt;</span></code>. This instance is created from the vector of bytes
+passed to the call of <a class="reference internal" href="reference.html#binary-data:binary-data:parse-frame"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">parse-frame</span></code></a>. Then, the value of the source and
+destination address fields in the Ethernet frame are extracted and printed.</p>
+<p>The class <a class="reference internal" href="reference.html#binary-data:binary-data:[frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code></a> defines several generic functions:</p>
+<table class="hlist"><tr><td><ul class="simple">
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:parse-frame"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">parse-frame</span></code></a> instantiates a <a class="reference internal" href="reference.html#binary-data:binary-data:[frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code></a> with the value taken from a given byte-vector</p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:assemble-frame"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">assemble-frame</span></code></a> encodes a <a class="reference internal" href="reference.html#binary-data:binary-data:[frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code></a> instance into its byte-vector</p></li>
+</ul>
+</td><td><ul class="simple">
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:frame-size"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">frame-size</span></code></a> returns the size (in bit) of the given frame</p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:summary"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">summary</span></code></a> prints a human-readable summary of the given frame</p></li>
+</ul>
+</td></tr></table>
+<p>Some properties are mixed in into our class hierarchy by introducing
+the direct subclasses of <a class="reference internal" href="reference.html#binary-data:binary-data:[frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code></a>:</p>
+<p>For efficiency reasons, there is a distinction between frames that
+have a static (compile-time) size (<a class="reference internal" href="reference.html#binary-data:binary-data:[fixed-size-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;fixed-size-frame&gt;</span></code></a>) and
+frames of dynamic size (<a class="reference internal" href="reference.html#binary-data:binary-data:[variable-size-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;variable-size-frame&gt;</span></code></a>).</p>
+<p>Another property is translation of the value into a Dylan object of
+the standard library. An example of such a <a class="reference internal" href="reference.html#binary-data:binary-data:[translated-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;translated-frame&gt;</span></code></a>
+is the (fixed size) type <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;2byte-big-endian-unsigned-integer&gt;</span></code>
+which is translated into a Dylan <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. This is referred to
+as a <em>translated frame</em> while frames without a matching Dylan type are
+known as <em>untranslated frames</em> (<a class="reference internal" href="reference.html#binary-data:binary-data:[untranslated-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;untranslated-frame&gt;</span></code></a>).</p>
+<p>The appropriate classes and accessor functions are not written
+directly for container frames. Rather, they are created by invocation
+of the macro <a class="reference internal" href="reference.html#binary-data:binary-data:definebinary-data"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">binary-data</span></code></a>. This serves two purposes: it
+allows a more compact representation, eliminating the need to write
+boilerplate code over and over again, and it hides implementation
+details from the user of the DSL.</p>
+</section>
+<section id="frame-types">
+<h2>Frame Types<a class="headerlink" href="#frame-types" title="Permalink to this heading">#</a></h2>
+<section id="leaf-frames">
+<h3>Leaf Frames<a class="headerlink" href="#leaf-frames" title="Permalink to this heading">#</a></h3>
+<p>A leaf frame can be fixed or variable size, and translated or
+untranslated. Examples are:</p>
+<table class="hlist"><tr><td><ul class="simple">
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[raw-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;raw-frame&gt;</span></code></a> has a variable size and no translation</p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[null-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;null-frame&gt;</span></code></a> has a zero size and no translation</p></li>
+</ul>
+</td><td><ul class="simple">
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[fixed-size-byte-vector-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;fixed-size-byte-vector-frame&gt;</span></code></a> (e.g. an IPv4 address) has a fixed size and no translation</p></li>
+<li><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;2byte-big-endian-unsigned-integer&gt;</span></code> has a fixed size of 16 bits, and its translation is a Dylan <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</td></tr></table>
+<p>FIXME: <a class="reference internal" href="reference.html#binary-data:binary-data:[externally-delimited-string]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;externally-delimited-string&gt;</span></code></a> is variable size and
+untranslated, though <a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#as"><code class="xref drm docutils literal notranslate"><span class="pre">as</span></code></a> in both directions with <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>
+is provided (should inherit from translated frame)</p>
+<p>The generic function <a class="reference internal" href="reference.html#binary-data:binary-data:read-frame"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">read-frame</span></code></a> is used to convert a
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> into an instance of a <cite>&lt;leaf-frame&gt;</cite>.</p>
+<p>FIXME: why is read-frame not defined on container-frame?</p>
+<p>The running example in this guide will be an <code class="docutils literal notranslate"><span class="pre">&lt;ethernet-frame&gt;</span></code>,
+which contains the mac address of the source and a mac-address of the
+destination. A mac address is the unique address of each network
+interface, assigned by the IEEE. It consists of 6 bytes and is usually
+printed in hexadecimal, each byte separated by <code class="docutils literal notranslate"><span class="pre">:</span></code>.</p>
+<p>The definition of the <code class="docutils literal notranslate"><span class="pre">&lt;mac-address&gt;</span></code> class in Dylan is:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;mac-address&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;fixed-size-byte-vector-frame&gt;</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">inline</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">field-size</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nc">&lt;mac-address&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">length</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="mi">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">8</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">mac-address</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;byte-vector&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">res</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;mac-address&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">parse-frame</span><span class="p">(</span><span class="nc">&lt;mac-address&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">mac-address</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;string&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">res</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;mac-address&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">read-frame</span><span class="p">(</span><span class="nc">&lt;mac-address&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">read-frame</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nc">&lt;mac-address&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;string&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">res</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;mac-address&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">as-lowercase</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">any?</span><span class="p">(</span><span class="nb">method</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;:&#39;</span><span class="w"> </span><span class="k">end</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">))</span>
+<span class="w">    </span><span class="c1">//input: 00:de:ad:be:ef:00</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">split</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;:&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">unless</span><span class="p">(</span><span class="n">fields</span><span class="p">.</span><span class="nb">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span>
+<span class="w">     </span><span class="k">signal</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;parse-error&gt;</span><span class="p">))</span>
+<span class="w">    </span><span class="k">end</span><span class="p">;</span>
+<span class="w">    </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;mac-address&gt;</span><span class="p">,</span>
+<span class="w">         </span><span class="k">data:</span><span class="w"> </span><span class="nb">map-as</span><span class="p">(</span><span class="nc">&lt;stretchy-vector-subsequence&gt;</span><span class="p">,</span>
+<span class="w">                      </span><span class="nb">rcurry</span><span class="p">(</span><span class="n">string-to-integer</span><span class="p">,</span><span class="w"> </span><span class="k">base:</span><span class="w"> </span><span class="mi">16</span><span class="p">),</span>
+<span class="w">                      </span><span class="n">fields</span><span class="p">))</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="c1">//input: 00deadbeef00</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="k">end</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="nb">as</span><span class="w"> </span><span class="p">(</span><span class="nb">class</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nc">&lt;string&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;mac-address&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">string</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;string&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">reduce1</span><span class="p">(</span><span class="nb">method</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="nb">concatenate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;:&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="p">,</span>
+<span class="w">          </span><span class="nb">map-as</span><span class="p">(</span><span class="nc">&lt;stretchy-vector&gt;</span><span class="p">,</span>
+<span class="w">                 </span><span class="nb">rcurry</span><span class="p">(</span><span class="n">integer-to-string</span><span class="p">,</span><span class="w"> </span><span class="k">base:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="k">size:</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
+<span class="w">                 </span><span class="n">frame</span><span class="p">.</span><span class="n">data</span><span class="p">))</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The data is stored in the <code class="docutils literal notranslate"><span class="pre">data</span></code> slot of the
+<a class="reference internal" href="reference.html#binary-data:binary-data:[fixed-size-byte-vector-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;fixed-size-byte-vector-frame&gt;</span></code></a>, the <code class="docutils literal notranslate"><span class="pre">field-size</span></code> method
+returns statically 48 bit, syntax sugar for constructing
+<code class="docutils literal notranslate"><span class="pre">&lt;mac-address&gt;</span></code> instances are provided, <code class="docutils literal notranslate"><span class="pre">read-frame</span></code> converts a
+<code class="docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code>, whereas <code class="docutils literal notranslate"><span class="pre">as</span></code> converts a <code class="docutils literal notranslate"><span class="pre">&lt;mac-address&gt;</span></code> into human
+readable output.</p>
+<p>A leaf frame on its own is not very useful, but it is the building
+block for the composed container frames.</p>
+</section>
+<section id="container-frame">
+<h3>Container Frame<a class="headerlink" href="#container-frame" title="Permalink to this heading">#</a></h3>
+<p>The container frame class inherits from <a class="reference internal" href="reference.html#binary-data:binary-data:[variable-size-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;variable-size-frame&gt;</span></code></a>
+and <a class="reference internal" href="reference.html#binary-data:binary-data:[untranslated-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;untranslated-frame&gt;</span></code></a>.</p>
+<p>A container frame consists of a sequence of fields. A field represents
+the static information about a protocol: the name of the field, the
+frame type, possibly a start and length offset, a length, a method for
+fixing the byte vector, …</p>
+<p>The list of fields for a given <a class="reference internal" href="reference.html#binary-data:binary-data:[container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;container-frame&gt;</span></code></a> persists
+only once in memory, the dynamic values are represented by
+<code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame-field&gt;</span></code> objects.</p>
+<p>Methods defined on <a class="reference internal" href="reference.html#binary-data:binary-data:[container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;container-frame&gt;</span></code></a>:</p>
+<table class="hlist"><tr><td><ul class="simple">
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:fields"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">fields</span></code></a> returns the list of <a class="reference internal" href="reference.html#binary-data:binary-data:[field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;field&gt;</span></code></a> instances</p></li>
+<li><p><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">field-count</span></code> returns the size of the list</p></li>
+</ul>
+</td><td><ul class="simple">
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:frame-name"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">frame-name</span></code></a> returns a short identifier of the frame</p></li>
+</ul>
+</td></tr></table>
+<p>The definer macro <a class="reference internal" href="reference.html#binary-data:binary-data:definebinary-data"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">binary-data</span></code></a> translates the
+binary-data DSL into a class definition which is a subclass of
+<a class="reference internal" href="reference.html#binary-data:binary-data:[container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;container-frame&gt;</span></code></a> (and other useful stuff).</p>
+<p>The class <a class="reference internal" href="reference.html#binary-data:binary-data:[header-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;header-frame&gt;</span></code></a> is a direct subclass of
+<a class="reference internal" href="reference.html#binary-data:binary-data:[container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;container-frame&gt;</span></code></a> which is used for container frames which
+consist of a header (addressing, etc) and some payload, which might
+also be a container-frame of variable type.</p>
+<p>The running example is an <code class="docutils literal notranslate"><span class="pre">&lt;ethernet-frame&gt;</span></code>, which is shown as
+binary data definition.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="n">binary-data</span><span class="w"> </span><span class="nc">&lt;ethernet-frame&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;header-frame&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">summary</span><span class="w"> </span><span class="s">&quot;ETH %= -&gt; %=&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">source-address</span><span class="p">,</span><span class="w"> </span><span class="n">destination-address</span><span class="p">;</span>
+<span class="w">  </span><span class="n">field</span><span class="w"> </span><span class="n">destination-address</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;mac-address&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">field</span><span class="w"> </span><span class="n">source-address</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;mac-address&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">layering</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">type-code</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;2byte-big-endian-unsigned-integer&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">variably-typed</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="k">type-function:</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">payload-type</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The first line specifies the name <code class="docutils literal notranslate"><span class="pre">&lt;ethernet-frame&gt;</span></code>, and its
+superclass, <a class="reference internal" href="reference.html#binary-data:binary-data:[header-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;header-frame&gt;</span></code></a>.</p>
+<p>The second line specialises the method <a class="reference internal" href="reference.html#binary-data:binary-data:summary"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">summary</span></code></a> on an
+<code class="docutils literal notranslate"><span class="pre">&lt;ethernet-frame&gt;</span></code> to print <code class="docutils literal notranslate"><span class="pre">ETH</span></code>, the source address and the
+destination address.</p>
+<p>The remaining lines represent each one field in the ethernet frame
+structure. The <code class="docutils literal notranslate"><span class="pre">source-address</span></code> and <code class="docutils literal notranslate"><span class="pre">destination-address</span></code> are each
+of type <code class="docutils literal notranslate"><span class="pre">&lt;mac-address&gt;</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">type-code</span></code> field is a 16 bit integer, and it is a <code class="docutils literal notranslate"><span class="pre">layering</span></code>
+field (<a class="reference internal" href="reference.html#binary-data:binary-data:[layering-field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layering-field&gt;</span></code></a>). This means that its value is used
+to determine the type of its payload! Also, when assembling such a
+frame, the layering field will be filled out automatically depending
+on the payload type.  There can be at most one <code class="docutils literal notranslate"><span class="pre">layering</span></code> field in a
+binary data definition.</p>
+<p>The last field is the payload, whose type is variable and given by
+applying the function <code class="docutils literal notranslate"><span class="pre">payload-type</span></code> to the concrete frame instance.
+The default type-function of a <a class="reference internal" href="reference.html#binary-data:binary-data:[variably-typed-field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;variably-typed-field&gt;</span></code></a> is
+<a class="reference internal" href="reference.html#binary-data:binary-data:payload-type"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">payload-type</span></code></a>.</p>
+<p>A payload for an <code class="docutils literal notranslate"><span class="pre">&lt;ethernet-frame&gt;</span></code> might be a <code class="docutils literal notranslate"><span class="pre">&lt;vlan-tag&gt;</span></code>, if
+the <code class="docutils literal notranslate"><span class="pre">type-code</span></code> is <code class="docutils literal notranslate"><span class="pre">#x8100</span></code> (the <code class="docutils literal notranslate"><span class="pre">over</span></code> keyword takes care of
+the hairy details).</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="n">binary-data</span><span class="w"> </span><span class="nc">&lt;vlan-tag&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;header-frame&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">over</span><span class="w"> </span><span class="nc">&lt;ethernet-frame&gt;</span><span class="w"> </span><span class="mh">#x8100</span><span class="p">;</span>
+<span class="w">  </span><span class="n">summary</span><span class="w"> </span><span class="s">&quot;VLAN: %=&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">vlan-id</span><span class="p">;</span>
+<span class="w">  </span><span class="n">field</span><span class="w"> </span><span class="n">priority</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;3bit-unsigned-integer&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">field</span><span class="w"> </span><span class="n">canonical-format-indicator</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;1bit-unsigned-integer&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">field</span><span class="w"> </span><span class="n">vlan-id</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;12bit-unsigned-integer&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">layering</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">type-code</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;2byte-big-endian-unsigned-integer&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">variably-typed</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="k">type-function:</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">payload-type</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Default values for fields can be provided, similar to Dylan class
+definitions, using the equals sign (<code class="docutils literal notranslate"><span class="pre">=</span></code>) after the field type.</p>
+<p>A more detailed description of the binary data language can be found
+in its reference <a class="reference internal" href="reference.html#binary-data:binary-data:definebinary-data"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">binary-data</span></code></a>.</p>
+</section>
+<section id="inheritance-variably-typed-container-frames">
+<h3>Inheritance: Variably Typed Container Frames<a class="headerlink" href="#inheritance-variably-typed-container-frames" title="Permalink to this heading">#</a></h3>
+<p>A container frame can inherit from another container frame that
+already has some fields defined. The
+<a class="reference internal" href="reference.html#binary-data:binary-data:[variably-typed-container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;variably-typed-container-frame&gt;</span></code></a> class is used in container
+frames which have the type information encoded in the frame. The
+layering field (<a class="reference internal" href="reference.html#binary-data:binary-data:[layering-field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layering-field&gt;</span></code></a>) of such container
+frames must be parsed in order to determine the actual type.</p>
+<p>Continuing with the <code class="docutils literal notranslate"><span class="pre">&lt;ethernet-frame&gt;</span></code> example, consider the <a class="reference external" href="https://en.wikipedia.org/wiki/IPv4#Options">options of an
+IPv4 packet</a>. These share a
+common header (<code class="docutils literal notranslate"><span class="pre">copy-flag</span></code> and <code class="docutils literal notranslate"><span class="pre">option-type</span></code>), but a concrete option
+might have additional fields. The end of the options list is determined by
+the <code class="docutils literal notranslate"><span class="pre">header-length</span></code> field of an IPv4 packet and by the
+<code class="docutils literal notranslate"><span class="pre">&lt;end-option&gt;</span></code> (whose <code class="docutils literal notranslate"><span class="pre">option-type</span></code> is 0).</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">abstract</span><span class="w"> </span><span class="n">binary-data</span><span class="w"> </span><span class="nc">&lt;ip-option-frame&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;variably-typed-container-frame&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">field</span><span class="w"> </span><span class="n">copy-flag</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;1bit-unsigned-integer&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">layering</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">option-type</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;7bit-unsigned-integer&gt;</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="n">binary-data</span><span class="w"> </span><span class="nc">&lt;end-option&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;ip-option-frame&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">over</span><span class="w"> </span><span class="nc">&lt;ip-option-frame&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="n">binary-data</span><span class="w"> </span><span class="nc">&lt;router-alert&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;ip-option-frame&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">over</span><span class="w"> </span><span class="nc">&lt;ip-option-frame&gt;</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span>
+<span class="w">  </span><span class="n">field</span><span class="w"> </span><span class="n">router-alert-length</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;unsigned-byte&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="w">  </span><span class="n">field</span><span class="w"> </span><span class="n">router-alert-value</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;2byte-big-endian-unsigned-integer&gt;</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This defines the <code class="docutils literal notranslate"><span class="pre">&lt;end-option&gt;</span></code> which has the <code class="docutils literal notranslate"><span class="pre">option-type</span></code> field
+in the ip-option frame set to <code class="docutils literal notranslate"><span class="pre">0</span></code>. An <code class="docutils literal notranslate"><span class="pre">&lt;end-option&gt;</span></code> does not
+contain any further fields, thus only has the two fields inherited
+from the <code class="docutils literal notranslate"><span class="pre">&lt;ip-option-frame&gt;</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;router-alert&gt;</span></code> specifies two more fields, which are
+appended to the inherited fields.</p>
+</section>
+</section>
+<section id="fields">
+<h2>Fields<a class="headerlink" href="#fields" title="Permalink to this heading">#</a></h2>
+<p>The domain-specific language <a class="reference internal" href="reference.html#binary-data:binary-data:definebinary-data"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">binary-data</span></code></a> provides
+syntactic sugar to create <a class="reference internal" href="reference.html#binary-data:binary-data:[field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;field&gt;</span></code></a> instances. A client should
+not need to instantiate these directly. A field contains the static
+information (such as type, length, default value) of a sequence of
+bits inside of a <a class="reference internal" href="reference.html#binary-data:binary-data:[container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;container-frame&gt;</span></code></a>.</p>
+<p>Binary data formats have some common patterns which are directly
+integrated into this library:</p>
+<ul class="simple">
+<li><p><em>variably-typed</em> fields for payloads</p></li>
+<li><p><em>layering</em> of protocols in the OSI network stack</p></li>
+<li><p><em>enumeration</em> where the bit value has a direct correspondence to a <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a></p></li>
+<li><p><em>repeating</em> occurences of a field, such as key-value pairs</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There might be more patterns, if you find any, please tell us!</p>
+</div>
+<section id="variably-typed">
+<h3>Variably-typed<a class="headerlink" href="#variably-typed" title="Permalink to this heading">#</a></h3>
+<p>Most fields have the same type in all frame instances, i.e. they are
+statically typed. In some cases however, the type of a field can
+depend on the value of another field in the same <a class="reference internal" href="reference.html#binary-data:binary-data:[container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;container-frame&gt;</span></code></a>.
+Such fields can be defined using <a class="reference internal" href="reference.html#binary-data:binary-data:[variably-typed-field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;variably-typed-field&gt;</span></code></a> which does
+not have a static type, but an expression determining the field type for a
+concrete frame instance.</p>
+<p>This example uses the <code class="docutils literal notranslate"><span class="pre">variably-typed</span> <span class="pre">field</span></code> syntax. The
+<code class="docutils literal notranslate"><span class="pre">type-function</span></code> keyword has <code class="docutils literal notranslate"><span class="pre">frame</span></code> bound to the concrete frame
+object.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">field</span><span class="w"> </span><span class="n">length-type</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;2bit-unsigned-integer&gt;</span><span class="p">;</span>
+<span class="n">variably-typed</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">body-length</span><span class="p">,</span>
+<span class="w">  </span><span class="k">type-function:</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">length-type</span><span class="p">)</span>
+<span class="w">                   </span><span class="mi">0</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nc">&lt;unsigned-byte&gt;</span><span class="p">;</span>
+<span class="w">                   </span><span class="mi">1</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nc">&lt;2byte-big-endian-unsigned-integer&gt;</span><span class="p">;</span>
+<span class="w">                   </span><span class="mi">2</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nc">&lt;4byte-big-endian-unsigned-integer&gt;</span><span class="p">;</span>
+<span class="w">                   </span><span class="mi">3</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nc">&lt;null-frame&gt;</span><span class="p">;</span>
+<span class="w">                 </span><span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Note that whenever the actual type of a variably-typed field resolves to the
+&lt;null-frame&gt; type it means that the field is completely missing from the
+container frame.</p>
+</section>
+<section id="layering">
+<h3>Layering<a class="headerlink" href="#layering" title="Permalink to this heading">#</a></h3>
+<p>Binary data format stacking is omnipresent in network protocols. An
+ethernet frame can contain different types of payload, amongst others
+ARP frames, IPv4 frames. This library provides syntactic sugar
+<code class="docutils literal notranslate"><span class="pre">layering</span></code> to define which field in a frame determines the type of
+the payload. A binary data definition can also specify which value is
+used to be the payload of another binary data format.</p>
+<p>A layering field (<a class="reference internal" href="reference.html#binary-data:binary-data:[layering-field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layering-field&gt;</span></code></a>) provides the information
+that the value of this field controls the type of the payload, and
+establishes a registry for field values and matching payload types.</p>
+<p>The registry can be extended with the <code class="docutils literal notranslate"><span class="pre">over</span></code> syntax of
+<a class="reference internal" href="reference.html#binary-data:binary-data:definebinary-data"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">binary-data</span></code></a>, and it can be queried using the
+convinience function <a class="reference internal" href="reference.html#binary-data:binary-data:payload-type"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">payload-type</span></code></a>, or <a class="reference internal" href="reference.html#binary-data:binary-data:lookup-layer"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">lookup-layer</span></code></a> and
+<a class="reference internal" href="reference.html#binary-data:binary-data:reverse-lookup-layer"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">reverse-lookup-layer</span></code></a>.</p>
+</section>
+<section id="enumeration">
+<h3>Enumeration<a class="headerlink" href="#enumeration" title="Permalink to this heading">#</a></h3>
+<p>An enumerated field (<a class="reference internal" href="reference.html#binary-data:binary-data:[enum-field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;enum-field&gt;</span></code></a>) provides a set of mappings
+from the binary value to a Dylan <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a>. Note that the binary
+value must be a numerical type so that the mapping is from an integer
+to a symbol.</p>
+<p>In this example, accessing the value of the field would return one of
+the symbols rather than the value of the <a class="reference internal" href="reference.html#binary-data:binary-data:[unsigned-byte]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;unsigned-byte&gt;</span></code></a>. For
+mappings not specified, the integer value is used:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;unsigned-byte&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="k">mappings:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nc">&lt;=&gt;</span><span class="w"> </span><span class="ss">#&quot;connect&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">2</span><span class="w"> </span><span class="nc">&lt;=&gt;</span><span class="w"> </span><span class="ss">#&quot;bind&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">3</span><span class="w"> </span><span class="nc">&lt;=&gt;</span><span class="w"> </span><span class="ss">#&quot;udp associate&quot;</span><span class="w"> </span><span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="repeating">
+<h3>Repeating<a class="headerlink" href="#repeating" title="Permalink to this heading">#</a></h3>
+<p>Repeated fields (<a class="reference internal" href="reference.html#binary-data:binary-data:[repeated-field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;repeated-field&gt;</span></code></a>) have a list of values of
+the field type, instead of just a single one. Currently two kinds
+of repeated fields are supported, <a class="reference internal" href="reference.html#binary-data:binary-data:[self-delimited-repeated-field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;self-delimited-repeated-field&gt;</span></code></a>
+and <a class="reference internal" href="reference.html#binary-data:binary-data:[count-repeated-field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;count-repeated-field&gt;</span></code></a>, they only differ in the way the
+number of elements in the repeated field is determined.</p>
+<p>A self-delimited field definition uses an expression to evaluate whether
+or not the end of the list of values has been reached, usually by checking
+for a magic value. This expression should return <code class="docutils literal notranslate"><span class="pre">#t</span></code> when the field is
+fully parsed. For example:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">repeated</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;ip-option-frame&gt;</span><span class="p">,</span>
+<span class="w">  </span><span class="k">reached-end?:</span>
+<span class="w">    </span><span class="nb">instance?</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="nc">&lt;end-option&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>A count field definition uses another field in the frame to determine
+how many elements are in the field. For example:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">field</span><span class="w"> </span><span class="n">number-methods</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;unsigned-byte&gt;</span><span class="p">,</span>
+<span class="w">  </span><span class="k">fixup:</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">methods</span><span class="p">.</span><span class="nb">size</span><span class="p">;</span>
+<span class="n">repeated</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">methods</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;unsigned-byte&gt;</span><span class="p">,</span>
+<span class="w">  </span><span class="k">count:</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">number-methods</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Note the use of the <code class="docutils literal notranslate"><span class="pre">fixup</span></code> keyword on the <code class="docutils literal notranslate"><span class="pre">number-methods</span></code> field to
+calculate a value for use by <a class="reference internal" href="reference.html#binary-data:binary-data:assemble-frame"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">assemble-frame</span></code></a> if the value is not
+otherwise specified.</p>
+</section>
+<section id="adding-a-new-leaf-frame-type">
+<h3>Adding a New Leaf Frame Type<a class="headerlink" href="#adding-a-new-leaf-frame-type" title="Permalink to this heading">#</a></h3>
+<p>Depending on the properties of the frame, there are different methods
+which should be specialized. In general, there need to be a
+specialization of the size, how to parse, and how to assemble the
+frame.</p>
+<p>There are two generic functions which should be specialized by every
+<a class="reference internal" href="reference.html#binary-data:binary-data:[leaf-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;leaf-frame&gt;</span></code></a> subclass: <a class="reference internal" href="reference.html#binary-data:binary-data:parse-frame"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">parse-frame</span></code></a> and
+<a class="reference internal" href="reference.html#binary-data:binary-data:read-frame"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">read-frame</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>there should be a <code class="docutils literal notranslate"><span class="pre">print-frame</span></code> as well, rather than using <code class="docutils literal notranslate"><span class="pre">as(&lt;string&gt;,</span> <span class="pre">frame)</span></code>.</p>
+</div>
+<p>Fixed size frames must specialize <a class="reference internal" href="reference.html#binary-data:binary-data:field-size"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">field-size</span></code></a>, variable sized
+ones <a class="reference internal" href="reference.html#binary-data:binary-data:frame-size"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">frame-size</span></code></a>.</p>
+<p>Translated frames must specialize <a class="reference internal" href="reference.html#binary-data:binary-data:high-level-type"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">high-level-type</span></code></a> and
+<a class="reference internal" href="reference.html#binary-data:binary-data:assemble-frame-into-as"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">assemble-frame-into-as</span></code></a>.</p>
+<p>Untranslated frames must specialize <a class="reference internal" href="reference.html#binary-data:binary-data:assemble-frame-into"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">assemble-frame-into</span></code></a>.</p>
+<p>There are already several classes and macros implemented where these
+methods are defined.</p>
+<p>See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[leaf-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;leaf-frame&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[fixed-size-translated-leaf-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;fixed-size-translated-leaf-frame&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[variable-size-translated-leaf-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;variable-size-translated-leaf-frame&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[fixed-size-untranslated-leaf-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;fixed-size-untranslated-leaf-frame&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[variable-size-untranslated-leaf-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;variable-size-untranslated-leaf-frame&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:definen-byte-vector"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">n-byte-vector</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:definen-bit-unsigned-integer"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">n-bit-unsigned-integer</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:definen-byte-unsigned-integer"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">n-byte-unsigned-integer</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[unsigned-integer-bit-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;unsigned-integer-bit-frame&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[variable-size-byte-vector]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;variable-size-byte-vector&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[externally-delimited-string]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;externally-delimited-string&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[fixed-size-byte-vector-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;fixed-size-byte-vector-frame&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[big-endian-unsigned-integer-byte-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;big-endian-unsigned-integer-byte-frame&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference.html#binary-data:binary-data:[little-endian-unsigned-integer-byte-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;little-endian-unsigned-integer-byte-frame&gt;</span></code></a></p></li>
+</ul>
+</section>
+</section>
+<section id="efficiency-considerations">
+<h2>Efficiency Considerations<a class="headerlink" href="#efficiency-considerations" title="Permalink to this heading">#</a></h2>
+<p>The design goal of this library is, as usual in object-centered
+programming, that the time and space overhead are minimal (the
+compiler should remove all the indirections!).</p>
+<p>This library is carefully designed to achieve this goal, while not
+limiting the expressiveness, sacrificing the safety, or burdening the
+developer with inconvenient syntactic noise. A story about binary data
+is that there are often big chunks of data, and deeply nested pieces
+of data. The good news is that most applications do not need all
+binary data.</p>
+<p>The binary data library was designed with lazy parsing in mind: if a
+byte vector is received, the high-level object does not parse the byte
+vector completely, but only the requested fields. To achieve this, we
+gather information about each field, specifically its start and end
+offset, and also its length, already at compile time, using a number
+system consisting of the type union between <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> and
+<code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unknown-at-compile-time</span></code>, for which basic arithmetic is
+defined.</p>
+<p>For fixed sized fields, meaning single fields with a static and fixed
+size frame type, their length is propagated while the DSL iterates
+over the fields. All field offsets for the <code class="docutils literal notranslate"><span class="pre">&lt;ethernet-frame&gt;</span></code> are
+known at compile time. Accessing the <code class="docutils literal notranslate"><span class="pre">payload</span></code> is a subsequence
+operation (performing zerocopy) starting at bit 112 (or byte 15) of
+the binary vector.</p>
+<p>While at the user level arithmetic is on the bit level, accesses at
+byte boundaries are done directly into the byte vector. This is
+encapsulated in the class <a class="reference internal" href="reference.html#binary-data:binary-data:[stretchy-byte-vector-subsequence]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stretchy-byte-vector-subsequence&gt;</span></code></a></p>
+<p>FIXME: move &lt;stretchy-byte-vector-subsequence&gt; to a separate module</p>
+<p>Each binary data macro call defines a container class with two direct
+subclasses, a high-level decoded class
+(<code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;decoded-container-frame&gt;</span></code>) and a partially parsed one with
+an attached byte-vector (<code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;unparsed-container-frame&gt;</span></code>).  The
+decoded class has a list of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame-field&gt;</span></code> instances, which
+contain the metadata (size, fixup function, reference to the field,
+etc.) of each field. The partially parsed class reuses this class in
+its <code class="docutils literal notranslate"><span class="pre">cache</span></code> slot, and keeps a reference to its byte vector in
+another slot.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="reference.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">API Reference</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2013, Dylan Hackers
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Usage</a><ul>
+<li><a class="reference internal" href="#terminology">Terminology</a></li>
+<li><a class="reference internal" href="#representation-in-dylan">Representation in Dylan</a></li>
+<li><a class="reference internal" href="#frame-types">Frame Types</a><ul>
+<li><a class="reference internal" href="#leaf-frames">Leaf Frames</a></li>
+<li><a class="reference internal" href="#container-frame">Container Frame</a></li>
+<li><a class="reference internal" href="#inheritance-variably-typed-container-frames">Inheritance: Variably Typed Container Frames</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fields">Fields</a><ul>
+<li><a class="reference internal" href="#variably-typed">Variably-typed</a></li>
+<li><a class="reference internal" href="#layering">Layering</a></li>
+<li><a class="reference internal" href="#enumeration">Enumeration</a></li>
+<li><a class="reference internal" href="#repeating">Repeating</a></li>
+<li><a class="reference internal" href="#adding-a-new-leaf-frame-type">Adding a New Leaf Frame Type</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#efficiency-considerations">Efficiency Considerations</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=e031e9a9"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    </body>
+</html>

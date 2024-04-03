@@ -1,0 +1,317 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Usage" href="usage.html" />
+
+    <!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+        <title>Binary Data 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="#"><div class="brand">Binary Data 0.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+  
+  
+  <span class="sidebar-brand-text">Binary Data 0.1 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">Internals</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="binary-data">
+<h1>Binary Data<a class="headerlink" href="#binary-data" title="Permalink to this heading">#</a></h1>
+<p>The binary data library provides a domain-specific language for
+manipulation of binary data, or structured byte sequences, as they
+appear in everyday software such as networking tools or graphics file
+manipulation. The binary data domain-specific language uses the
+metaprogramming features of Dylan to a large extent.</p>
+<p>The design goals are manifold: concise expressive syntax, efficient
+conversion between byte vectors and high level objects (in both
+directions, by using zerocopy and lazy parsing technology). The source
+code of this library is available under a MIT license at <a class="reference external" href="https://github.com/dylan-lang/binary-data">GitHub</a>. A large body of
+implemented binary data formats using this library is also available
+at <a class="reference external" href="https://github.com/dylan-hackers/network-night-vision/tree/master/protocols">GitHub</a>.</p>
+<p>Inspiration for this library is taken among others from the defstorage
+system available as part of the <a class="reference external" href="http://en.wikipedia.org/wiki/Genera_%28operating_system%29">Genera Common Lisp operating system</a> and the
+swiss-army knife for interactive packet manipulation <a class="reference external" href="http://web.archive.org/web/20131217022133/http://bb.secdev.org/scapy/wiki/Home">scapy (Web archive)</a>.</p>
+<p>For further information, you might want to read our published papers
+about a TCP/IP stack written entirely in Dylan:</p>
+<ul class="simple">
+<li><p><a class="reference download internal" download="" href="_downloads/df299cb0f452150922d979828f10faf0/a-DSL-for-manipulation-of-binary-data.pdf"><code class="xref download docutils literal notranslate"><span class="pre">A</span> <span class="pre">domain-specific</span> <span class="pre">language</span> <span class="pre">for</span> <span class="pre">manipulation</span> <span class="pre">of</span> <span class="pre">binary</span> <span class="pre">data</span> <span class="pre">in</span> <span class="pre">Dylan</span></code></a> (by Hannes Mehnert and Andreas Bogk at ILC 2007)</p></li>
+<li><p><a class="reference download internal" download="" href="_downloads/006217823e62a183ad54c13f000d4bdb/secure-networking.pdf"><code class="xref download docutils literal notranslate"><span class="pre">Secure</span> <span class="pre">Networking</span></code></a> (by Andreas Bogk and Hannes Mehnert in 2006)</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#terminology">Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#representation-in-dylan">Representation in Dylan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#frame-types">Frame Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#leaf-frames">Leaf Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#container-frame">Container Frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#inheritance-variably-typed-container-frames">Inheritance: Variably Typed Container Frames</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#fields">Fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#variably-typed">Variably-typed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#layering">Layering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#enumeration">Enumeration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#repeating">Repeating</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#adding-a-new-leaf-frame-type">Adding a New Leaf Frame Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#efficiency-considerations">Efficiency Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#class-hierarchy">Class hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#tool-api">Tool API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#parsing-frames">Parsing Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#assembling-frames">Assembling Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#information-about-frames">Information about Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#information-about-frame-types">Information about Frame Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#fields">Fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#layering-of-frames">Layering of frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#database-of-binary-data-formats">Database of Binary Data Formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#utilities">Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#errors">Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#extension-api">Extension API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#extending-binary-data-formats">Extending Binary Data Formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#defining-a-custom-leaf-frame">Defining a Custom Leaf Frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#predefined-leaf-frames">Predefined Leaf Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#bit-frames">32 Bit Frames</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html#stretchy-vector-subsequences">Stretchy Vector Subsequences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">Internals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#internal-api">Internal API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#container-frame-internals">Container Frame Internals</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="usage.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Usage</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2013, Dylan Hackers
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=e031e9a9"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    </body>
+</html>
