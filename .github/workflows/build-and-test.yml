@@ -19,7 +19,7 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-    
+
       - uses: actions/checkout@v4
 
       - uses: dylan-lang/install-opendylan@v3
@@ -37,4 +37,4 @@ jobs:
         if: success() || failure()
         uses: mikepenz/action-junit-report@v4
         with:
-          report_paths: '**/_build/TEST-*.xml
+          report_paths: '**/_build/TEST-*.xml'
