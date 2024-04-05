@@ -10,6 +10,6 @@
 	"sphinx-extensions"
     ],
     "license": "MIT",
-    "url": "A DSL for parsing and assembling binary data",
+    "url": "https://github.com/dylan-lang/binary-data",
     "version": "0.1.1"
 }
