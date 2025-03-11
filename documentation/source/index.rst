@@ -18,7 +18,7 @@ at `GitHub
 
 Inspiration for this library is taken among others from the defstorage
 system available as part of the `Genera Common Lisp operating system
-<http://en.wikipedia.org/wiki/Genera_%28operating_system%29>`_ and the
+<https://en.wikipedia.org/wiki/Genera_%28operating_system%29>`_ and the
 swiss-army knife for interactive packet manipulation `scapy (Web archive)
 <http://web.archive.org/web/20131217022133/http://bb.secdev.org/scapy/wiki/Home>`__.
 
