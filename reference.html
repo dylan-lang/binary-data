@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Internals" href="internals.html" /><link rel="prev" title="Usage" href="usage.html" />
 
-    <!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>API Reference - Binary Data 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
     
     
 
@@ -68,7 +68,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -83,22 +83,63 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -111,6 +152,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -129,7 +172,8 @@
       <div class="theme-toggle-container theme-toggle-header">
         <button class="theme-toggle">
           <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
@@ -177,11 +221,17 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/reference.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
 <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
@@ -191,25 +241,25 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="api-reference">
-<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading">#</a></h1>
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">¶</a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
 <p>This describes the API available from binary-data. It is organized in
 the following sections, depending on different demands: using binary
 data in a tool, extending with a custom binary format, and the
 internal API.</p>
 </section>
 <section id="class-hierarchy">
-<h2>Class hierarchy<a class="headerlink" href="#class-hierarchy" title="Permalink to this heading">#</a></h2>
+<h2>Class hierarchy<a class="headerlink" href="#class-hierarchy" title="Link to this heading">¶</a></h2>
 <p>The class hierarchy is rooted in <code class="docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code>. Several direct
 subclasses exist, some are <code class="docutils literal notranslate"><span class="pre">open</span></code> and may be subclassed. Only those
 combinations of direct subclasses which were needed until now are
 defined (there might be need for other combinations in the future).</p>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[frame]">
-<span class="sig-name descname"><span class="pre">&lt;frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The abstract superclass of all frames, several generic functions
@@ -231,7 +281,7 @@ are defined on this class.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[leaf-frame]">
-<span class="sig-name descname"><span class="pre">&lt;leaf-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[leaf-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;leaf-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[leaf-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The abstract superclass of all frames without any further structure.</p>
@@ -250,7 +300,7 @@ are defined on this class.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[fixed-size-frame]">
-<span class="sig-name descname"><span class="pre">&lt;fixed-size-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[fixed-size-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;fixed-size-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[fixed-size-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The abstract superclass of all frames with a static length. The
@@ -265,7 +315,7 @@ object class of the given instance.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[variable-size-frame]">
-<span class="sig-name descname"><span class="pre">&lt;variable-size-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variable-size-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;variable-size-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variable-size-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The abstract superclass of all frames with a variable length.</p>
@@ -278,7 +328,7 @@ object class of the given instance.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[translated-frame]">
-<span class="sig-name descname"><span class="pre">&lt;translated-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[translated-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;translated-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[translated-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The abstract superclass of all frames with a conversion into a
@@ -292,7 +342,7 @@ native Dylan type.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[untranslated-frame]">
-<span class="sig-name descname"><span class="pre">&lt;untranslated-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[untranslated-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;untranslated-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[untranslated-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Abstract superclass of all frames with a custom class instance.</p>
@@ -305,7 +355,7 @@ native Dylan type.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[fixed-size-untranslated-frame]">
-<span class="sig-name descname"><span class="pre">&lt;fixed-size-untranslated-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[fixed-size-untranslated-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;fixed-size-untranslated-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[fixed-size-untranslated-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Abstract superclass for fixed sized frames without a translation</p>
@@ -318,7 +368,7 @@ native Dylan type.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[variable-size-untranslated-frame]">
-<span class="sig-name descname"><span class="pre">&lt;variable-size-untranslated-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variable-size-untranslated-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;variable-size-untranslated-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variable-size-untranslated-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Abstract superclass for variable sized frames without a
@@ -333,7 +383,7 @@ translation. This is the direct superclass of
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[fixed-size-translated-leaf-frame]">
-<span class="sig-name descname"><span class="pre">&lt;fixed-size-translated-leaf-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[fixed-size-translated-leaf-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;fixed-size-translated-leaf-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[fixed-size-translated-leaf-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Superclass of all fixed size leaf frames with a translation,
@@ -347,7 +397,7 @@ mainly used for bit vectors represented as Dylan <a class="reference external" h
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[variable-size-translated-leaf-frame]">
-<span class="sig-name descname"><span class="pre">&lt;variable-size-translated-leaf-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variable-size-translated-leaf-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;variable-size-translated-leaf-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variable-size-translated-leaf-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Superclass of all variable size leaf frames with a translation
@@ -361,7 +411,7 @@ mainly used for bit vectors represented as Dylan <a class="reference external" h
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[fixed-size-untranslated-leaf-frame]">
-<span class="sig-name descname"><span class="pre">&lt;fixed-size-untranslated-leaf-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[fixed-size-untranslated-leaf-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;fixed-size-untranslated-leaf-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[fixed-size-untranslated-leaf-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Superclass of all fixed size leaf frames without a translation,
@@ -376,7 +426,7 @@ see its subclass <a class="reference internal" href="#binary-data:binary-data:[f
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[variable-size-untranslated-leaf-frame]">
-<span class="sig-name descname"><span class="pre">&lt;variable-size-untranslated-leaf-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variable-size-untranslated-leaf-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;variable-size-untranslated-leaf-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variable-size-untranslated-leaf-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Superclass of all variable size leaf frames without a
@@ -391,7 +441,7 @@ translation (for example class <a class="reference internal" href="#binary-data:
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[null-frame]">
-<span class="sig-name descname"><span class="pre">&lt;null-frame&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[null-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;null-frame&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[null-frame]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A concrete zero size leaf frame without a translation. This frame type
@@ -408,7 +458,7 @@ or vice versa is not supported (because it wouldn’t make much sense).</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[container-frame]">
-<span class="sig-name descname"><span class="pre">&lt;container-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[container-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;container-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[container-frame]" title="Link to this definition">¶</a></dt>
 <dd><p>Superclass of all binary data definitions using the <a class="reference internal" href="#binary-data:binary-data:definebinary-data"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span>
 <span class="pre">binary-data</span></code></a> macro.</p>
 <dl class="field-list simple">
@@ -429,7 +479,7 @@ or vice versa is not supported (because it wouldn’t make much sense).</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[header-frame]">
-<span class="sig-name descname"><span class="pre">&lt;header-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[header-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;header-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[header-frame]" title="Link to this definition">¶</a></dt>
 <dd><p>Superclass of all binary data definitions which support layering,
 thus have a header and payload.</p>
 <dl class="field-list simple">
@@ -455,7 +505,7 @@ payload of the header frame instance.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[variably-typed-container-frame]">
-<span class="sig-name descname"><span class="pre">&lt;variably-typed-container-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variably-typed-container-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;variably-typed-container-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variably-typed-container-frame]" title="Link to this definition">¶</a></dt>
 <dd><p>Superclass of all binary data definitions which have an abstract
 header followed by more fields. In the header a specific
 <a class="reference internal" href="#binary-data:binary-data:[layering-field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layering-field&gt;</span></code></a> determines which subclass to instantiate.</p>
@@ -468,12 +518,12 @@ header followed by more fields. In the header a specific
 
 </section>
 <section id="tool-api">
-<h2>Tool API<a class="headerlink" href="#tool-api" title="Permalink to this heading">#</a></h2>
+<h2>Tool API<a class="headerlink" href="#tool-api" title="Link to this heading">¶</a></h2>
 <section id="parsing-frames">
-<h3>Parsing Frames<a class="headerlink" href="#parsing-frames" title="Permalink to this heading">#</a></h3>
+<h3>Parsing Frames<a class="headerlink" href="#parsing-frames" title="Link to this heading">¶</a></h3>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:parse-frame">
-<span class="sig-name descname"><span class="pre">parse-frame</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:parse-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">parse-frame</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:parse-frame" title="Link to this definition">¶</a></dt>
 <dd><p>Parses the given binary packet as frame-type, resulting in an
 instance of the frame-type and the number of consumed bits.</p>
 <dl class="field-list simple">
@@ -498,7 +548,7 @@ instance of the frame-type and the number of consumed bits.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:read-frame">
-<span class="sig-name descname"><span class="pre">read-frame</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:read-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">read-frame</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:read-frame" title="Link to this definition">¶</a></dt>
 <dd><p>Converts a given string to an instance of the given leaf frame type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -520,10 +570,10 @@ instance of the frame-type and the number of consumed bits.</p>
 
 </section>
 <section id="assembling-frames">
-<h3>Assembling Frames<a class="headerlink" href="#assembling-frames" title="Permalink to this heading">#</a></h3>
+<h3>Assembling Frames<a class="headerlink" href="#assembling-frames" title="Link to this heading">¶</a></h3>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:assemble-frame">
-<span class="sig-name descname"><span class="pre">assemble-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:assemble-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">assemble-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:assemble-frame" title="Link to this definition">¶</a></dt>
 <dd><p>Produces a binary vector representing this frame. All field fixup
 functions are called.</p>
 <dl class="field-list simple">
@@ -545,10 +595,10 @@ functions are called.</p>
 
 </section>
 <section id="information-about-frames">
-<h3>Information about Frames<a class="headerlink" href="#information-about-frames" title="Permalink to this heading">#</a></h3>
+<h3>Information about Frames<a class="headerlink" href="#information-about-frames" title="Link to this heading">¶</a></h3>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:frame-size">
-<span class="sig-name descname"><span class="pre">frame-size</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:frame-size" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-size</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:frame-size" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the length in bits for the given frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -569,7 +619,7 @@ functions are called.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:summary">
-<span class="sig-name descname"><span class="pre">summary</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:summary" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">summary</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:summary" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a human-readable customizable (in binary-data-definer)
 string, which summarizes the frame.</p>
 <dl class="field-list simple">
@@ -591,7 +641,7 @@ string, which summarizes the frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:packet">
-<span class="sig-name descname"><span class="pre">packet</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:packet" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">packet</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:packet" title="Link to this definition">¶</a></dt>
 <dd><p>Underlying byte vector of the given <a class="reference internal" href="#binary-data:binary-data:[container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;container-frame&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -612,7 +662,7 @@ string, which summarizes the frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:parent">
-<span class="sig-name descname"><span class="pre">parent</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:parent" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">parent</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:parent" title="Link to this definition">¶</a></dt>
 <dd><p>If the frame is a payload of another layer, returns the frame of
 the upper layer, false otherwise.</p>
 <dl class="field-list simple">
@@ -634,10 +684,10 @@ the upper layer, false otherwise.</p>
 
 </section>
 <section id="information-about-frame-types">
-<h3>Information about Frame Types<a class="headerlink" href="#information-about-frame-types" title="Permalink to this heading">#</a></h3>
+<h3>Information about Frame Types<a class="headerlink" href="#information-about-frame-types" title="Link to this heading">¶</a></h3>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:fields">
-<span class="sig-name descname"><span class="pre">fields</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:fields" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fields</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:fields" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a vector of <a class="reference internal" href="#binary-data:binary-data:[field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;field&gt;</span></code></a> for the given <a class="reference internal" href="#binary-data:binary-data:[container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;container-frame&gt;</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -662,7 +712,7 @@ the upper layer, false otherwise.</p>
 </div>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:frame-name">
-<span class="sig-name descname"><span class="pre">frame-name</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:frame-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-name</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:frame-name" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the name of the frame type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -687,12 +737,12 @@ the upper layer, false otherwise.</p>
 </div>
 </section>
 <section id="fields">
-<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this heading">#</a></h3>
+<h3>Fields<a class="headerlink" href="#fields" title="Link to this heading">¶</a></h3>
 <p>Syntactic sugar in the <a class="reference internal" href="#binary-data:binary-data:definebinary-data"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">binary-data</span></code></a> domain-specific
 language instantiates these fields.</p>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[field]">
-<span class="sig-name descname"><span class="pre">&lt;field&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[field]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;field&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[field]" title="Link to this definition">¶</a></dt>
 <dd><p>The abstract superclass of all fields.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -741,7 +791,7 @@ accessed.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[variably-typed-field]">
-<span class="sig-name descname"><span class="pre">&lt;variably-typed-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variably-typed-field]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;variably-typed-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variably-typed-field]" title="Link to this definition">¶</a></dt>
 <dd><p>The class for fields of dynamic type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -763,7 +813,7 @@ accessed.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[statically-typed-field]">
-<span class="sig-name descname"><span class="pre">&lt;statically-typed-field&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[statically-typed-field]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;statically-typed-field&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[statically-typed-field]" title="Link to this definition">¶</a></dt>
 <dd><p>The abstract superclass of all statically typed fields.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -789,7 +839,7 @@ accessed.</p>
 </div>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[single-field]">
-<span class="sig-name descname"><span class="pre">&lt;single-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[single-field]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;single-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[single-field]" title="Link to this definition">¶</a></dt>
 <dd><p>The common field. Nothing interesting going on here.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -800,7 +850,7 @@ accessed.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[enum-field]">
-<span class="sig-name descname"><span class="pre">&lt;enum-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[enum-field]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;enum-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[enum-field]" title="Link to this definition">¶</a></dt>
 <dd><p>An enumeration field to map <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> to <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -816,7 +866,7 @@ accessed.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[layering-field]">
-<span class="sig-name descname"><span class="pre">&lt;layering-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[layering-field]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;layering-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[layering-field]" title="Link to this definition">¶</a></dt>
 <dd><p>The layering field is used in <a class="reference internal" href="#binary-data:binary-data:[header-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;header-frame&gt;</span></code></a> and
 <a class="reference internal" href="#binary-data:binary-data:[variably-typed-container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;variably-typed-container-frame&gt;</span></code></a> to determine the concrete
 type of the payload or which subclass to use.</p>
@@ -834,7 +884,7 @@ information. No need to specify a fixup.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[repeated-field]">
-<span class="sig-name descname"><span class="pre">&lt;repeated-field&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[repeated-field]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;repeated-field&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[repeated-field]" title="Link to this definition">¶</a></dt>
 <dd><p>Abstract superclass of repeated fields. The <code class="docutils literal notranslate"><span class="pre">init-value</span></code> slot is
 bound to <code class="docutils literal notranslate"><span class="pre">#()</span></code>.</p>
 <dl class="field-list simple">
@@ -846,7 +896,7 @@ bound to <code class="docutils literal notranslate"><span class="pre">#()</span>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[count-repeated-field]">
-<span class="sig-name descname"><span class="pre">&lt;count-repeated-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[count-repeated-field]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;count-repeated-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[count-repeated-field]" title="Link to this definition">¶</a></dt>
 <dd><p>A repeated field whose number of repetitions is determined
 externally.</p>
 <dl class="field-list simple">
@@ -863,7 +913,7 @@ externally.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[self-delimited-repeated-field]">
-<span class="sig-name descname"><span class="pre">&lt;self-delimited-repeated-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[self-delimited-repeated-field]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;self-delimited-repeated-field&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[self-delimited-repeated-field]" title="Link to this definition">¶</a></dt>
 <dd><p>A repeated field whose end is determined internally.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -879,10 +929,10 @@ externally.</p>
 
 </section>
 <section id="layering-of-frames">
-<h3>Layering of frames<a class="headerlink" href="#layering-of-frames" title="Permalink to this heading">#</a></h3>
+<h3>Layering of frames<a class="headerlink" href="#layering-of-frames" title="Link to this heading">¶</a></h3>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:payload-type">
-<span class="sig-name descname"><span class="pre">payload-type</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:payload-type" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">payload-type</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:payload-type" title="Link to this definition">¶</a></dt>
 <dd><p>The type of the payload, It is just a wrapper around
 <a class="reference internal" href="#binary-data:binary-data:lookup-layer"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">lookup-layer</span></code></a>, which returns <a class="reference internal" href="#binary-data:binary-data:[raw-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;raw-frame&gt;</span></code></a> if
 <code class="docutils literal notranslate"><span class="pre">lookup-layer</span></code> returned false.</p>
@@ -905,7 +955,7 @@ externally.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:lookup-layer">
-<span class="sig-name descname"><span class="pre">lookup-layer</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:lookup-layer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">lookup-layer</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:lookup-layer" title="Link to this definition">¶</a></dt>
 <dd><p>Given a <em>frame-type</em> and a <em>key</em>, returns the type of the payload.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -927,7 +977,7 @@ externally.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:reverse-lookup-layer">
-<span class="sig-name descname"><span class="pre">reverse-lookup-layer</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:reverse-lookup-layer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">reverse-lookup-layer</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:reverse-lookup-layer" title="Link to this definition">¶</a></dt>
 <dd><p>Given a frame type and a payload, returns the value for the layering field.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -953,14 +1003,14 @@ externally.</p>
 </div>
 </section>
 <section id="database-of-binary-data-formats">
-<h3>Database of Binary Data Formats<a class="headerlink" href="#database-of-binary-data-formats" title="Permalink to this heading">#</a></h3>
+<h3>Database of Binary Data Formats<a class="headerlink" href="#database-of-binary-data-formats" title="Link to this heading">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Rename to <code class="docutils literal notranslate"><span class="pre">$binary-data-registry</span></code> or similar. Also, narrow types for the functions in this section.</p>
 </div>
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:$protocols">
-<span class="sig-name descname"><span class="pre">$protocols</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#binary-data:binary-data:$protocols" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$protocols</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#binary-data:binary-data:$protocols" title="Link to this definition">¶</a></dt>
 <dd><p>A hash table with all defined binary formats. Insertion is done by
 a call of <a class="reference internal" href="#binary-data:binary-data:definebinary-data"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">binary-data</span></code></a>.</p>
 <dl class="field-list simple">
@@ -975,7 +1025,7 @@ a call of <a class="reference internal" href="#binary-data:binary-data:definebin
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:find-protocol">
-<span class="sig-name descname"><span class="pre">find-protocol</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:find-protocol" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">find-protocol</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:find-protocol" title="Link to this definition">¶</a></dt>
 <dd><p>Looks for the given name in the hashtable
 <a class="reference internal" href="#binary-data:binary-data:$protocols"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$protocols</span></code></a>. Signals an error if no protocol with the given
 name can be found.</p>
@@ -999,7 +1049,7 @@ name can be found.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:find-protocol-field">
-<span class="sig-name descname"><span class="pre">find-protocol-field</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:find-protocol-field" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">find-protocol-field</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:find-protocol-field" title="Link to this definition">¶</a></dt>
 <dd><p>Queries a field by name in a given binary data format. Errors if no
 such field is known in the binary data format.</p>
 <dl class="field-list simple">
@@ -1022,10 +1072,10 @@ such field is known in the binary data format.</p>
 
 </section>
 <section id="utilities">
-<h3>Utilities<a class="headerlink" href="#utilities" title="Permalink to this heading">#</a></h3>
+<h3>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h3>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:hexdump">
-<span class="sig-name descname"><span class="pre">hexdump</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:hexdump" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">hexdump</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:hexdump" title="Link to this definition">¶</a></dt>
 <dd><p>Prints the given <em>data</em> in hexadecimal on the given <em>stream</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1050,7 +1100,7 @@ hexadecimal).</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:byte-offset">
-<span class="sig-name descname"><span class="pre">byte-offset</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:byte-offset" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">byte-offset</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:byte-offset" title="Link to this definition">¶</a></dt>
 <dd><p>Computes the number of bytes for a given number of bits. A synonym
 for <code class="docutils literal notranslate"><span class="pre">rcurry(ash,</span> <span class="pre">3)</span></code>.</p>
 <dl class="field-list simple">
@@ -1072,7 +1122,7 @@ for <code class="docutils literal notranslate"><span class="pre">rcurry(ash,</sp
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:bit-offset">
-<span class="sig-name descname"><span class="pre">bit-offset</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:bit-offset" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-offset</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:bit-offset" title="Link to this definition">¶</a></dt>
 <dd><p>Computes the number of bits which do not fit into a byte for a
 given number of bits. A synonym for <code class="docutils literal notranslate"><span class="pre">curry(logand,</span> <span class="pre">7)</span></code>.</p>
 <dl class="field-list simple">
@@ -1094,7 +1144,7 @@ given number of bits. A synonym for <code class="docutils literal notranslate"><
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:byte-aligned">
-<span class="sig-name descname"><span class="pre">byte-aligned</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:byte-aligned" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">byte-aligned</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:byte-aligned" title="Link to this definition">¶</a></dt>
 <dd><p>Checks that the given number of bits can be represented in full
 bytes, otherwise signals an <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;alignment-error&gt;</span></code>.</p>
 <dl class="field-list simple">
@@ -1111,7 +1161,7 @@ bytes, otherwise signals an <code class="xref dylan dylan-class docutils literal
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:data">
-<span class="sig-name descname"><span class="pre">data</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:data" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:data" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the underlying byte vector of a wrapper object, used for
 several untranslated leaf frames.</p>
 <dl class="field-list simple">
@@ -1137,10 +1187,10 @@ several untranslated leaf frames.</p>
 </div>
 </section>
 <section id="errors">
-<h3>Errors<a class="headerlink" href="#errors" title="Permalink to this heading">#</a></h3>
+<h3>Errors<a class="headerlink" href="#errors" title="Link to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[out-of-bound-error]">
-<span class="sig-name descname"><span class="pre">&lt;out-of-bound-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[out-of-bound-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;out-of-bound-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[out-of-bound-error]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a></p>
@@ -1150,7 +1200,7 @@ several untranslated leaf frames.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[out-of-range-error]">
-<span class="sig-name descname"><span class="pre">&lt;out-of-range-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[out-of-range-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;out-of-range-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[out-of-range-error]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a></p>
@@ -1160,7 +1210,7 @@ several untranslated leaf frames.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[malformed-data-error]">
-<span class="sig-name descname"><span class="pre">&lt;malformed-data-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[malformed-data-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;malformed-data-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[malformed-data-error]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a></p>
@@ -1170,7 +1220,7 @@ several untranslated leaf frames.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[parse-error]">
-<span class="sig-name descname"><span class="pre">&lt;parse-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[parse-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;parse-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[parse-error]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a></p>
@@ -1180,7 +1230,7 @@ several untranslated leaf frames.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[inline-layering-error]">
-<span class="sig-name descname"><span class="pre">&lt;inline-layering-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[inline-layering-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;inline-layering-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[inline-layering-error]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a></p>
@@ -1190,7 +1240,7 @@ several untranslated leaf frames.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[missing-inline-layering-error]">
-<span class="sig-name descname"><span class="pre">&lt;missing-inline-layering-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[missing-inline-layering-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;missing-inline-layering-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[missing-inline-layering-error]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a></p>
@@ -1201,14 +1251,14 @@ several untranslated leaf frames.</p>
 </section>
 </section>
 <section id="extension-api">
-<h2>Extension API<a class="headerlink" href="#extension-api" title="Permalink to this heading">#</a></h2>
+<h2>Extension API<a class="headerlink" href="#extension-api" title="Link to this heading">¶</a></h2>
 <section id="extending-binary-data-formats">
-<h3>Extending Binary Data Formats<a class="headerlink" href="#extending-binary-data-formats" title="Permalink to this heading">#</a></h3>
+<h3>Extending Binary Data Formats<a class="headerlink" href="#extending-binary-data-formats" title="Link to this heading">¶</a></h3>
 <p>This domain-specific language defines a subclass of
 <a class="reference internal" href="#binary-data:binary-data:[container-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;container-frame&gt;</span></code></a>, and lots of boilerplate.</p>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:definebinary-data">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">binary-data</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#binary-data:binary-data:definebinary-data" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">binary-data</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#binary-data:binary-data:definebinary-data" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
 <dd class="field-odd"><p><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="p">[</span><span class="nb">abstract</span><span class="p">]</span><span class="w"> </span><span class="n">binary-data</span><span class="w"> </span><span class="vg">*binary-format-name*</span><span class="w"> </span><span class="p">([</span><span class="vg">*super-binary-format*</span><span class="p">])</span>
@@ -1316,7 +1366,7 @@ during macro processing.</p>
 </div>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:fixup!">
-<span class="sig-name descname"><span class="pre">fixup!</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:fixup!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fixup!</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:fixup!" title="Link to this definition">¶</a></dt>
 <dd><p>Fixes data in an assembled container frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1339,13 +1389,13 @@ names in DNS fragments.</p>
 
 </section>
 <section id="defining-a-custom-leaf-frame">
-<h3>Defining a Custom Leaf Frame<a class="headerlink" href="#defining-a-custom-leaf-frame" title="Permalink to this heading">#</a></h3>
+<h3>Defining a Custom Leaf Frame<a class="headerlink" href="#defining-a-custom-leaf-frame" title="Link to this heading">¶</a></h3>
 <p>A common structure in binary data formats are subsequent ranges of
 bits or bytes, each with a different meaning. There are some macros
 available to define frame types of common patterns.</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:field-size">
-<span class="sig-name descname"><span class="pre">field-size</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:field-size" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">field-size</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:field-size" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the static size of a given frame type. Should be
 specialized for custom fixed sized frames.</p>
 <dl class="field-list simple">
@@ -1367,7 +1417,7 @@ specialized for custom fixed sized frames.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:high-level-type">
-<span class="sig-name descname"><span class="pre">high-level-type</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:high-level-type" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">high-level-type</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:high-level-type" title="Link to this definition">¶</a></dt>
 <dd><p>For translated frames, return the native Dylan type. Otherwise
 identity.</p>
 <dl class="field-list simple">
@@ -1389,7 +1439,7 @@ identity.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:assemble-frame-into">
-<span class="sig-name descname"><span class="pre">assemble-frame-into</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:assemble-frame-into" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">assemble-frame-into</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:assemble-frame-into" title="Link to this definition">¶</a></dt>
 <dd><p>Shuffle the bits in the given <em>packet</em> so that the <em>frame</em> is
 encoded correctly.</p>
 <dl class="field-list simple">
@@ -1412,7 +1462,7 @@ encoded correctly.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:assemble-frame-into-as">
-<span class="sig-name descname"><span class="pre">assemble-frame-into-as</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:assemble-frame-into-as" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">assemble-frame-into-as</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:assemble-frame-into-as" title="Link to this definition">¶</a></dt>
 <dd><p>Shuffle the bits in the given <em>packet</em> so that the <em>frame</em> is
 encoded correctly as the given <em>frame-type</em>.</p>
 <dl class="field-list simple">
@@ -1436,7 +1486,7 @@ encoded correctly as the given <em>frame-type</em>.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:definen-bit-unsigned-integer">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">n-bit-unsigned-integer</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#binary-data:binary-data:definen-bit-unsigned-integer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">n-bit-unsigned-integer</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#binary-data:binary-data:definen-bit-unsigned-integer" title="Link to this definition">¶</a></dt>
 <dd><p>Describes an <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> represented by a bit vector of
 arbitrary size.</p>
 <dl class="field-list simple">
@@ -1471,7 +1521,7 @@ arbitrary size.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:definen-byte-unsigned-integer">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">n-byte-unsigned-integer</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#binary-data:binary-data:definen-byte-unsigned-integer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">n-byte-unsigned-integer</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#binary-data:binary-data:definen-byte-unsigned-integer" title="Link to this definition">¶</a></dt>
 <dd><p>Describes an <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> represented by a byte vector of
 arbitrary size and encoding (little or big endian).</p>
 <dl class="field-list simple">
@@ -1511,7 +1561,7 @@ arbitrary size and encoding (little or big endian).</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:definen-byte-vector">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">n-byte-vector</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#binary-data:binary-data:definen-byte-vector" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">n-byte-vector</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#binary-data:binary-data:definen-byte-vector" title="Link to this definition">¶</a></dt>
 <dd><p>Defines a class with an underlying fixed size byte vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -1543,7 +1593,7 @@ surrounding angle brackets).</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:defineleaf-frame-constructor">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">leaf-frame-constructor</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#binary-data:binary-data:defineleaf-frame-constructor" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">leaf-frame-constructor</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#binary-data:binary-data:defineleaf-frame-constructor" title="Link to this definition">¶</a></dt>
 <dd><p>Defines constructors for a given name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -1574,10 +1624,10 @@ three specializations:</p>
 
 </section>
 <section id="predefined-leaf-frames">
-<h3>Predefined Leaf Frames<a class="headerlink" href="#predefined-leaf-frames" title="Permalink to this heading">#</a></h3>
+<h3>Predefined Leaf Frames<a class="headerlink" href="#predefined-leaf-frames" title="Link to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[unsigned-integer-bit-frame]">
-<span class="sig-name descname"><span class="pre">&lt;unsigned-integer-bit-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[unsigned-integer-bit-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;unsigned-integer-bit-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[unsigned-integer-bit-frame]" title="Link to this definition">¶</a></dt>
 <dd><p>The superclass of all bit frames, concrete classes are defined with
 the <a class="reference internal" href="#binary-data:binary-data:definen-bit-unsigned-integer"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">n-bit-unsigned-integer</span></code></a>.</p>
 <dl class="field-list simple">
@@ -1602,7 +1652,7 @@ the <a class="reference internal" href="#binary-data:binary-data:definen-bit-uns
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[boolean-bit]">
-<span class="sig-name descname"><span class="pre">&lt;boolean-bit&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[boolean-bit]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;boolean-bit&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[boolean-bit]" title="Link to this definition">¶</a></dt>
 <dd><p>A single bit, at the Dylan level a <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p>
 <p>The <a class="reference internal" href="#binary-data:binary-data:high-level-type"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">high-level-type</span></code></a> returns <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.
 The <a class="reference internal" href="#binary-data:binary-data:field-size"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">field-size</span></code></a> returns 1.</p>
@@ -1615,7 +1665,7 @@ The <a class="reference internal" href="#binary-data:binary-data:field-size"><co
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[unsigned-byte]">
-<span class="sig-name descname"><span class="pre">&lt;unsigned-byte&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[unsigned-byte]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;unsigned-byte&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[unsigned-byte]" title="Link to this definition">¶</a></dt>
 <dd><p>A single byte, represented as a <a class="reference external" href="https://opendylan.org/library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:[byte]">&lt;byte&gt;</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Operations<span class="colon">:</span></dt>
@@ -1634,7 +1684,7 @@ https://opendylan.org/library-reference/common-dylan/byte-vector.html#common-dyl
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[variable-size-byte-vector]">
-<span class="sig-name descname"><span class="pre">&lt;variable-size-byte-vector&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variable-size-byte-vector]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;variable-size-byte-vector&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[variable-size-byte-vector]" title="Link to this definition">¶</a></dt>
 <dd><p>A byte vector of arbitrary size, provided externally.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1645,7 +1695,7 @@ https://opendylan.org/library-reference/common-dylan/byte-vector.html#common-dyl
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[externally-delimited-string]">
-<span class="sig-name descname"><span class="pre">&lt;externally-delimited-string&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[externally-delimited-string]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;externally-delimited-string&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[externally-delimited-string]" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> of a certain length, externally delimited. The
 conversion method <a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#as"><code class="xref drm docutils literal notranslate"><span class="pre">as</span></code></a> is specialised on <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> and
 <code class="docutils literal notranslate"><span class="pre">&lt;externally-delimited-string&gt;</span></code>.</p>
@@ -1662,7 +1712,7 @@ conversion method <a class="reference external" href="https://opendylan.org/book
 </div>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[raw-frame]">
-<span class="sig-name descname"><span class="pre">&lt;raw-frame&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[raw-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;raw-frame&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[raw-frame]" title="Link to this definition">¶</a></dt>
 <dd><p>The bottom of the type hierarchy: if nothing is known, a
 <code class="docutils literal notranslate"><span class="pre">&lt;raw-frame&gt;</span></code> is all you can have. <a class="reference internal" href="#binary-data:binary-data:hexdump"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">hexdump</span></code></a> can
 be used to inspect the frame contents.</p>
@@ -1675,7 +1725,7 @@ be used to inspect the frame contents.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[fixed-size-byte-vector-frame]">
-<span class="sig-name descname"><span class="pre">&lt;fixed-size-byte-vector-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[fixed-size-byte-vector-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;fixed-size-byte-vector-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[fixed-size-byte-vector-frame]" title="Link to this definition">¶</a></dt>
 <dd><p>A vector of any amount of bytes with a custom representation. Used
 amongst others for IP addresses, MAC addresses</p>
 <dl class="field-list simple">
@@ -1705,7 +1755,7 @@ amongst others for IP addresses, MAC addresses</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[big-endian-unsigned-integer-byte-frame]">
-<span class="sig-name descname"><span class="pre">&lt;big-endian-unsigned-integer-byte-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[big-endian-unsigned-integer-byte-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;big-endian-unsigned-integer-byte-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[big-endian-unsigned-integer-byte-frame]" title="Link to this definition">¶</a></dt>
 <dd><p>A frame representing an <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> of a certain size,
 depending on the size of the underlyaing byte vector.</p>
 <p>The macro <code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">n-byte-unsigned-integer-definer</span></code> defines
@@ -1733,7 +1783,7 @@ subclasses with a certain size.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[little-endian-unsigned-integer-byte-frame]">
-<span class="sig-name descname"><span class="pre">&lt;little-endian-unsigned-integer-byte-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[little-endian-unsigned-integer-byte-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;little-endian-unsigned-integer-byte-frame&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[little-endian-unsigned-integer-byte-frame]" title="Link to this definition">¶</a></dt>
 <dd><p>A frame representing an <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> of a certain size,
 depending on the size of the underlying byte vector.</p>
 <p>The macro <code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">n-byte-unsigned-integer-definer</span></code> defines
@@ -1761,7 +1811,7 @@ subclasses with a certain size.</p>
 
 </section>
 <section id="bit-frames">
-<h3>32 Bit Frames<a class="headerlink" href="#bit-frames" title="Permalink to this heading">#</a></h3>
+<h3>32 Bit Frames<a class="headerlink" href="#bit-frames" title="Link to this heading">¶</a></h3>
 <p>The <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> type in Dylan is represented by only 30
 bits, thus 32 bit frames which should be represented as a
 <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a> require a workaround. The workaround consists of using
@@ -1773,7 +1823,7 @@ bits, thus 32 bit frames which should be represented as a
 </div>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[big-endian-unsigned-integer-4byte]">
-<span class="sig-name descname"><span class="pre">&lt;big-endian-unsigned-integer-4byte&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[big-endian-unsigned-integer-4byte]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;big-endian-unsigned-integer-4byte&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[big-endian-unsigned-integer-4byte]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#binary-data:binary-data:[fixed-size-byte-vector-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;fixed-size-byte-vector-frame&gt;</span></code></a></p>
@@ -1783,7 +1833,7 @@ bits, thus 32 bit frames which should be represented as a
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[little-endian-unsigned-integer-4byte]">
-<span class="sig-name descname"><span class="pre">&lt;little-endian-unsigned-integer-4byte&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[little-endian-unsigned-integer-4byte]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;little-endian-unsigned-integer-4byte&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[little-endian-unsigned-integer-4byte]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#binary-data:binary-data:[fixed-size-byte-vector-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;fixed-size-byte-vector-frame&gt;</span></code></a></p>
@@ -1793,7 +1843,7 @@ bits, thus 32 bit frames which should be represented as a
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:big-endian-unsigned-integer-4byte">
-<span class="sig-name descname"><span class="pre">big-endian-unsigned-integer-4byte</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:big-endian-unsigned-integer-4byte" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">big-endian-unsigned-integer-4byte</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:big-endian-unsigned-integer-4byte" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>big-endian-unsigned-integer-4byte (data) =&gt; (#rest results)</p>
@@ -1813,7 +1863,7 @@ bits, thus 32 bit frames which should be represented as a
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:little-endian-unsigned-integer-4byte">
-<span class="sig-name descname"><span class="pre">little-endian-unsigned-integer-4byte</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:little-endian-unsigned-integer-4byte" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">little-endian-unsigned-integer-4byte</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:little-endian-unsigned-integer-4byte" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>little-endian-unsigned-integer-4byte (data) =&gt; (#rest results)</p>
@@ -1833,7 +1883,7 @@ bits, thus 32 bit frames which should be represented as a
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:byte-vector-to-float-be">
-<span class="sig-name descname"><span class="pre">byte-vector-to-float-be</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:byte-vector-to-float-be" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">byte-vector-to-float-be</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:byte-vector-to-float-be" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>byte-vector-to-float-be (bv) =&gt; (res)</p>
@@ -1853,7 +1903,7 @@ bits, thus 32 bit frames which should be represented as a
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:byte-vector-to-float-le">
-<span class="sig-name descname"><span class="pre">byte-vector-to-float-le</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:byte-vector-to-float-le" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">byte-vector-to-float-le</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:byte-vector-to-float-le" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>byte-vector-to-float-le (bv) =&gt; (res)</p>
@@ -1873,7 +1923,7 @@ bits, thus 32 bit frames which should be represented as a
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:float-to-byte-vector-be">
-<span class="sig-name descname"><span class="pre">float-to-byte-vector-be</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:float-to-byte-vector-be" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">float-to-byte-vector-be</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:float-to-byte-vector-be" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float-to-byte-vector-be (float) =&gt; (res)</p>
@@ -1893,7 +1943,7 @@ bits, thus 32 bit frames which should be represented as a
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:float-to-byte-vector-le">
-<span class="sig-name descname"><span class="pre">float-to-byte-vector-le</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:float-to-byte-vector-le" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">float-to-byte-vector-le</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#binary-data:binary-data:float-to-byte-vector-le" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float-to-byte-vector-le (float) =&gt; (res)</p>
@@ -1914,7 +1964,7 @@ bits, thus 32 bit frames which should be represented as a
 </section>
 </section>
 <section id="stretchy-vector-subsequences">
-<h2>Stretchy Vector Subsequences<a class="headerlink" href="#stretchy-vector-subsequences" title="Permalink to this heading">#</a></h2>
+<h2>Stretchy Vector Subsequences<a class="headerlink" href="#stretchy-vector-subsequences" title="Link to this heading">¶</a></h2>
 <p>The underlying byte vector which is used in binary data is a
 <a class="reference internal" href="#binary-data:binary-data:[stretchy-byte-vector]"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">&lt;stretchy-byte-vector&gt;</span></code></a>. To allow zerocopy while parsing, and
 providing each frame parser only with a byte vector of the required
@@ -1926,7 +1976,7 @@ which tracks the byte-vector together with a start and end index.</p>
 </div>
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[stretchy-byte-vector]">
-<span class="sig-name descname"><span class="pre">&lt;stretchy-byte-vector&gt;</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#binary-data:binary-data:[stretchy-byte-vector]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;stretchy-byte-vector&gt;</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#binary-data:binary-data:[stretchy-byte-vector]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#type"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code></a></p>
@@ -1939,16 +1989,16 @@ which tracks the byte-vector together with a start and end index.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[stretchy-vector-subsequence]">
-<span class="sig-name descname"><span class="pre">&lt;stretchy-vector-subsequence&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[stretchy-vector-subsequence]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;stretchy-vector-subsequence&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[stretchy-vector-subsequence]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;vector&gt;</span></code></p>
 </dd>
 <dt class="field-even">Init-Keywords<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>data</strong> – </p></li>
-<li><p><strong>end</strong> – </p></li>
-<li><p><strong>start</strong> – </p></li>
+<li><p><strong>data</strong></p></li>
+<li><p><strong>end</strong></p></li>
+<li><p><strong>start</strong></p></li>
 </ul>
 </dd>
 </dl>
@@ -1956,7 +2006,7 @@ which tracks the byte-vector together with a start and end index.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:subsequence">
-<span class="sig-name descname"><span class="pre">subsequence</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:subsequence" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subsequence</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:subsequence" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>subsequence (seq) =&gt; (#rest results)</p>
@@ -1976,7 +2026,7 @@ which tracks the byte-vector together with a start and end index.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:[stretchy-byte-vector-subsequence]">
-<span class="sig-name descname"><span class="pre">&lt;stretchy-byte-vector-subsequence&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[stretchy-byte-vector-subsequence]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;stretchy-byte-vector-subsequence&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#binary-data:binary-data:[stretchy-byte-vector-subsequence]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#binary-data:binary-data:[stretchy-vector-subsequence]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stretchy-vector-subsequence&gt;</span></code></a></p>
@@ -1986,7 +2036,7 @@ which tracks the byte-vector together with a start and end index.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:decode-integer">
-<span class="sig-name descname"><span class="pre">decode-integer</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:decode-integer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">decode-integer</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:decode-integer" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>decode-integer (seq count) =&gt; (#rest results)</p>
@@ -2007,7 +2057,7 @@ which tracks the byte-vector together with a start and end index.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="binary-data:binary-data:encode-integer">
-<span class="sig-name descname"><span class="pre">encode-integer</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:encode-integer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">encode-integer</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#binary-data:binary-data:encode-integer" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>encode-integer (value seq count) =&gt; (#rest results)</p>
@@ -2087,27 +2137,141 @@ which tracks the byte-vector together with a start and end index.</p>
             <ul>
 <li><a class="reference internal" href="#">API Reference</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#class-hierarchy">Class hierarchy</a></li>
+<li><a class="reference internal" href="#class-hierarchy">Class hierarchy</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:[frame]"><code class="docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[leaf-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;leaf-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[fixed-size-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;fixed-size-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[variable-size-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;variable-size-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[translated-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;translated-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[untranslated-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;untranslated-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[fixed-size-untranslated-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;fixed-size-untranslated-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[variable-size-untranslated-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;variable-size-untranslated-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[fixed-size-translated-leaf-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;fixed-size-translated-leaf-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[variable-size-translated-leaf-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;variable-size-translated-leaf-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[fixed-size-untranslated-leaf-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;fixed-size-untranslated-leaf-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[variable-size-untranslated-leaf-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;variable-size-untranslated-leaf-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[null-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;null-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[container-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;container-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[header-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;header-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[variably-typed-container-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;variably-typed-container-frame&gt;</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#tool-api">Tool API</a><ul>
-<li><a class="reference internal" href="#parsing-frames">Parsing Frames</a></li>
-<li><a class="reference internal" href="#assembling-frames">Assembling Frames</a></li>
-<li><a class="reference internal" href="#information-about-frames">Information about Frames</a></li>
-<li><a class="reference internal" href="#information-about-frame-types">Information about Frame Types</a></li>
-<li><a class="reference internal" href="#fields">Fields</a></li>
-<li><a class="reference internal" href="#layering-of-frames">Layering of frames</a></li>
-<li><a class="reference internal" href="#database-of-binary-data-formats">Database of Binary Data Formats</a></li>
-<li><a class="reference internal" href="#utilities">Utilities</a></li>
-<li><a class="reference internal" href="#errors">Errors</a></li>
+<li><a class="reference internal" href="#parsing-frames">Parsing Frames</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:parse-frame"><code class="docutils literal notranslate"><span class="pre">parse-frame</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:read-frame"><code class="docutils literal notranslate"><span class="pre">read-frame</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#assembling-frames">Assembling Frames</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:assemble-frame"><code class="docutils literal notranslate"><span class="pre">assemble-frame</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#information-about-frames">Information about Frames</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:frame-size"><code class="docutils literal notranslate"><span class="pre">frame-size</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:summary"><code class="docutils literal notranslate"><span class="pre">summary</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:packet"><code class="docutils literal notranslate"><span class="pre">packet</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:parent"><code class="docutils literal notranslate"><span class="pre">parent</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#information-about-frame-types">Information about Frame Types</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:fields"><code class="docutils literal notranslate"><span class="pre">fields</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:frame-name"><code class="docutils literal notranslate"><span class="pre">frame-name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fields">Fields</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:[field]"><code class="docutils literal notranslate"><span class="pre">&lt;field&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[variably-typed-field]"><code class="docutils literal notranslate"><span class="pre">&lt;variably-typed-field&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[statically-typed-field]"><code class="docutils literal notranslate"><span class="pre">&lt;statically-typed-field&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[single-field]"><code class="docutils literal notranslate"><span class="pre">&lt;single-field&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[enum-field]"><code class="docutils literal notranslate"><span class="pre">&lt;enum-field&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[layering-field]"><code class="docutils literal notranslate"><span class="pre">&lt;layering-field&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[repeated-field]"><code class="docutils literal notranslate"><span class="pre">&lt;repeated-field&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[count-repeated-field]"><code class="docutils literal notranslate"><span class="pre">&lt;count-repeated-field&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[self-delimited-repeated-field]"><code class="docutils literal notranslate"><span class="pre">&lt;self-delimited-repeated-field&gt;</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#layering-of-frames">Layering of frames</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:payload-type"><code class="docutils literal notranslate"><span class="pre">payload-type</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:lookup-layer"><code class="docutils literal notranslate"><span class="pre">lookup-layer</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:reverse-lookup-layer"><code class="docutils literal notranslate"><span class="pre">reverse-lookup-layer</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#database-of-binary-data-formats">Database of Binary Data Formats</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:$protocols"><code class="docutils literal notranslate"><span class="pre">$protocols</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:find-protocol"><code class="docutils literal notranslate"><span class="pre">find-protocol</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:find-protocol-field"><code class="docutils literal notranslate"><span class="pre">find-protocol-field</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#utilities">Utilities</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:hexdump"><code class="docutils literal notranslate"><span class="pre">hexdump</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:byte-offset"><code class="docutils literal notranslate"><span class="pre">byte-offset</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:bit-offset"><code class="docutils literal notranslate"><span class="pre">bit-offset</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:byte-aligned"><code class="docutils literal notranslate"><span class="pre">byte-aligned</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:data"><code class="docutils literal notranslate"><span class="pre">data</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#errors">Errors</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:[out-of-bound-error]"><code class="docutils literal notranslate"><span class="pre">&lt;out-of-bound-error&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[out-of-range-error]"><code class="docutils literal notranslate"><span class="pre">&lt;out-of-range-error&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[malformed-data-error]"><code class="docutils literal notranslate"><span class="pre">&lt;malformed-data-error&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[parse-error]"><code class="docutils literal notranslate"><span class="pre">&lt;parse-error&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[inline-layering-error]"><code class="docutils literal notranslate"><span class="pre">&lt;inline-layering-error&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[missing-inline-layering-error]"><code class="docutils literal notranslate"><span class="pre">&lt;missing-inline-layering-error&gt;</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#extension-api">Extension API</a><ul>
-<li><a class="reference internal" href="#extending-binary-data-formats">Extending Binary Data Formats</a></li>
-<li><a class="reference internal" href="#defining-a-custom-leaf-frame">Defining a Custom Leaf Frame</a></li>
-<li><a class="reference internal" href="#predefined-leaf-frames">Predefined Leaf Frames</a></li>
-<li><a class="reference internal" href="#bit-frames">32 Bit Frames</a></li>
+<li><a class="reference internal" href="#extending-binary-data-formats">Extending Binary Data Formats</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:definebinary-data"><code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">binary-data</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:fixup!"><code class="docutils literal notranslate"><span class="pre">fixup!</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#stretchy-vector-subsequences">Stretchy Vector Subsequences</a></li>
+<li><a class="reference internal" href="#defining-a-custom-leaf-frame">Defining a Custom Leaf Frame</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:field-size"><code class="docutils literal notranslate"><span class="pre">field-size</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:high-level-type"><code class="docutils literal notranslate"><span class="pre">high-level-type</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:assemble-frame-into"><code class="docutils literal notranslate"><span class="pre">assemble-frame-into</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:assemble-frame-into-as"><code class="docutils literal notranslate"><span class="pre">assemble-frame-into-as</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:definen-bit-unsigned-integer"><code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">n-bit-unsigned-integer</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:definen-byte-unsigned-integer"><code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">n-byte-unsigned-integer</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:definen-byte-vector"><code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">n-byte-vector</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:defineleaf-frame-constructor"><code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">leaf-frame-constructor</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#predefined-leaf-frames">Predefined Leaf Frames</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:[unsigned-integer-bit-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;unsigned-integer-bit-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[boolean-bit]"><code class="docutils literal notranslate"><span class="pre">&lt;boolean-bit&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[unsigned-byte]"><code class="docutils literal notranslate"><span class="pre">&lt;unsigned-byte&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[variable-size-byte-vector]"><code class="docutils literal notranslate"><span class="pre">&lt;variable-size-byte-vector&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[externally-delimited-string]"><code class="docutils literal notranslate"><span class="pre">&lt;externally-delimited-string&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[raw-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;raw-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[fixed-size-byte-vector-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;fixed-size-byte-vector-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[big-endian-unsigned-integer-byte-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;big-endian-unsigned-integer-byte-frame&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[little-endian-unsigned-integer-byte-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;little-endian-unsigned-integer-byte-frame&gt;</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bit-frames">32 Bit Frames</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:[big-endian-unsigned-integer-4byte]"><code class="docutils literal notranslate"><span class="pre">&lt;big-endian-unsigned-integer-4byte&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[little-endian-unsigned-integer-4byte]"><code class="docutils literal notranslate"><span class="pre">&lt;little-endian-unsigned-integer-4byte&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:big-endian-unsigned-integer-4byte"><code class="docutils literal notranslate"><span class="pre">big-endian-unsigned-integer-4byte</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:little-endian-unsigned-integer-4byte"><code class="docutils literal notranslate"><span class="pre">little-endian-unsigned-integer-4byte</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:byte-vector-to-float-be"><code class="docutils literal notranslate"><span class="pre">byte-vector-to-float-be</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:byte-vector-to-float-le"><code class="docutils literal notranslate"><span class="pre">byte-vector-to-float-le</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:float-to-byte-vector-be"><code class="docutils literal notranslate"><span class="pre">float-to-byte-vector-be</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:float-to-byte-vector-le"><code class="docutils literal notranslate"><span class="pre">float-to-byte-vector-le</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stretchy-vector-subsequences">Stretchy Vector Subsequences</a><ul>
+<li><a class="reference internal" href="#binary-data:binary-data:[stretchy-byte-vector]"><code class="docutils literal notranslate"><span class="pre">&lt;stretchy-byte-vector&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[stretchy-vector-subsequence]"><code class="docutils literal notranslate"><span class="pre">&lt;stretchy-vector-subsequence&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:subsequence"><code class="docutils literal notranslate"><span class="pre">subsequence</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:[stretchy-byte-vector-subsequence]"><code class="docutils literal notranslate"><span class="pre">&lt;stretchy-byte-vector-subsequence&gt;</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:decode-integer"><code class="docutils literal notranslate"><span class="pre">decode-integer</span></code></a></li>
+<li><a class="reference internal" href="#binary-data:binary-data:encode-integer"><code class="docutils literal notranslate"><span class="pre">encode-integer</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -2119,9 +2283,9 @@ which tracks the byte-vector together with a start and end index.</p>
       
     </aside>
   </div>
-</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=e031e9a9"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+</div><script src="_static/documentation_options.js?v=2709fde1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>
