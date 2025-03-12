@@ -1,10 +1,6 @@
-name: Build documentation
+name: Check documentation
 
 on:
-  push:
-    # all branches
-    paths:
-      - 'documentation/**'
   pull_request:
     # all branches
     paths:
@@ -44,17 +40,3 @@ jobs:
           image: ghcr.io/fraya/dylan-docs
           options: -v ${{ github.workspace }}/documentation:/docs
           run: make html
-
-      - name: Upload html artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: binary-data-doc-html
-          path: documentation/build/html/
-
-      - name: Bypassing Jekyll on GH Pages
-        run: sudo touch documentation/build/html/.nojekyll
-
-      - name: Deploy documents to GH pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/build/html
