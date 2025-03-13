@@ -964,7 +964,7 @@ Predefined Leaf Frames
    :operations:
 
       - :gf:`high-level-type` returns `<byte>
-        https://opendylan.org/library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:[byte]`_.
+        <https://opendylan.org/library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:[byte]>`_.
       - :gf:`field-size` returns 8.
 
    :superclasses: :class:`<fixed-size-translated-leaf-frame>`

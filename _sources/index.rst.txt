@@ -18,15 +18,15 @@ at `GitHub
 
 Inspiration for this library is taken among others from the defstorage
 system available as part of the `Genera Common Lisp operating system
-<http://en.wikipedia.org/wiki/Genera_%28operating_system%29>`_ and the
+<https://en.wikipedia.org/wiki/Genera_%28operating_system%29>`_ and the
 swiss-army knife for interactive packet manipulation `scapy (Web archive)
 <http://web.archive.org/web/20131217022133/http://bb.secdev.org/scapy/wiki/Home>`__.
 
 For further information, you might want to read our published papers
 about a TCP/IP stack written entirely in Dylan:
 
-* :download:`A domain-specific language for manipulation of binary data in Dylan <../papers/a-DSL-for-manipulation-of-binary-data.pdf>` (by Hannes Mehnert and Andreas Bogk at ILC 2007)
-* :download:`Secure Networking <../papers/secure-networking.pdf>` (by Andreas Bogk and Hannes Mehnert in 2006)
+* :download:`A domain-specific language for manipulation of binary data in Dylan <./papers/a-DSL-for-manipulation-of-binary-data.pdf>` (by Hannes Mehnert and Andreas Bogk at ILC 2007)
+* :download:`Secure Networking <./papers/secure-networking.pdf>` (by Andreas Bogk and Hannes Mehnert in 2006)
 
 .. toctree::
    :maxdepth: 3
