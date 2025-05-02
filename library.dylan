@@ -31,7 +31,9 @@ define module binary-data
 
   export byte-aligned, high-level-type;
 
-  export n-byte-vector-definer, n-bit-unsigned-integer-definer;
+  export n-bit-unsigned-integer-definer, <unsigned-integer-bit-frame>,
+    n-byte-vector-definer, <big-endian-unsigned-integer-byte-frame>,
+    <little-endian-unsigned-integer-byte-frame>;
 
   export hexdump;
 
