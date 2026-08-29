@@ -98,7 +98,7 @@ untranslated, though :drm:`as` in both directions with :drm:`<string>`
 is provided (should inherit from translated frame)
 
 The generic function :gf:`read-frame` is used to convert a
-:drm:`<string>` into an instance of a `<leaf-frame>`.
+:drm:`<string>` into an instance of a :class:`<leaf-frame>`.
 
 FIXME: why is read-frame not defined on container-frame?
 
